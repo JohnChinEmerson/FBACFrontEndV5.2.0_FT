@@ -1,0 +1,116 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>ItemPriceCategorysUI - {{text}}</h2>
+<mat-divider></mat-divider>
+<div class="search-div" *ngIf="type == 'items'">
+    <mat-form-field  class="w-40" appearance="standard">
+        <mat-label>ItemName</mat-label>
+        <input matInput autocomplete="off" required [value]="data[0].ItemName" readonly>
+    </mat-form-field>
+     <ng-select  
+        class="w-10"
+        [items]="unitMeasures" 
+        [virtualScroll]="true" 
+        appendTo="body" 
+        bindLabel="UM" 
+        bindValue="UM"  
+        [searchable]="true" 
+        [clearable] = "false" 
+        placeholder="UM" 
+        (change)="onChangeUM($event)"
+        [(ngModel)]="UM"
+        required>
+    </ng-select>
+    <mat-form-field class="w-10"  appearance="standard">
+        <mat-label>RegularPrice</mat-label>
+        <input matInput autocomplete="off" required [value]="price" readonly>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="onClickNew()" > New</button> 
+</div>
+<div class="search-div" *ngIf="type == 'inventory'">
+    <mat-form-field  class="w-40" appearance="standard">
+        <mat-label>ItemName</mat-label>
+        <input matInput autocomplete="off" required [value]="data[0].ItemName" readonly>
+    </mat-form-field>
+     <ng-select  
+        class="w-10"
+        [items]="unitMeasures" 
+        [virtualScroll]="true" 
+        appendTo="body" 
+        bindLabel="UM" 
+        bindValue="UM"  
+        [searchable]="true" 
+        [clearable] = "false" 
+        placeholder="UM" 
+        (change)="onChangeUM($event)"
+        [(ngModel)]="UM"
+        required>
+    </ng-select>
+    <mat-form-field class="w-10"  appearance="standard">
+        <mat-label>RegularPrice</mat-label>
+        <input matInput autocomplete="off" required [value]="price" readonly>
+    </mat-form-field>
+</div>
+  <div class="mat-elevation-z2 w-100">
+    <mat-table [dataSource]="listData" matSort>
+        <ng-container *ngFor="let dc of defaultColumns">
+                    <ng-container  [matColumnDef]="dc">
+                    <mat-header-cell *matHeaderCellDef sticky>{{ dc }}</mat-header-cell>
+                        <mat-cell  *matCellDef="let element"  class="auto-adjust-cell" [ngClass]="element | rowClasses:dc:columnTypeMap[dc]" [title]="element[dc]">
+                         <ng-container [ngSwitch]="dc">
+                            <span *ngSwitchCase="'Price'">
+                                <input matInput placeholder="Input Price"  class="clickable inputtable" title="Input Price " type="text" step="0.01"  (keyup.enter)="onKeyupEditPrice($event, element.id )" (focusout)="onKeyupEditPrice($event, element.id )"    [value]="element.Price" autocomplete="false" [disabled]="type == 'sales' || type=='order'">
+                            </span>
+                            <span *ngSwitchCase="'MinimumQty'">
+                                <input matInput placeholder="Input MinimumQty"  class="clickable inputtable" title="Input MinimumQty " type="text" step="0.01"  (keyup.enter)="onKeyupEditMinimumQty($event, element.id )"  (focusout)="onKeyupEditMinimumQty($event, element.id )" [value]="element.MinimumQty" autocomplete="false" [disabled]="type == 'sales' || type=='order'">
+                            </span>
+                            <span *ngSwitchDefault>
+                                {{ element | rowDisplay:dc:columnTypeMap[dc] }}
+                            </span>
+                        </ng-container>
+                        </mat-cell>
+                    </ng-container>
+                </ng-container>
+        <ng-container matColumnDef="loading">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+                <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+            </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="noData">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+                No data.
+            </mat-footer-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="defaultColumns; sticky:true"></mat-header-row>
+        <mat-row  (click)="getRecord(row)" (dblclick)="onClickSelectPrice()" *matRowDef="let row; columns: defaultColumns;" [ngClass]="{'data-selected': selectedId == row.id}" appTouchContextMenu (contextmenu)="onContextMenu($event, row)"></mat-row>
+        <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+        <mat-footer-row *matFooterRowDef="['noData']"  [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
+    </mat-table>
+  <mat-paginator class="mat-paginator-sticky" [pageSize]="5" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons> </mat-paginator>
+  <div mat-dialog-actions class="mb-3" *ngIf="type == 'items'">
+    <div class="col align-elements mt-4"  [align]="'start'">
+        <p class="me-5">
+            {{lblCost}}
+        </p>
+        <p>
+            {{lblAveCost}}
+        </p>
+    </div>
+    <div class="col"  [align]="'end'">
+        <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" (click)="onClickSaveItemPriceCategorys()">{{btnText}}</button>
+    </div>
+  
+  </div>
+</div>
+
+<!-- RightClickEvent -->
+    <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x" [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu"></div>
+    <mat-menu #contextMenu="matMenu">
+    <ng-template matMenuContent let-data="data">
+        <button mat-menu-item *ngFor="let cB of contextButtons" [disabled]="!cB.Disabled" (click)="cB.Function()">
+        <mat-icon>read_more</mat-icon> {{cB.Label}}
+        </button>
+    </ng-template>
+    </mat-menu>
+<!-- End RightClickEvent -->

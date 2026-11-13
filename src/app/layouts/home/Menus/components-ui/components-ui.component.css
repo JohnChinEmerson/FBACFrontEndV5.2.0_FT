@@ -1,0 +1,25 @@
+.product-bar{
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+.qty-made{
+    width: 200px;
+}
+.w-type{
+    min-width: 180px;
+}
+.search{
+    flex: 1;
+}
+.um-cell{
+    cursor: pointer;
+    text-decoration: underline dotted;
+}
+.um-changed{
+    font-size: 10px;
+    color: #2e7d32;
+    margin-left: 4px;
+}

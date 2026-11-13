@@ -1,0 +1,147 @@
+<mat-progress-bar *ngIf="type == 'financials' && (!totals || !totalDash)" mode="indeterminate"></mat-progress-bar>
+<mat-tab-group (selectedTabChange)="DisplayTab($event.tab.textLabel)" [selectedIndex]="null">
+  <mat-tab label="Dashboard">
+      <section class="content" *ngIf="type == 'dashboard'">
+        <mat-form-field appearance="standard" class="fd-branch" *ngIf="!auth.Branch && branches?.length">
+            <mat-label>Branch</mat-label>
+            <mat-select role="combobox" [disableOptionCentering]="true" [(ngModel)]="fnbBranchId">
+                <mat-option *ngFor="let data of branchesWithoutAll" [value]="data.BranchId">{{data.BranchName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <app-fnb-dashboard *ngIf="fnbBranchId" [branchId]="fnbBranchId"></app-fnb-dashboard>
+      </section>
+  </mat-tab>
+  <mat-tab label="Financials">
+      <div class="tab-content">
+      </div>
+  </mat-tab>
+  <mat-tab label="Command Center">
+  <div class="tab-content">
+    <app-command-center></app-command-center>
+  </div>
+  </mat-tab>
+</mat-tab-group>
+
+<section class="content" *ngIf="type == 'financials'">
+  <div class="search-div">
+    <mat-form-field  appearance="standard">
+      <mat-label>Year</mat-label>
+        <mat-select role="combobox" [disableOptionCentering]="true" [(ngModel)]="selectedYear" (selectionChange)="FetchRecords()">
+            <mat-option *ngFor="let year of years" value="{{year}}">
+                {{year}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="standard" *ngIf="!auth.Branch">
+        <mat-label>Branch</mat-label>
+        <mat-select role="combobox"  [disableOptionCentering]="true"  [(ngModel)]="branchId" (selectionChange)="FetchRecords()">
+            <mat-option *ngFor="let data of branches" [value]="data.BranchId">{{data.BranchName}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+  </div>
+
+    <!-- KPI cards -->
+    <div class="kpi-grid my-2">
+      <mat-card class="kpi-card" *ngFor="let k of [
+          { label: 'Sales', value: totals?.SalesTotal, icon: 'point_of_sale', up: true },
+          { label: 'Customer Payments', value: totals?.PaymentsTotal, icon: 'payments', up: true },
+          { label: 'Purchases', value: totals?.PurchasesTotal, icon: 'shopping_cart', up: false },
+          { label: 'Supplier Payments', value: totals?.SupplierPaymentsTotal, icon: 'local_shipping', up: false },
+          { label: 'Expenses', value: totals?.ExpensesTotal, icon: 'receipt_long', up: false }]"
+          [class.kpi-up]="k.up" [class.kpi-down]="!k.up">
+        <div class="kpi-icon"><mat-icon>{{k.icon}}</mat-icon></div>
+        <div class="kpi-info">
+          <span class="kpi-label">{{k.label}}</span>
+          <span class="kpi-value">{{k.value | number:'1.2-2'}}</span>
+        </div>
+        <mat-icon class="kpi-trend">{{ k.up ? 'trending_up' : 'trending_down' }}</mat-icon>
+      </mat-card>
+    </div>
+
+    <div class="row g-3 mb-3">
+        <div class="col-12 col-xl-8 chart-col">
+          <mat-card class="chart-card">
+            <div class="p-3">
+              <highcharts-chart
+              class="chart"
+              [Highcharts]="Highcharts"
+              [callbackFunction]="chartCallback" 
+              [update]="true" 
+              [options]="chart2">
+            </highcharts-chart>
+            </div>
+          </mat-card>   
+        </div>
+        <div class="col-12 col-xl-4 chart-col">
+            <mat-card class="chart-card">
+              <div class="p-3">
+                <highcharts-chart 
+                  class="chart" 
+                  [Highcharts]="Highcharts2" 
+                  [callbackFunction]="chartCallback2" 
+                  [update]="true" 
+                  [options]="chartOptions2"
+                  
+                  >
+                </highcharts-chart>
+              </div>
+            </mat-card>   
+        </div>
+    </div>
+     <div class="row g-3 mb-3">
+        <div class="col-12 col-xl-8 chart-col">
+            <mat-card class="chart-card">
+            <div class="p-3">
+              <highcharts-chart 
+                    class="chart" 
+                    [Highcharts]="Highcharts6" 
+                    [callbackFunction]="chartCallback6" 
+                    [update]="true" 
+                    [options]="chart6">
+              </highcharts-chart>
+            </div>
+          </mat-card>   
+        </div>
+         <div class="col-12 col-xl-4 chart-col">
+          <mat-card class="chart-card">
+            <div class="p-3">
+              <highcharts-chart 
+                    class="chart" 
+                    [Highcharts]="Highcharts5" 
+                    [callbackFunction]="chartCallback5" 
+                    [update]="true" 
+                    [options]="chart5">
+              </highcharts-chart>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-12 col-xl-8 chart-col">
+          <mat-card class="chart-card">
+            <div class="p-3">
+              <highcharts-chart 
+              class="chart" 
+              [Highcharts]="Highcharts4" 
+              [callbackFunction]="chartCallback4" 
+              [update]="true" 
+              [options]="chart4">
+            </highcharts-chart>
+            </div>
+          </mat-card>   
+        </div>
+        <div class="col-12 col-xl-4 chart-col">
+          <mat-card class="chart-card">
+            <div class="p-3">
+              <highcharts-chart 
+                [Highcharts]="Highcharts3"
+                [options]="chartOptionsPie"
+                [callbackFunction]="chartCallback3"
+                >
+              </highcharts-chart>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+</section>
+

@@ -1,0 +1,20 @@
+.mat-dialog-content{
+    padding: 0px 25px 0px 25px !important;
+}
+mat-form-field{
+    width: 100% !important;
+}
+mat-checkbox{
+    position:absolute;
+    left: -20px;
+}
+.cSelect{
+    display: inline-block !important;
+    width: 100% !important;
+    height: 50% !important;
+}
+::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+}
+
+

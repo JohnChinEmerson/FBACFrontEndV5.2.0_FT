@@ -1,0 +1,88 @@
+<button mat-icon-button class="close-button" (click)="onClose()" aria-label="Close dialog">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+
+<h2 mat-dialog-title>ReceivingConfigAccessRightsUI</h2>
+<mat-divider></mat-divider>
+
+<div class="access-right-select">
+    <ng-select
+        [items]="accessRights"
+        bindLabel="AccessRightName"
+        bindValue="AccessRightName"
+        [virtualScroll]="true"
+        appendTo="body"
+        [searchable]="true"
+        [clearable]="false"
+        placeholder="Access Right Name"
+        [(ngModel)]="accessRightName"
+        (change)="getReceivingConfigAccessRight()"
+        required>
+    </ng-select>
+</div>
+
+<form [formGroup]="receivingConfigAccessRightForm" (ngSubmit)="onSubmit()">
+
+    <div mat-dialog-content>
+
+        <div class="fields-container pt-3 ms-5">
+
+            <div class="field-row">
+                <label>
+                    <mat-checkbox
+                        [checked]="receivingConfigAccessRights.HideCost == 'yes'"
+                        (change)="onCheck('HideCost', $event.checked, receivingConfigAccessRights.HideCost, 'Boolean')">
+                        Hide Cost:
+                    </mat-checkbox>
+                </label>
+                <input
+                    matInput
+                    placeholder="Input HideCost"
+                    autocomplete="off"
+                    formControlName="HideCost">
+            </div>
+
+            <div class="field-row">
+                <label>
+                    <mat-checkbox
+                        [checked]="receivingConfigAccessRights.HidePrice == 'yes'"
+                        (change)="onCheck('HidePrice', $event.checked, receivingConfigAccessRights.HidePrice, 'Boolean')">
+                        Hide Price:
+                    </mat-checkbox>
+                </label>
+                <input
+                    matInput
+                    placeholder="Input HidePrice"
+                    autocomplete="off"
+                    formControlName="HidePrice">
+            </div>
+
+            <div class="field-row">
+                <label>
+                    <mat-checkbox
+                        [checked]="receivingConfigAccessRights.EditPrice == 'yes'"
+                        (change)="onCheck('EditPrice', $event.checked, receivingConfigAccessRights.EditPrice, 'Boolean')">
+                        Edit Price:
+                    </mat-checkbox>
+                </label>
+                <input
+                    matInput
+                    placeholder="Input EditPrice"
+                    autocomplete="off"
+                    formControlName="EditPrice">
+            </div>
+        </div>
+    </div>
+
+    <div mat-dialog-actions align="end" class="mb-3">
+        <button
+            type="submit"
+            class="mt-4 me-2"
+            mat-raised-button
+            color="primary"
+            [disabled]="receivingConfigAccessRightForm.invalid || loading">
+            {{ btnText }}
+        </button>
+    </div>
+
+</form>

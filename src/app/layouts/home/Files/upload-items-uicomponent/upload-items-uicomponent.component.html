@@ -1,0 +1,51 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="false" [disabled]="loading">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>UploadItemsUI</h2>
+<mat-divider></mat-divider>
+<div mat-dialog-content>
+    <h5>Download Excel File Template: <a [href]="templateUrl" download="items_template.xls">ItemsFormat</a></h5>
+    <p class="hint">One sheet per item type (Ingredient, Finish Product, Ad-on, Set, Finish Product Production, Component Production,
+        Premix Production) and a Costing sheet. Items that already exist are skipped; a blank ItemId is generated.</p>
+    <input type="file" class="form-control w-100 mt-1" (change)="onFileChange($event)" accept=".xlsx, .xls" [disabled]="loading">
+
+    <mat-progress-bar class="loading-bar w-100 mt-2" mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    <div class="status" *ngIf="loading">{{ status }}</div>
+
+    <ng-container *ngIf="summary && !loading">
+        <div class="summary">
+            <span class="chip add">{{ summary.add }} to add</span>
+            <span class="chip add" *ngIf="summary.components">{{ summary.components }} component link(s)</span>
+            <span class="chip skip">{{ summary.skip }} skipped</span>
+            <span class="chip error" [class.none]="!summary.errors">{{ summary.errors }} error(s)</span>
+        </div>
+        <div class="notes">
+            <div *ngIf="summary.generatedIds">{{ summary.generatedIds }} ItemId(s) will be generated.</div>
+            <div *ngIf="summary.newUnits?.length">New UM: {{ summary.newUnits.join(', ') }}</div>
+            <div *ngIf="summary.newCategorys?.length">New Category: {{ summary.newCategorys.join(', ') }}</div>
+            <div class="error-text" *ngIf="summary.errors">Nothing will be uploaded until the errors are fixed.</div>
+        </div>
+
+        <div class="issues" *ngIf="summary.issues?.length">
+            <table>
+                <thead><tr><th></th><th>Sheet</th><th>Row</th><th>Col</th><th>Reason</th></tr></thead>
+                <tbody>
+                    <tr *ngFor="let i of summary.issues; trackBy: trackByIndex" [ngClass]="'t-' + i.type">
+                        <td><span class="tag">{{ i.type }}</span></td>
+                        <td>{{ i.sheet }}</td>
+                        <td>{{ i.row }}</td>
+                        <td>{{ i.column }}</td>
+                        <td>{{ i.reason }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="more" *ngIf="summary.moreIssues">... and {{ summary.moreIssues }} more</div>
+        </div>
+    </ng-container>
+</div>
+<div mat-dialog-actions [align]="'end'" class="mb-2">
+    <button type="button" mat-stroked-button color="primary" (click)="onClickCheck()" [disabled]="!file || loading">Check File</button>
+    <button type="button" mat-raised-button color="primary" (click)="onClickUpload()" [disabled]="!canUpload">
+        {{ loading && status == 'Uploading...' ? 'Uploading...' : 'Upload' + (summary?.add ? ' ' + summary.add + ' item(s)' : '') }}
+    </button>
+</div>

@@ -1,0 +1,46 @@
+// @import "../node_modules/@angular/material/theming";
+
+// $custom-typography: mat-typography-config(
+//   $font-family: 'Verdana, Geneva, Tahoma, sans-serif'
+// );
+
+// @include angular-material-typography($custom-typography);
+// @include mat-core();
+// $my-primary: mat-palette($mat-indigo,500);
+// $my-accent:  mat-palette($mat-amber, 500, A200,A100,A400);
+// $my-warn:    mat-palette($mat-red,500);
+// $my-theme: mat-light-theme($my-primary, $my-accent, $my-warn);
+// @include angular-material-theme($my-theme);
+
+
+@import "../node_modules/@angular/material/theming";
+
+/* Initialize Material core styles (must be first) */
+@include mat-core();
+
+/* Define custom typography settings */
+$custom-typography: mat-typography-config(
+  $font-family: 'Verdana, Geneva, Tahoma, sans-serif',
+);
+
+/* Apply custom typography */
+@include angular-material-typography($custom-typography);
+
+/* Define color palettes */
+$my-primary: mat-palette($mat-indigo, 500);
+$my-accent: mat-palette($mat-amber, 500, A200, A100, A400);
+$my-warn: mat-palette($mat-red, 500);
+
+/* Apply theme with custom typography */
+$my-theme: mat-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+      warn: $my-warn
+    ),
+    typography: $custom-typography
+  )
+);
+
+@include angular-material-theme($my-theme);

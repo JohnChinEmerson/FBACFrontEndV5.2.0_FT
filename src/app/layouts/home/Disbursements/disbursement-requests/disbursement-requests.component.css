@@ -1,0 +1,117 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.mat-column-TransDate, .mat-column-TransName, .mat-column-VoucherNo.mat-column-TransNo,.mat-column-Amount ,.mat-column-AmountDue ,.mat-column-Qty,.mat-column-UM,.mat-column-Cost,.mat-column-Discount{
+  flex: 0 0 10%;
+}
+
+.mat-column-PayToName{
+  flex: 0 0 20%;
+}
+.mat-column-ParticularName, .mat-column-Category{
+  flex: 0 0 30%;
+}
+.mat-column-ItemName,.mat-column-SourceTransNo{
+  flex: 0 0 20%;
+}
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+}
+mat-table {
+  display: block;
+  min-width: 1000px; /* Adjust as needed */
+}
+
+.table-cont{
+    min-height: 700px;
+    max-height: 700px;
+    overflow: auto;
+}
+
+.auto-adjust-cell {
+  white-space: normal !important;  
+  word-wrap: break-word !important;             
+  line-height: 1.4em !important;               
+  padding: 4px 8px !important;                  
+}
+
+.mat-row, .mat-cell {
+  height: auto !important;         
+}
+
+/* Main table panel */
+.itemListTransaction {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 700px;
+  max-height: 700px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.itemListTransaction mat-table {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.itemListTransaction mat-paginator {
+  flex: 0 0 auto;
+  margin-top: auto;
+  position: relative;
+  z-index: 2;
+  background: white;
+}
+.table-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.itemListTransaction2 {
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  min-height: 0;
+  max-height: 730px;
+}
+/* 110% scale and above */
+@media (-webkit-min-device-pixel-ratio: 1.1),
+       (min-resolution: 1.1dppx) {
+  .itemListTransaction {
+    max-height: 630px;
+  }
+  .itemListTransaction2 {
+    max-height: 630px;
+  }
+}
+
+/* 125% scale and above */
+@media (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 1.25dppx) {
+  .itemListTransaction {
+    max-height: 530px;
+  }
+  .itemListTransaction2 {
+    max-height: 530px;
+  }
+}
+
+/* 125% scale and above */
+@media (-webkit-min-device-pixel-ratio: 1.50),
+       (min-resolution: 1.50dppx) {
+    .itemListTransaction {
+    max-height: 430px;
+  }
+  .itemListTransaction2 {
+    max-height: 430px;
+  }
+}

@@ -1,0 +1,52 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+  <table class="table table-bordered" #tableToExport >
+      <thead class="thead-background">
+        <tr>
+          <th scope="col">DATE</th>
+          <th scope="col">READINGNO</th>
+          <th scope="col">CASHIER</th>
+          <th scope="col">START</th>
+          <th scope="col">END</th>
+          <th scope="col">STARTUP CASH</th>
+          <th scope="col">AMOUNT IN</th>
+          <th scope="col">AMOUNT OUT</th>
+          <th scope="col">NET AMOUNT</th>
+          <th scope="col">TERMINAL</th>
+          <th scope="col">STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of Data">
+          <td class="TransDate">{{data.TransDate | date:'MM/dd/yyyy'}}</td>
+          <td>{{data.ReadingNo }}</td>
+          <td>{{data.UserFullName }}</td>
+          <td >{{data.StartDateTime | date:'MM/dd/yyyy h:mm a ' }}</td>
+          <td >{{data.EndDateTime | date:'MM/dd/yyyy h:mm a' }}</td>
+          <td class="numeric">{{data.StartUpCash | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.AmountIn | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.AmountOut | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.NetAmount | number:'1.2-2'}}</td>
+          <td>{{data.MachineName }}</td>
+          <td>{{data.RecordStatus }}</td>
+        </tr>
+        <tr class="footer">
+            <td class="no-border" colspan="5"></td>
+            <td class="numeric"> {{getTotal('StartUpCash') | number:'1.2-2'}}</td>
+            <td class="numeric"> {{getTotal('AmountIn') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('AmountOut') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('NetAmount') | number:'1.2-2'}}</td>
+            <td class="no-border" colspan="2"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  

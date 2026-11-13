@@ -1,0 +1,230 @@
+<!-- BIR SALES SUMMARY REPORT (desktop BIRSalesSummary.rdlc) -->
+<div class="table-wrap" *ngIf="section == 'summary'">
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2">Date</th>
+                <th rowspan="2">Beginning SI/OR No.</th>
+                <th rowspan="2">Ending SI/OR No.</th>
+                <th rowspan="2">Grand Accum. Sales Ending Balance</th>
+                <th rowspan="2">Grand Accum. Beg. Balance</th>
+                <th rowspan="2">Sales Issued w/ Manual SI/OR (per RR 16-2018)</th>
+                <th rowspan="2">Gross Sales for the Day</th>
+                <th rowspan="2">VATable Sales</th>
+                <th rowspan="2">VAT Amount</th>
+                <th rowspan="2">VAT-Exempt Sales</th>
+                <th rowspan="2">Zero-Rated Sales</th>
+                <th colspan="8">Deductions</th>
+                <th colspan="6">Adjustment on VAT</th>
+                <th rowspan="2">VAT Payable</th>
+                <th rowspan="2">Net Sales</th>
+                <th rowspan="2">Sales Overrun /Overflow</th>
+                <th rowspan="2">Reset Counter</th>
+                <th rowspan="2">Z -Counter</th>
+                <th rowspan="2">Remarks</th>
+            </tr>
+            <tr>
+                <th>SC</th><th>PWD</th><th>NAAC</th><th>SOLO PARENT</th><th>Others</th><th>Returns</th><th>Void</th><th>Total Deductions</th>
+                <th>SC</th><th>PWD</th><th>Others</th><th>VAT on Returns</th><th>Others</th><th>Total VAT Adjustment</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let x of rows">
+                <td>{{x.TransDate | date:'MM/d/yy'}}</td>
+                <td>{{x.StartingSI}}</td>
+                <td>{{x.EndingSI}}</td>
+                <td class="num">{{x.EndingSales | number:'1.2-2'}}</td>
+                <td class="num">{{x.PreviousSales | number:'1.2-2'}}</td>
+                <td>{{x.ManualOR}}</td>
+                <td class="num">{{x.GrossSales | number:'1.2-2'}}</td>
+                <td class="num">{{x.VATSales | number:'1.2-2'}}</td>
+                <td class="num">{{x.VATAmount | number:'1.2-2'}}</td>
+                <td class="num">{{x.VATExemptSales | number:'1.2-2'}}</td>
+                <td class="num">{{x.ZeroRatedSales | number:'1.2-2'}}</td>
+                <td class="num">{{x.SeniorDiscount | number:'1.2-2'}}</td>
+                <td class="num">{{x.PWDDiscount | number:'1.2-2'}}</td>
+                <td class="num">{{x.NAACDiscount | number:'1.2-2'}}</td>
+                <td class="num">{{x.SoloParentDiscount | number:'1.2-2'}}</td>
+                <td class="num">{{x.OtherDiscount | number:'1.2-2'}}</td>
+                <td class="num">{{x.LessReturn | number:'1.2-2'}}</td>
+                <td class="num">{{x.LessVoid | number:'1.2-2'}}</td>
+                <td class="num">{{x.TotalDeductions | number:'1.2-2'}}</td>
+                <td class="num">{{x.LessVATSenior | number:'1.2-2'}}</td>
+                <td class="num">{{x.LessVATPWD | number:'1.2-2'}}</td>
+                <td class="num">{{x.LessVATOther | number:'1.2-2'}}</td>
+                <td class="num">0.00</td>
+                <td class="num">{{x.LessVATZeroRated | number:'1.2-2'}}</td>
+                <td class="num">{{x.TotalVATAdjustments | number:'1.2-2'}}</td>
+                <td class="num">{{x.VATPayable | number:'1.2-2'}}</td>
+                <td class="num">{{x.NetSales | number:'1.2-2'}}</td>
+                <td>-</td>
+                <td>{{x.ResetCounterNo}}</td>
+                <td>{{x.ZCounterNo}}</td>
+                <td>-</td>
+            </tr>
+            <tr *ngIf="rows.length == 0"><td colspan="31" class="empty">No Z-Reading in the period.</td></tr>
+        </tbody>
+        <tfoot *ngIf="rows.length > 0">
+            <tr>
+                <td colspan="3">TOTAL ({{rows.length}})</td>
+                <td class="num">{{sum(rows,'EndingSales') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'PreviousSales') | number:'1.2-2'}}</td>
+                <td></td>
+                <td class="num">{{sum(rows,'GrossSales') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'VATSales') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'VATAmount') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'VATExemptSales') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'ZeroRatedSales') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'SeniorDiscount') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'PWDDiscount') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'NAACDiscount') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'SoloParentDiscount') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'OtherDiscount') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'LessReturn') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'LessVoid') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'TotalDeductions') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'LessVATSenior') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'LessVATPWD') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'LessVATOther') | number:'1.2-2'}}</td>
+                <td class="num">0.00</td>
+                <td class="num">{{sum(rows,'LessVATZeroRated') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'TotalVATAdjustments') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'VATPayable') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'NetSales') | number:'1.2-2'}}</td>
+                <td colspan="4"></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!-- BIR SALES DETAILED REPORT (desktop BIRSalesDetailed.rdlc): sales, then sales returns and voids -->
+<ng-container *ngIf="section == 'detailed'">
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="2">Date</th>
+                    <th rowspan="2">SI/OR No.</th>
+                    <th rowspan="2">Manual SI/OR</th>
+                    <th rowspan="2">Gross Sales for the Day</th>
+                    <th rowspan="2">VATable Sales</th>
+                    <th rowspan="2">VAT Amount</th>
+                    <th rowspan="2">VAT-Exempt Sales</th>
+                    <th rowspan="2">Zero-Rated Sales</th>
+                    <th colspan="8">Deductions</th>
+                    <th colspan="6">Adjustment on VAT</th>
+                    <th rowspan="2">VAT Payable</th>
+                    <th rowspan="2">Net Sales</th>
+                    <th rowspan="2">Sales Overrun /Overflow</th>
+                    <th rowspan="2">Reset Counter</th>
+                    <th rowspan="2">Z -Counter</th>
+                    <th rowspan="2">Remarks</th>
+                </tr>
+                <tr>
+                    <th>SC</th><th>PWD</th><th>NAAC</th><th>SOLO PARENT</th><th>Others</th><th>Returns</th><th>Void</th><th>Total Deductions</th>
+                    <th>SC</th><th>PWD</th><th>Others</th><th>VAT on Returns</th><th>Others</th><th>Total VAT Adjustment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let x of rows" [class.void]="x.RecordStatus == 'void'">
+                    <td>{{x.TransDate | date:'MM/d/yy'}}</td>
+                    <td>{{x.SINo}}</td>
+                    <td>{{x.InvNo}}</td>
+                    <td class="num" *ngFor="let c of detailedAmounts">{{x[c] | number:'1.2-2'}}</td>
+                    <td>-</td>
+                    <td>{{x.ResetCounter}}</td>
+                    <td>{{x.ZCounterNo}}</td>
+                    <td>{{x.Remarks}}</td>
+                </tr>
+                <tr *ngIf="rows.length == 0"><td colspan="28" class="empty">No sales in the period.</td></tr>
+            </tbody>
+            <tfoot *ngIf="rows.length > 0">
+                <tr>
+                    <td colspan="3">TOTAL ({{rows.length}})</td>
+                    <td class="num" *ngFor="let c of detailedAmounts">{{sum(rows, c) | number:'1.2-2'}}</td>
+                    <td colspan="4"></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="subtitle">SALES RETURN DETAILS</div>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>DATE</th><th>SRNO</th><th>REFERENCE NO</th><th>ITEM NAME</th><th>QTY</th><th>PRICE</th><th>AMOUNT</th><th>VAT AMOUNT</th><th>REASON</th></tr></thead>
+            <tbody>
+                <tr *ngFor="let x of data?.returns">
+                    <td>{{x.TransDate | date:'MM/d/yy'}}</td><td>{{x.SRNo}}</td><td>{{x.SINo}}</td><td>{{x.ItemName}}</td>
+                    <td class="num">{{x.Qty | number:'1.1-1'}}</td><td class="num">{{x.Price | number:'1.2-2'}}</td>
+                    <td class="num">{{x.Amount | number:'1.2-2'}}</td><td class="num">{{x.TotalVATAmount | number:'1.2-2'}}</td><td>{{x.Reason}}</td>
+                </tr>
+                <tr *ngIf="!data?.returns?.length"><td colspan="9" class="empty">-</td></tr>
+            </tbody>
+            <tfoot *ngIf="data?.returns?.length">
+                <tr><td colspan="6">TOTAL</td><td class="num">{{sum(data.returns,'Amount') | number:'1.2-2'}}</td><td class="num">{{sum(data.returns,'TotalVATAmount') | number:'1.2-2'}}</td><td></td></tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="subtitle">VOID DETAILS</div>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>DATE</th><th>VOID NO</th><th>REFERENCE NO</th><th>AMOUNT</th><th>REASON</th></tr></thead>
+            <tbody>
+                <tr *ngFor="let x of data?.voids">
+                    <td>{{x.VoidDateTime | date:'MM/d/yy'}}</td><td>{{x.VoidNo}}</td><td>{{x.SINo}}</td>
+                    <td class="num">{{x.VoidAmount | number:'1.2-2'}}</td><td>{{x.VoidReason}}</td>
+                </tr>
+                <tr *ngIf="!data?.voids?.length"><td colspan="5" class="empty">-</td></tr>
+            </tbody>
+            <tfoot *ngIf="data?.voids?.length">
+                <tr><td colspan="3">TOTAL</td><td class="num">{{sum(data.voids,'VoidAmount') | number:'1.2-2'}}</td><td></td></tr>
+            </tfoot>
+        </table>
+    </div>
+</ng-container>
+
+<!-- Senior / PWD / NAAC / Solo Parent / MOV sales books (desktop BIR*BreakDown.rdlc) -->
+<div class="table-wrap" *ngIf="section != 'summary' && section != 'detailed'">
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>ID No.</th>
+                <th *ngIf="withTIN">TIN</th>
+                <th>SI/OR No.</th>
+                <th>Sales (inclusive of VAT)</th>
+                <th *ngIf="withTIN">VAT Amount</th>
+                <th *ngIf="withTIN">VAT-Exempt Sales</th>
+                <th>Discount</th>
+                <th>Net Sales</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let x of rows" [class.void]="x.RecordStatus == 'void'">
+                <td>{{x.TransDate | date:'MM/d/yy'}}</td>
+                <td>{{x.DiscountPerson}}</td>
+                <td>{{x.DiscountId}}</td>
+                <td *ngIf="withTIN">{{x.DiscountTIN}}</td>
+                <td>{{x.SINo}}</td>
+                <td class="num">{{x.VATSales | number:'1.2-2'}}</td>
+                <td class="num" *ngIf="withTIN">{{x.LessVAT | number:'1.2-2'}}</td>
+                <td class="num" *ngIf="withTIN">{{x.VATExemptSales | number:'1.2-2'}}</td>
+                <td class="num">{{x.DiscountAmount | number:'1.2-2'}}</td>
+                <td class="num">{{x.NetSales | number:'1.2-2'}}</td>
+            </tr>
+            <tr *ngIf="rows.length == 0"><td [attr.colspan]="withTIN ? 10 : 7" class="empty">No records.</td></tr>
+        </tbody>
+        <tfoot *ngIf="rows.length > 0">
+            <tr>
+                <td [attr.colspan]="withTIN ? 5 : 4">TOTAL ({{rows.length}})</td>
+                <td class="num">{{sum(rows,'VATSales') | number:'1.2-2'}}</td>
+                <td class="num" *ngIf="withTIN">{{sum(rows,'LessVAT') | number:'1.2-2'}}</td>
+                <td class="num" *ngIf="withTIN">{{sum(rows,'VATExemptSales') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'DiscountAmount') | number:'1.2-2'}}</td>
+                <td class="num">{{sum(rows,'NetSales') | number:'1.2-2'}}</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

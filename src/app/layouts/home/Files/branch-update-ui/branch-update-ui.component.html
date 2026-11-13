@@ -1,0 +1,43 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>BranchUpdateUI</h2>
+<mat-divider></mat-divider>
+<div class="search-div">
+    <mat-form-field class="search-form-field " floatLabel="never" appearance="standard">
+    <input matInput [(ngModel)]="searchKey" placeholder="Search" (keyup)="applyFilter()" autocomplete="false">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+    </button>
+    </mat-form-field>
+</div>
+<div class="mat-elevation-z2  table-cont" >
+    <mat-table [dataSource]="listData" matSort>
+        <ng-container matColumnDef="BranchName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>BranchName</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <mat-checkbox  (change)="getCheckboxValues($event.checked, element.BranchId)" [checked]="element.IsUpdate == 'yes'">
+                    {{element.BranchName}}
+                </mat-checkbox>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="loading">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+                <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+            </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="noData">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+                No data.
+            </mat-footer-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+        <mat-row  (click)="getRecord(row)"  *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'data-selected': SelectedId == row.id}"></mat-row>
+        <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!IsTrue}"></mat-footer-row>
+        <mat-footer-row *matFooterRowDef="['noData']"
+            [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
+    </mat-table>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+        <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" (click)="onClickUpdate()">Update</button>
+      </div>
+</div>

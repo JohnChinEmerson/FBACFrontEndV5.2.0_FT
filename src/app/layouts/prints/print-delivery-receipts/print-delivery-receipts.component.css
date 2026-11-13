@@ -1,0 +1,39 @@
+td{
+    white-space: normal;
+}
+th, td {
+    border: 1px solid #888;
+}
+.title{
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: larger;
+    padding: 2%;
+}
+
+
+table th, table td {
+  border: 1px solid #888;
+  padding: 2.5px !important;
+  line-height: 1;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+} 
+
+table thead th {
+    font-weight: 1000 !important;
+    background-color: #D3D3D3; 
+} 
+.numeric{
+    text-align: right;
+}
+tfoot{
+    font-weight: 500;
+}
+.no-border{
+    border: none !important;
+}
+.p {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;;
+    line-height: .5; 
+}
+

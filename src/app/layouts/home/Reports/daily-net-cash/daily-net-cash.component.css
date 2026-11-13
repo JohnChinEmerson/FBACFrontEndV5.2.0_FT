@@ -1,0 +1,112 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.mat-column-Category, .mat-column-ItemName {
+    flex: 0 0 20%;
+}
+
+::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+}
+
+.mat-column-Month{
+    flex: 0 0 10% !important;
+  }
+
+
+.mat-column-GrandTotal{
+  flex: 0 0 10% !important;
+}
+.mat-column-TransDate{
+    flex: 0 0 10% !important;
+  }
+
+.mat-column-CashIn{
+  flex: 0 0 37% !important;
+}
+
+.mat-column-SalesDownPayments{
+    flex: 0 0 9% !important;
+    border-left: 1px solid #adadad;
+  justify-content: end;
+}
+.mat-column-ReceivablePayments{
+    flex: 0 0 9% !important;
+  justify-content: end;
+}
+.mat-column-ItemSalesPayments{
+    flex: 0 0 9% !important;
+  justify-content: end;
+}
+.mat-column-TotalAmountIn{
+    flex: 0 0 10% !important;
+    justify-content: end;
+}
+
+.mat-column-CashOut{
+    flex: 0 0 46% !important;
+}
+.mat-column-PODownPayments{
+    flex: 0 0 9% !important;
+  justify-content: end;
+    border-left: 1px solid #adadad;
+}
+.mat-column-ItemReceivedPayments{
+    flex: 0 0 9% !important;
+  justify-content: end;
+}
+.mat-column-PayablePayments{
+    flex: 0 0 9% !important;
+  justify-content: end;
+}
+.mat-column-ExpensePayments{
+    flex: 0 0 9% !important;
+  justify-content: end;
+}
+.mat-column-TotalAmountOut{
+    flex: 0 0 10% !important;
+  justify-content: end;
+}
+
+.mat-column-NetH{
+    flex: 0 0 7% !important;
+}
+.mat-column-NetIncome{
+  flex: 0 0 7%!important;
+  border-left: 1px solid #adadad;
+  justify-content: end;
+}
+
+.mat-table .mat-cell, 
+.mat-table .mat-header-cell {
+    max-width: 1000px !important; /* Adjust as needed */
+}
+
+.summary-bar {
+    display: grid;
+    grid-template-columns: 10% 37% 46% 7%;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+}
+
+
+.summary-bar .cashin {
+    background: #6fcf70;
+}
+
+.summary-bar .cashout {
+    background: #e06666;
+}
+
+.summary-bar .net {
+    background: #f2e55c;
+}

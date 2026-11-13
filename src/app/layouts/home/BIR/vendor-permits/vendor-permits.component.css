@@ -1,0 +1,21 @@
+.content{
+    margin-top: 6%;
+    width: 100%;
+    position: fixed;
+}
+
+mat-card{
+    width:  800px;
+    margin: auto;
+}
+mat-form-field {
+    width: 100%;
+    line-height: -10%;
+}
+.landing-background{
+    position: fixed;
+    top: -5%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width:60%;
+  }

@@ -1,0 +1,102 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>MultiplePaymentUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="mulitplePaymentForm" (ngSubmit)="validateForm()">
+    <div mat-dialog-content>
+        <div class="row">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>TotalDue</mat-label>
+                <input matInput placeholder="Input TotalDue" autocomplete="off"  formControlName="TotalDue" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" readonly required>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <div class="col-10">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>TotalPaid</mat-label>
+                    <input matInput placeholder="Input TotalPaid" autocomplete="off"  formControlName="TotalPaid" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" readonly required>
+                </mat-form-field>
+            </div>
+            <div class="col-2">
+                <button type="button" mat-flat-button color="primary" class="w-100" (click)="onClickViewDetails()"> Details</button>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>AmountPaid</mat-label>
+                    <input matInput placeholder="Input AmountPaid" autocomplete="off"  formControlName="AmountPaid" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" required (keyup)="onChangeAmountPaid()">
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>{{lblRemaining}}</mat-label>
+                    <input matInput placeholder="Input Remaining" autocomplete="off"  formControlName="Remaining" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" readonly required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>PaymentType</mat-label>
+                <mat-select role="combobox" [disableOptionCentering]="true" formControlName="PaymentType" required required (selectionChange)="onChangePaymentType($event.value)">
+                    <mat-option *ngFor="let x of paymentTypes" [value]="x"> {{x}} </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>DepositTo</mat-label>
+                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="DepositTo" autocomplete="off" [required]="requiredBank" >
+                        <mat-option  *ngFor="let x of cashAccounts" [value]="x.CashAccount"> {{x.CashAccount}} </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>ReferenceNo</mat-label>
+                    <input matInput placeholder="Input ReferenceNo" autocomplete="off"  formControlName="ReferenceNo"  >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>CheckNo</mat-label>
+                    <input matInput placeholder="Input CheckNo" autocomplete="off"  formControlName="CheckNo" [required]="requiredCheck" >
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field appearance="standard" class="w-100">
+                    <mat-label>CheckDate</mat-label>
+                    <input matInput [matDatepicker]="picker3" formControlName="CheckDate2" autocomplete="off"  [required]="requiredCheck"  >
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+           <mat-form-field class="w-100" appearance="standard">
+            <mat-label>BankName</mat-label>
+            <input type="text"
+                    matInput
+                    [matAutocomplete]="auto"
+                    formControlName="BankName"
+                    [required]="requiredBank"
+                    autocomplete="off">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayBank">
+                <mat-option *ngFor="let x of banks" [value]="x.BankName">
+                {{ x.BankName }}
+                </mat-option>
+            </mat-autocomplete>
+            </mat-form-field>
+        </div>
+       
+           
+        <div mat-dialog-actions [align]="'end'" class="mb-3">
+            <button type="button" class="me-3" (click)="validateForm()" mat-raised-button color="primary" [disabled]="mulitplePaymentForm.invalid || loading == true">{{btnText}}</button>
+          </div>
+    </div>
+  </form>

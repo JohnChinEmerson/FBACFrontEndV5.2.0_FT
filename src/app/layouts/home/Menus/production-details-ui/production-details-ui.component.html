@@ -1,0 +1,38 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>ProductionDetailsUI - {{ receipt?.ProductionNo }}</h2>
+<mat-divider></mat-divider>
+<mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"></mat-progress-bar>
+<div mat-dialog-content>
+    <div class="grid-toolbar">
+        <b>PRODUCED (STOCK IN)</b>
+        <button mat-raised-button color="warn" (click)="onClickDelete()" [disabled]="receipt?.RecordStatus != 'open'">Delete</button>
+        <span class="total-count">Total Records : {{ produced.length }}</span>
+    </div>
+    <div class="grid-list">
+        <table>
+            <thead><tr><th>StockIn No.</th><th>ItemName</th><th>UM</th><th class="numeric">Qty</th><th class="numeric">UnitCost</th><th class="numeric">Amount</th><th>Status</th></tr></thead>
+            <tbody>
+                <tr class="clickable" *ngFor="let d of produced" (click)="selected = d" [class.data-selected]="selected?.id == d.id">
+                    <td>{{ d.TransNo }}</td><td>{{ d.ItemName }}</td><td>{{ d.UM }}</td>
+                    <td class="numeric">{{ d.Qty | number:'1.2-4' }}</td><td class="numeric">{{ d.Price | number:'1.2-2' }}</td><td class="numeric">{{ d.Amount | number:'1.2-2' }}</td>
+                    <td [class.negative]="d.RecordStatus != 'open'">{{ d.RecordStatus }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="grid-toolbar consumed-title"><b>COMPONENTS USED (STOCK OUT)</b></div>
+    <div class="grid-list">
+        <table>
+            <thead><tr><th>StockOut No.</th><th>ItemName</th><th>UM</th><th class="numeric">Qty</th><th class="numeric">UnitCost</th><th class="numeric">Amount</th><th>Status</th></tr></thead>
+            <tbody>
+                <tr *ngFor="let d of consumed">
+                    <td>{{ d.TransNo }}</td><td>{{ d.ItemName }}</td><td>{{ d.UM }}</td>
+                    <td class="numeric">{{ d.Qty | number:'1.2-4' }}</td><td class="numeric">{{ d.Price | number:'1.2-2' }}</td><td class="numeric">{{ d.Amount | number:'1.2-2' }}</td>
+                    <td [class.negative]="d.RecordStatus != 'open'">{{ d.RecordStatus }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+.content {
+    margin: 10px;
+}
+
+/* filters */
+.cc-filters {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 4px 14px;
+    background: #fff;
+    border: 1px solid #e3e6ef;
+    border-radius: 12px;
+}
+.cc-range-filter { flex: 0 1 auto; min-width: 0; }
+.cc-branch { flex: 0 1 220px; min-width: 170px; }
+.cc-view { min-height: 44px; min-width: 100px; font-weight: 600; }
+.cc-progress { margin-top: 4px; border-radius: 2px; }
+
+::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+}
+
+/* summary: a card per group, big figures */
+.cc-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 12px 0 20px;
+}
+.cc-panel {
+    background: #fff;
+    border: 1px solid #e3e6ef;
+    border-top: 4px solid var(--tone);
+    border-radius: 12px;
+    padding: 12px 14px;
+    box-shadow: 0 1px 3px rgba(20, 30, 70, 0.06);
+    min-width: 0;
+}
+.cc-panel-title {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+    font-size: 13px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase; color: var(--tone);
+}
+.cc-panel-title mat-icon { font-size: 20px; width: 20px; height: 20px; }
+.cc-figures { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.cc-figure {
+    position: relative;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+    min-height: 68px; padding: 10px 26px 10px 12px;
+    border: 0; border-radius: 10px; background: var(--tone-bg);
+    font: inherit; text-align: left; cursor: pointer; min-width: 0;
+    transition: box-shadow .15s;
+}
+.cc-figure:hover { box-shadow: 0 4px 12px rgba(20, 30, 70, 0.12); }
+.cc-figure.loading { opacity: .55; }
+.cc-figure-label { font-size: 12px; font-weight: 600; color: #5f6b7a; }
+.cc-figure-value { font-size: 20px; font-weight: 700; color: #1f2937; line-height: 1.2; overflow-wrap: anywhere; }
+.cc-figure-go { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); color: var(--tone); opacity: .6; }
+.tone-blue  { --tone: #3F51B5; --tone-bg: #eef0fb; }
+.tone-green { --tone: #2e7d32; --tone-bg: #edf7ee; }
+.tone-amber { --tone: #ef6c00; --tone-bg: #fff5e8; }
+
+/* report shortcuts: a short list per group */
+.cc-heading { margin: 0 0 10px; font-size: 16px; font-weight: 700; color: #1f2937; }
+.cc-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    align-items: start;
+}
+.cc-group {
+    background: #fff;
+    border: 1px solid #e3e6ef;
+    border-radius: 12px;
+    padding: 12px 8px 6px;
+}
+.cc-group-title {
+    display: flex; align-items: center; gap: 10px; padding: 0 6px 8px;
+    font-size: 14px; font-weight: 700; color: #1f2937;
+}
+.cc-group-icon {
+    display: flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 8px; background: #e8eaf6; color: #3F51B5;
+}
+.cc-group-icon mat-icon { font-size: 18px; width: 18px; height: 18px; }
+.cc-link {
+    display: flex; align-items: center; justify-content: space-between; width: 100%;
+    min-height: 44px; padding: 0 8px; border: 0; border-top: 1px solid #f0f2f6; background: transparent;
+    font: inherit; font-weight: 600; color: #374151; text-align: left; cursor: pointer; border-radius: 6px;
+}
+.cc-link mat-icon { font-size: 16px; width: 16px; height: 16px; color: #9ca3af; }
+.cc-link:hover { background: #f5f6fc; color: #3F51B5; }
+.cc-link:hover mat-icon { color: #3F51B5; }
+
+@media (max-width: 1199px) {
+    .cc-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+    .content { margin: 6px; }
+    .cc-filters { padding: 8px 10px; gap: 8px; }
+    .cc-ranges { flex: 1 1 100%; }
+    .cc-range { flex: 1; padding: 0 6px; }
+    .cc-field, .cc-branch { flex: 1 1 45%; }
+    .cc-view { flex: 1 1 100%; }
+    .cc-summary { grid-template-columns: 1fr; }
+    .cc-figure-value { font-size: 18px; }
+    .cc-groups { grid-template-columns: 1fr; }
+}

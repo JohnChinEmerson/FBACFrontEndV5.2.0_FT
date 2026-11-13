@@ -1,0 +1,84 @@
+<section class="content">
+    <div class="search-div">
+        <mat-checkbox [checked]="withDate" [(ngModel)]="withDate"></mat-checkbox>
+        <mat-form-field appearance="standard">
+            <mat-label>Date From</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="dateFrom"  autocomplete="off" required  [disabled]="!withDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Date To</mat-label>
+            <input matInput [matDatepicker]="picker2" [(ngModel)]="dateTo"  autocomplete="off"  required  [disabled]="!withDate">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      
+        <ng-select  
+            class="w-20"
+            [items]="suppliers" 
+            [virtualScroll]="true" 
+            appendTo="body" 
+            bindLabel="SupplierName"
+            bindValue="SupplierId"
+            [searchable]="true" 
+            [clearable] = "false" 
+            placeholder="SupplierName"
+            [(ngModel)]="supplierName"
+            required>
+        </ng-select>
+      
+        <ng-select  
+            class="w-10"
+            [items]="filterTypes" 
+            [virtualScroll]="true" 
+            appendTo="body" 
+            [searchable]="true" 
+            [clearable] = "false" 
+            placeholder="FilterType"
+            [(ngModel)]="filterType"
+            required>
+        </ng-select>
+        <ng-select 
+            [items]="branches" 
+            [virtualScroll]="true" 
+            appendTo="body" 
+            bindLabel="BranchName"
+            bindValue="BranchId"
+            [(ngModel)]="branchId" 
+            [searchable]="true" 
+            [clearable] = "false" 
+            placeholder="Branch"
+            class="w-10"
+            (change)="getCBOSuppliers()"
+            >
+        </ng-select>
+        <button mat-raised-button color="primary" *ngFor="let tB of toolButtons" [disabled]="!tB.Disabled" (click)="tB.Function()" >{{tB.Label}}</button> 
+    </div>
+    <mat-tab-group>
+        <mat-tab label="Items">
+            <div class="tab-content">
+                <app-supplier-items-report  [filteredData]="filteredData"></app-supplier-items-report>
+            </div>
+        </mat-tab>
+        <mat-tab label="Return To Supplier">
+            <div class="tab-content">
+                <app-supplier-return-to-suppliers-report  [filteredData]="filteredData"></app-supplier-return-to-suppliers-report>
+            </div>
+        </mat-tab>
+       
+    </mat-tab-group>
+</section>
+
+<div style="visibility: hidden; position: fixed"
+    [style.left]="contextMenuPosition.x"
+    [style.top]="contextMenuPosition.y"
+    [matMenuTriggerFor]="contextMenu">
+</div>
+<mat-menu #contextMenu="matMenu">
+	<ng-template matMenuContent let-data="data">
+        <button mat-menu-item *ngFor="let cB of contextButtons" [disabled]="!cB.Disabled" (click)="cB.Function()" >
+            <mat-icon>read_more</mat-icon> {{cB.Label}}
+        </button>
+    </ng-template>
+</mat-menu>

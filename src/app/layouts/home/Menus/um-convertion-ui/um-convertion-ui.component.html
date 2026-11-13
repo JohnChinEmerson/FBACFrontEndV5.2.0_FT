@@ -1,0 +1,95 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>UMConvertionUI - {{ component?.ComponentName | uppercase }}</h2>
+<mat-divider></mat-divider>
+<mat-progress-bar *ngIf="loading" color="primary" mode="indeterminate"></mat-progress-bar>
+<div mat-dialog-content *ngIf="info">
+    <!-- Desktop UMConvertionUI -->
+    <div class="row">
+        <div class="col-4">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>Unit From</mat-label>
+                <input matInput [value]="info.UnitFrom" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-4">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>Rate</mat-label>
+                <input matInput [value]="info.FromRate | number:'1.2-4'" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-4">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>Old Cost</mat-label>
+                <input matInput [value]="info.Cost | number:'1.2-7'" readonly>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row align-items-center">
+        <div class="col-4">
+            <ng-select [items]="units" bindLabel="UnitTo" bindValue="UnitTo" [(ngModel)]="unitTo" [clearable]="false" [searchable]="true" appendTo="body" placeholder="Unit To"></ng-select>
+        </div>
+        <div class="col-4">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>Rate</mat-label>
+                <input matInput [value]="toRate | number:'1.2-4'" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-4">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>New Cost</mat-label>
+                <input matInput [value]="newCost | number:'1.2-7'" readonly>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <!-- Desktop ConversionsUI / ConversionUI: conversions of the item (base unit {{ info.BaseUM }}) -->
+    <mat-divider></mat-divider>
+    <div class="grid-toolbar pt-2">
+        <b>CONVERSIONS</b>
+        <small>1 {{ info.BaseUM }} = rate x Unit To</small>
+        <span class="total-count">Total Count : {{ convertions.length }}</span>
+    </div>
+    <div class="row align-items-center">
+        <div class="col-3">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>Unit To</mat-label>
+                <input matInput [(ngModel)]="form.UnitTo" autocomplete="off" placeholder="e.g. GRAMS">
+            </mat-form-field>
+        </div>
+        <div class="col-3">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>Convertion Rate</mat-label>
+                <input matInput type="number" min="0" [(ngModel)]="form.ConvertionRate" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-3">
+            <ng-select [items]="unitCategories" [(ngModel)]="form.UnitCategory" [clearable]="false" [searchable]="false" appendTo="body" placeholder="Category"></ng-select>
+        </div>
+        <div class="col-3 conv-actions">
+            <button type="button" mat-raised-button color="primary" (click)="onSaveConvertion()" [disabled]="loading">{{ form.id ? 'Update' : 'Save' }}</button>
+            <button type="button" mat-button (click)="onClickNew()">New</button>
+        </div>
+    </div>
+    <small class="description">{{ description }}</small>
+    <div class="grid-list">
+        <table>
+            <thead><tr><th>UnitFrom</th><th>UnitTo</th><th class="numeric">ConvertionRate</th><th>UnitCategory</th><th>Description</th><th></th></tr></thead>
+            <tbody>
+                <tr class="clickable" *ngFor="let c of convertions" (click)="onSelectConvertion(c)" [class.data-selected]="selectedId == c.id" title="Click to edit">
+                    <td>{{ c.UnitFrom }}</td>
+                    <td>{{ c.UnitTo }}</td>
+                    <td class="numeric">{{ c.ConvertionRate | number:'1.2-4' }}</td>
+                    <td>{{ c.UnitCategory }}</td>
+                    <td>{{ c.Description }}</td>
+                    <td class="numeric"><button mat-icon-button color="warn" title="Delete" (click)="onDeleteConvertion(c, $event)"><mat-icon>delete</mat-icon></button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="grid-empty" *ngIf="convertions.length == 0">No conversions yet. Add one above (e.g. 1 {{ info.BaseUM }} = 1000 GRAMS).</div>
+    </div>
+</div>
+<div mat-dialog-actions [align]="'end'" class="mb-3">
+    <button type="button" class="mt-4 me-2" mat-raised-button color="primary" (click)="onClickUpdate()" [disabled]="loading || !info">Update</button>
+</div>

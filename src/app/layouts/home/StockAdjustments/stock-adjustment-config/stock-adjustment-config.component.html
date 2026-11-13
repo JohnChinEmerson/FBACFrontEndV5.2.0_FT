@@ -1,0 +1,28 @@
+<app-background-logo-ui></app-background-logo-ui>
+
+<div class="content">
+    <mat-card>
+        <button mat-icon-button class="close-button" (click)="onClose()">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+        <h2 mat-dialog-title>StockAdjustmentConfigUI</h2>
+        <mat-divider></mat-divider>
+
+        <form [formGroup]="stockadjustmentForm" (ngSubmit)="onSubmit()">
+            <div mat-dialog-content>
+                <div class="fields-container pt-3">
+                    <div class="field-row">
+                        <label>
+                            <mat-checkbox [checked]="stockadjustmentconfig.ValidateQtyOnStockOut == 'yes'" (change)="onCheck('ValidateQtyOnStockOut', $event.checked, stockadjustmentconfig.ValidateQtyOnStockOut, 'Boolean')">ValidateQty On StockOut:</mat-checkbox>
+                        </label>
+                        <input class="ValidateQtyOnStockOut" matInput placeholder="Input ValidateQtyOnStockOut" autocomplete="off" formControlName="ValidateQtyOnStockOut">
+                    </div>
+                </div>
+            </div>
+
+            <div mat-dialog-actions [align]="'end'" class="mb-3">
+                <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="stockadjustmentForm.invalid || loading == true">{{btnText}}</button>
+            </div>
+        </form>
+    </mat-card>
+</div>

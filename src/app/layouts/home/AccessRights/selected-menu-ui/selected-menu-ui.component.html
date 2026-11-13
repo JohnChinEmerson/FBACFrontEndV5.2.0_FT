@@ -1,0 +1,20 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>{{btnText}} Menu</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="MenuForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <mat-form-field class="" appearance="standard">
+            <mat-label>MenuName</mat-label>
+            <input matInput placeholder="Input MenuName" autocomplete="off" required formControlName="MenuName">
+        </mat-form-field>
+        <mat-form-field class="" appearance="standard">
+            <mat-label>Order</mat-label>
+            <input matInput placeholder="Input Order" autocomplete="off" required formControlName="Order">
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions [align]="'end'">
+      <button type="submit" style="margin-right: 2px;" mat-raised-button color="primary" [disabled]="MenuForm.invalid || loading == true">{{btnText}}</button>
+    </div>
+  </form>

@@ -1,0 +1,60 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+  <table class="table table-bordered" #tableToExport>
+     <colgroup>
+        <col style="width: 15%;">      <!-- ItemName: 10% -->
+        <col style="width: 5%;">    <!-- UM -->
+        <col style="width: 10%;">   <!-- AveCost -->
+        <col style="width: 10%;">   <!-- Price -->
+        <col style="width: 10%;">    <!-- MarkUp -->
+        <col style="width: 10%;">    <!-- Qty -->
+        <col style="width: 13%;">   <!-- TotalAveCost -->
+        <col style="width: 13%;">   <!-- TotalPrice -->
+        <col style="width: 14%;">   <!-- ExpectedProfit -->
+    </colgroup>
+      <thead class="thead-background">
+        <tr>
+          <th scope="col">ItemName</th>
+          <th scope="col">UM</th>
+          <th scope="col">AveCost</th>
+          <th scope="col">Price</th>
+          <th scope="col">MarkUp</th>
+          <th scope="col">Qty</th>
+          <th scope="col">TotalAveCost</th>
+          <th scope="col">TotalPrice</th>
+          <th scope="col">ExpectedProfit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of items">
+          <td class="itemname">{{data.ItemName}}</td>
+          <td>{{data.UM}}</td>
+          <td class="numeric">{{data.AveCost  | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.Price | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.MarkUp | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.Available | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.TotalAveCost | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.TotalPrice | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.ExpectedProfit | number:'1.2-2'}}</td>
+        </tr>
+         <tr class="footer">
+            <td class="no-border"  colspan="2"></td>
+            <td class="numeric">{{getTotal('AveCost') | number: '1.2-2'}}</td>
+            <td class="numeric">{{getTotal('Price') | number: '1.2-2'}}</td>
+            <td class="numeric">{{getTotal('MarkUp') | number: '1.2-2'}}</td>
+            <td class="numeric">{{getTotal('Available') | number: '1.2-2'}}</td>
+            <td class="numeric">{{getTotal('TotalAveCost') | number: '1.2-2'}}</td>
+            <td class="numeric">{{getTotal('TotalPrice') | number: '1.2-2'}}</td>
+            <td class="numeric">{{getTotal('ExpectedProfit') | number: '1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <app-aprint-footer [totalRecords]="items.length"></app-aprint-footer>  

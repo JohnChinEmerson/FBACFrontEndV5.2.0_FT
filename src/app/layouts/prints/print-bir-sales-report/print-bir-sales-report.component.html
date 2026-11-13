@@ -1,0 +1,12 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+</div>
+<div class="p text-center">
+    <app-aprint-header></app-aprint-header>
+</div>
+<div class="title">
+    {{Title}}
+</div>
+<div #tableToExport>
+    <app-bir-sales-report-tables [data]="Data" [section]="Section"></app-bir-sales-report-tables>
+</div>

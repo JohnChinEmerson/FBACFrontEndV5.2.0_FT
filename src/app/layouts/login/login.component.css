@@ -1,0 +1,208 @@
+.content{
+    width: 100%;
+    text-align: center;
+    position: fixed;
+}
+mat-card{
+    width: 500px;
+    margin: auto;
+}
+mat-form-field {
+    width: 100%;
+}
+.login-remember{
+    display: block;
+    text-align: left;
+    margin: 0 0 8px;
+}
+::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+  }
+/* Phones, tablets in portrait and short (landscape) screens: the card is in the page flow under the fixed
+   toolbar, so it scrolls and the on-screen keyboard can push the focused field into view.
+   Large screens keep the fixed, centred card above. */
+@media (max-width: 900px), (max-height: 600px){
+    .content{
+        position: relative;
+        z-index: 1;                 /* above the fixed background logo */
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
+        margin: 0 !important;
+        padding: 76px 12px calc(16px + env(safe-area-inset-bottom));  /* below the fixed toolbar */
+        box-sizing: border-box;
+    }
+    mat-card{
+        width: auto;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    /* the global phone rule caps dialog content at 70vh; this is a page, not a dialog */
+    .mat-dialog-content{
+        max-height: none !important;
+        overflow: visible !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    /* a focused field is not scrolled under the toolbar or against the keyboard */
+    :host ::ng-deep input{
+        scroll-margin: 90px 0 120px;
+    }
+    .login-actions button{
+        min-height: 48px;
+        font-size: 16px;
+    }
+}
+/* touch screens up to tablet size: 16px inputs, so iOS does not zoom in on focus */
+@media (max-width: 1024px){
+    :host ::ng-deep input,
+    :host ::ng-deep .ng-select .ng-select-container,
+    :host ::ng-deep .mat-form-field-label{
+        font-size: 16px !important;
+    }
+}
+.search-div .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-div .header-content h2 {
+    margin: 0;
+}
+
+.search-div .close-button {
+    margin-left: auto; /* Ensures the button is aligned to the right */
+}
+
+/* ================= PHONE LOGIN ================= */
+/* full screen over the landing toolbar; scrolls when the on-screen keyboard is up */
+.pl {
+    position: fixed;
+    inset: 0;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    background: linear-gradient(160deg, #3F51B5, #283593);
+    text-align: left;
+}
+.pl-brand {
+    position: relative;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: calc(28px + env(safe-area-inset-top)) 24px 28px;
+    color: #fff;
+    text-align: center;
+}
+
+.pl-logo {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background: #fff;
+    padding: 5px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+}
+.pl-title { margin: 14px 0 0; font-size: 22px; font-weight: 500; line-height: 1.2; }
+.pl-subtitle { margin: 4px 0 0; font-size: 13px; opacity: .85; letter-spacing: .4px; }
+
+/* the form sheet fills the rest of the screen; Login sits at its bottom, in thumb reach */
+.pl-sheet {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 20px calc(20px + env(safe-area-inset-bottom));
+    border-radius: 24px 24px 0 0;
+    background: #fff;
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, .15);
+}
+.pl-heading { margin: 0; font-size: 22px; font-weight: 600; color: #1f2937; }
+.pl-hint { margin: 4px 0 16px; font-size: 14px; color: #6b7280; }
+.pl-label { margin: 12px 0 6px; font-size: 14px; font-weight: 600; color: #374151; }
+
+.pl-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 52px;
+    padding: 0 6px 0 14px;
+    border: 1.5px solid #d5d9e6;
+    border-radius: 12px;
+    background: #f8f9fc;
+}
+.pl-input:focus-within { border-color: #3F51B5; background: #fff; box-shadow: 0 0 0 3px rgba(63, 81, 181, .15); }
+.pl-input.invalid { border-color: #c62828; }
+.pl-input > mat-icon { color: #3F51B5; flex: 0 0 auto; }
+.pl-input input {
+    flex: 1;
+    min-width: 0;
+    height: 48px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font: inherit;
+    font-size: 16px;           /* no iOS zoom on focus */
+    color: #111827;
+}
+.pl-eye {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: #6b7280;
+}
+/* plain box: none of the Material theme's floating placeholder / underline / bottom space */
+.pl-select { padding-bottom: 0 !important; }
+.pl-select ::ng-deep .ng-select-container {
+    min-height: 52px !important;
+    align-items: center !important;
+    border: 1.5px solid #d5d9e6 !important;
+    border-radius: 12px !important;
+    background: #f8f9fc !important;
+    font-size: 16px !important;
+}
+.pl-select ::ng-deep .ng-select-container:after { border: 0 !important; }
+.pl-select.invalid ::ng-deep .ng-select-container { border-color: #c62828 !important; }
+.pl-select ::ng-deep .ng-select-container .ng-value-container { padding: 0 0 0 14px !important; border-top: 0 !important; align-items: center !important; }
+.pl-select ::ng-deep .ng-select-container .ng-value-container .ng-placeholder {
+    position: static !important;
+    transform: none !important;
+    color: #9ca3af !important;
+}
+.pl-select ::ng-deep .ng-has-value .ng-placeholder { display: none !important; }
+.pl-select ::ng-deep .ng-arrow-wrapper { align-self: center !important; bottom: 0 !important; padding-right: 10px; }
+.pl-error { margin-top: 4px; font-size: 13px; color: #c62828; }
+.pl-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 4px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #ffebee;
+    color: #b71c1c;
+    font-size: 14px;
+}
+.pl-remember { margin: 16px 0 8px; }
+.pl-remember ::ng-deep .mat-checkbox-layout { min-height: 44px; align-items: center; }
+.pl-login {
+    margin-top: auto;
+    min-height: 56px;
+    border-radius: 14px !important;
+    font-size: 17px;
+    font-weight: 600;
+}
+.pl-login ::ng-deep .mat-button-wrapper { display: inline-flex; align-items: center; gap: 10px; }
+.pl-spinner ::ng-deep circle { stroke: #fff !important; }
+/* a focused field is not scrolled against the keyboard */
+.pl input { scroll-margin: 24px 0 140px; }

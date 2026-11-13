@@ -1,0 +1,78 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+  <div *ngIf="FilterBy.toLowerCase() == 'item'">
+    <table class="table table-bordered" #tableToExport>
+      <thead class="thead-background">
+        <tr>
+          <th scope="col">ITEMNAME</th>
+          <th scope="col">UM</th>
+          <th scope="col">CATEGORY</th>
+          <th  class="numeric" scope="col">PRICE</th>
+          <th  class="numeric" scope="col"> QTY</th>
+          <th  class="numeric" scope="col"> AMT</th>
+          <th  class="numeric" scope="col"> AVECOST AMT</th>
+          <th  class="numeric" scope="col"> PROFIT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of Data">
+          <td>{{data.ItemName}}</td>
+          <td>{{data.UM}}</td>
+          <td>{{data.Category}}</td>
+          <td  class="numeric">{{data.Price | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.Qty | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.Amount | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.AveCostAmount | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.Profit | number:'1.2-2'}}</td>
+        </tr>
+        <tr class="footer">
+            <td class="no-border" colspan="3"></td>
+            <td  class="numeric">{{ getTotal('Price')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('Qty')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('Amount')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('AveCostAmount')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('Profit')| number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  
+  </div>
+  <div *ngIf="FilterBy.toLowerCase() == 'category'">
+    <table class="table table-bordered" #tableToExport>
+      <thead class="thead-background">
+        <tr>
+          <th scope="col">CATEGORY</th>
+          <th  class="numeric" scope="col"> QTY</th>
+          <th  class="numeric" scope="col"> AMT</th>
+          <th  class="numeric" scope="col"> AVECOST AMT</th>
+          <th  class="numeric" scope="col"> PROFIT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of Data">
+          <td>{{data.Category}}</td>
+          <td  class="numeric">{{data.Qty | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.Amount | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.AveCostAmount | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.Profit | number:'1.2-2'}}</td>
+        </tr>
+        <tr class="footer">
+            <td class="no-border"></td>
+            <td  class="numeric">{{getTotal('Qty')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{getTotal('Amount')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{getTotal('AveCostAmount')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{getTotal('Profit')| number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  
+  </div>
+   

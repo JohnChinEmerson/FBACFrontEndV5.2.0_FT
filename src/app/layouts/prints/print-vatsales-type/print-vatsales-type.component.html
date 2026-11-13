@@ -1,0 +1,58 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+</div>
+<div class="p text-center">
+    <app-aprint-header></app-aprint-header>
+</div>
+<div class="title">
+    {{Title}}
+</div>
+<div class="mb-5">
+    <table class="w-100 table table-bordered">
+      <thead class="thead-background">  
+        <tr>
+          <th scope="col">TERMINAL</th>
+          <th scope="col">SERIAL NO</th>
+          <th scope="col">MIN NO</th>
+          <th scope="col">PTU</th>
+        </tr>
+      </thead>
+      <tbody>
+          <td >{{machinePermit.ComputerName }}</td>
+          <td >{{machinePermit.SerialNo }}</td>
+          <td >{{machinePermit.MachineNo }}</td>
+          <td >{{machinePermit.PermitNo }}</td>
+      </tbody>  
+    </table>
+
+    <table class="w-100 table table-bordered">
+      <thead class="thead-background">  
+        <tr>
+          <th scope="col">DATE</th>
+          <th scope="col">SINO</th>
+          <th scope="col">TRANSNO</th>
+          <th scope="col">CUSTOMER</th>
+          <th scope="col">ADDRESS</th>
+          <th scope="col">TIN</th>
+          <th scope="col">TOTAL AMOUNT</th>
+          <th scope="col">VAT SALES</th>
+          <th scope="col">VAT EXEMPT</th>
+          <th scope="col">ZERO RATED</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let x of Data">
+              <td >{{x.TransDate | date:'MM/dd/yyyy' }}</td>
+              <td >{{x.SINo }}</td>
+              <td >{{x.TransNo }}</td>
+              <td >{{x.CustomerName }}</td>
+              <td >{{x.Address }}</td>
+              <td >{{x.CustomerTIN }}</td>
+              <td >{{x.TotalAmount | number:'1.2-2' }}</td>
+              <td >{{x.VATSales | number:'1.2-2' }}</td>
+              <td >{{x.VATExemptSales | number:'1.2-2' }}</td>
+              <td >{{x.ZeroRatedSales | number:'1.2-2' }}</td>
+          </tr>
+      </tbody>  
+    </table>
+    

@@ -1,0 +1,52 @@
+.content{
+    margin-top: 2%;
+    width: 100%;
+    position: fixed;
+}
+h1{
+    margin: 0 0 10px !important;
+}
+h3{
+    color: #888888;
+}
+mat-card{
+    width:  800px;
+    margin: auto;
+}
+mat-form-field {
+    width: 100%;
+    line-height: -10%;
+}
+
+.dm-footer {
+    display: flex; 
+    justify-content: space-between;
+    gap: 2%;
+    width: 100%;
+    align-items: center;
+}
+
+.dm-footer p {
+    margin: 0;
+    padding: 0; 
+}
+.dm-message {
+    text-align: justify;
+}
+
+.dm-message .p-indent {
+    text-indent: 5em; 
+    margin: 0;
+}
+
+.name{
+    line-height: 0.5;
+}
+.landing-background{
+    position: fixed;
+    top: -5%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width:60%;
+  }
+  

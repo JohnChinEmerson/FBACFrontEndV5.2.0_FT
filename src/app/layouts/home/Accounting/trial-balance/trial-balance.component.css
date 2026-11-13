@@ -1,0 +1,31 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.mat-column-Debit { flex: 0 0 25%; text-align: right; }
+.mat-column-Credit { flex: 0 0 25%; text-align: right; }
+.mat-column-AccountTitle { flex: 0 0 50%; text-align: left; }
+
+::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+}
+.mat-table .mat-cell, 
+.mat-table .mat-header-cell {
+    max-width: 100% !important;
+}
+.auto-adjust-cell {
+  white-space: normal !important;  
+  word-wrap: break-word !important;             
+  line-height: 1.4em !important;               
+  padding: 4px 8px !important;                  
+}
+.mat-row, .mat-cell {
+  height: auto !important;         
+}

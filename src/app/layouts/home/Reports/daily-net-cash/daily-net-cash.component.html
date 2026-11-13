@@ -1,0 +1,83 @@
+<section class="content">
+    <div class="search-div">
+            <ng-select 
+                [items]="months" 
+                [virtualScroll]="true" 
+                bindLabel="Label"
+                bindValue="Value"
+                appendTo="body" 
+                [(ngModel)]="month" 
+                [searchable]="true" 
+                [clearable] = "false" 
+                placeholder="Month"
+                class="w-10"
+                >
+            </ng-select>
+            <ng-select 
+                [items]="years" 
+                [virtualScroll]="true" 
+                appendTo="body" 
+                [(ngModel)]="year" 
+                [searchable]="true" 
+                [clearable] = "false" 
+                placeholder="Year"
+                class="w-10"
+                >
+            </ng-select>
+            <ng-select 
+                    [items]="branches" 
+                    [virtualScroll]="true" 
+                    appendTo="body" 
+                    bindLabel="BranchName"
+                    bindValue="BranchId"
+                    [(ngModel)]="branchId" 
+                    [searchable]="true" 
+                    [clearable] = "false" 
+                    placeholder="Branch"
+                    class="w-10"
+                    >
+            </ng-select>
+            <button mat-raised-button color="primary" *ngFor="let tB of toolButtons" [disabled]="!tB.Disabled" (click)="tB.Function()" >{{tB.Label}}</button> 
+    </div>
+    <div class="mat-elevation-z2 table-cont">
+        <div class="summary-bar">
+            <div class="grand-total"></div>
+            <div class="cashin">CASHIN</div>
+            <div class="cashout">CASHOUT</div>
+            <div class="net">NET</div>
+        </div>
+        
+        <div class="mat-elevation-z2">
+            <mat-table [dataSource]="listData" matSort >
+                <ng-container *ngFor="let dc of dateColumn" [matColumnDef]="dc">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{dc}}</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element[dc] | date:'MM/dd/yyyy'}}</mat-cell>
+                    <mat-footer-cell *matFooterCellDef class="footer"></mat-footer-cell>
+                </ng-container>
+                <ng-container *ngFor="let dc of numberColumns1" [matColumnDef]="dc.Data">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{dc.Label}}</mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="mat-column-number"> {{element[dc.Data] ?? 0 | number:'1.2-2'}} </mat-cell>
+                    <mat-footer-cell *matFooterCellDef class="footer"> {{getTotal(dc.Data) | number:'1.2-2'}} </mat-footer-cell>
+                </ng-container>
+                
+                <ng-container matColumnDef="loading">
+                    <mat-footer-cell *matFooterCellDef colspan="6">
+                        <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+                    </mat-footer-cell>
+                </ng-container>
+                <ng-container matColumnDef="noData">
+                    <mat-footer-cell *matFooterCellDef colspan="6">
+                        No data.
+                    </mat-footer-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="mergeColumns1; sticky:true"></mat-header-row>
+                <mat-row  *matRowDef="let row; columns: mergeColumns1;"></mat-row>
+                <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+                <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
+                <mat-footer-row [ngClass]="{'hide':(listData!=null && listData.data.length==0)}" *matFooterRowDef="mergeColumns1;"></mat-footer-row>
+            </mat-table>
+
+          <mat-paginator class="mat-paginator-sticky" [pageSize]="31" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons> </mat-paginator>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,74 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>Selected UserAccountUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="UserForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <div class="row">
+            <mat-form-field class="" appearance="standard">
+                <mat-label>Username</mat-label>
+                <input matInput placeholder="Input Username" autocomplete="off" required formControlName="Username">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="" appearance="standard">
+                <mat-label>UserFullName</mat-label>
+                <input matInput placeholder="Input UserFullName" autocomplete="off" required formControlName="UserFullName">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <ng-select  
+                        [items]="AccessRights" 
+                        [virtualScroll]="true" 
+                        appendTo="body" 
+                        formControlName="AccessRightId" 
+                        bindLabel="AccessRightName" 
+                        bindValue="id" 
+                        [searchable]="true" 
+                        [clearable] = "false" 
+                        placeholder="AccessRight" 
+                        (change)="onChangeAccessRight($event.id)"
+                        required
+                        >
+                </ng-select>
+            </div>
+            <div class="col-6">
+                <ng-select  
+                [items]="Editions" 
+                [virtualScroll]="true" 
+                appendTo="body" 
+                formControlName="Edition" 
+                bindLabel="Edition" 
+                bindValue="Edition" 
+                [searchable]="true" 
+                [clearable] = "false" 
+                placeholder="Edition" 
+                required
+                >
+        </ng-select>
+            </div>
+        </div>
+  
+        <div class="row">
+            <ng-select  
+            [items]="MachinePermits" 
+            [virtualScroll]="true" 
+            appendTo="body" 
+            formControlName="MachinePermitId" 
+            bindLabel="MachineDetails" 
+            bindValue="id" 
+            [searchable]="true" 
+            [clearable] = "false" 
+            placeholder="MachinePermit" 
+            (change)="onChangeMachinePermit($event.id)"
+            required
+            >
+        </ng-select>
+        </div>
+        </div>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+      <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="UserForm.invalid || loading == true">{{btnText}}</button>
+    </div>
+  </form>

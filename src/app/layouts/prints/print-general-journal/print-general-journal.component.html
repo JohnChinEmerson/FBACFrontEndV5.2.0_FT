@@ -1,0 +1,42 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+
+  <div >
+    <table class="table table-bordered" #tableToExport>
+        <thead class="thead-background">
+          <tr>
+            <th scope="col">TRANSDATE</th>
+            <th scope="col">REFERENCE NO</th>
+            <th scope="col">DESCRIPTION</th>
+            <th scope="col">ACCOUNT TITLE</th>
+            <th  class="numeric" scope="col">DEBIT</th>
+            <th  class="numeric" scope="col">CREDIT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of Data">
+            <td>{{data.TransDate | date:'MM/dd/yyyy'}}</td>
+            <td>{{data.ReferenceNo}}</td>
+            <td>{{data.Description}}</td>
+            <td>{{data.AccountTitle}}</td>
+            <td  class="numeric">{{data.Debit | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.Credit | number:'1.2-2'}}</td>
+          </tr>
+          <tr class="footer">
+              <td class="no-border" colspan="4"></td>
+              <td  class="numeric">{{ getTotal('Debit')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('Credit')| number:'1.2-2'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  
+  </div>
+   

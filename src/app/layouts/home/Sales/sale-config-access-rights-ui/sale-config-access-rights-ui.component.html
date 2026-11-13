@@ -1,0 +1,81 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+<mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>SaleConfigAccessRightsUI</h2>
+<mat-divider></mat-divider>
+
+<div class="access-right-select">
+    <ng-select
+        [items]="accessRights"
+        bindLabel="AccessRightName"
+        bindValue="AccessRightName"
+        [virtualScroll]="true"
+        appendTo="body"
+        [searchable]="true"
+        [clearable]="false"
+        placeholder="Access Right Name"
+        [(ngModel)]="accessRightName"
+        (change)="getSaleConfigAccessRight()"
+        required>
+    </ng-select>
+</div>
+
+<form [formGroup]="saleConfigAccessRightForm" (ngSubmit)="onSubmit()">
+<div mat-dialog-content>
+    <div class="fields-container pt-3 ms-5">
+        <div class="field-row">
+            <label>
+                <mat-checkbox [checked]="saleConfigAccessRights.DisableTransDate == 'yes'" (change)="onCheck('DisableTransDate', $event.checked, saleConfigAccessRights.DisableTransDate, 'Boolean')">Disable TransDate:</mat-checkbox>
+            </label>
+            <input class="DisableTransDate" matInput placeholder="Input DisableTransDate" autocomplete="off" formControlName="DisableTransDate">
+        </div>
+        <div class="field-row">
+            <label>
+                <mat-checkbox [checked]="saleConfigAccessRights.DisableItemDiscount == 'yes'" (change)="onCheck('DisableItemDiscount', $event.checked, saleConfigAccessRights.DisableItemDiscount, 'Boolean')">Disable ItemDiscount:</mat-checkbox>
+            </label>
+            <input class="DisableItemDiscount" matInput placeholder="Input DisableItemDiscount" autocomplete="off" formControlName="DisableItemDiscount">
+        </div>
+        <div class="field-row">
+            <label>
+                <mat-checkbox [checked]="saleConfigAccessRights.DisableReceiptDiscount == 'yes'" (change)="onCheck('DisableReceiptDiscount', $event.checked, saleConfigAccessRights.DisableReceiptDiscount, 'Boolean')">Disable ReceiptDiscount:</mat-checkbox>
+            </label>
+            <input class="DisableReceiptDiscount" matInput placeholder="Input DisableReceiptDiscount" autocomplete="off" formControlName="DisableReceiptDiscount">
+        
+        </div>
+        <div class="field-row">
+            <label>
+                <mat-checkbox [checked]="saleConfigAccessRights.DisableOtherPrice == 'yes'" (change)="onCheck('DisableOtherPrice', $event.checked, saleConfigAccessRights.DisableOtherPrice, 'Boolean')">Disable OtherPrice:</mat-checkbox>
+            </label>
+            <input class="DisableOtherPrice" matInput placeholder="Input DisableOtherPrice" autocomplete="off" formControlName="DisableOtherPrice">
+        </div>
+        <div class="field-row">
+            <label>
+                <mat-checkbox [checked]="saleConfigAccessRights.EditPrice == 'yes'" (change)="onCheck('EditPrice', $event.checked, saleConfigAccessRights.EditPrice, 'Boolean')">Enable ItemPrice:</mat-checkbox>
+            </label>
+            <input class="EditPrice" matInput placeholder="Input EditPrice" autocomplete="off" formControlName="EditPrice">
+        </div>
+        <div class="field-row">
+            <label>
+                <mat-checkbox [checked]="saleConfigAccessRights.HideDrawerSales == 'yes'" (change)="onCheck('HideDrawerSales', $event.checked, saleConfigAccessRights.HideDrawerSales, 'Boolean')">Hide DrawerSales:</mat-checkbox>
+            </label>
+            <input class="HideDrawerSales" matInput placeholder="Input HideDrawerSales" autocomplete="off" formControlName="HideDrawerSales">
+        </div>
+        <div class="field-row">
+            <label>
+                <mat-checkbox [checked]="saleConfigAccessRights.HideTotalCashCount == 'yes'" (change)="onCheck('HideTotalCashCount', $event.checked, saleConfigAccessRights.HideTotalCashCount, 'Boolean')">Hide TotalCashCount:</mat-checkbox>
+            </label>
+            <input class="HideTotalCashCount" matInput placeholder="Input HideTotalCashCount" autocomplete="off" formControlName="HideTotalCashCount">
+        </div>
+        <div class="field-row">
+            <label>
+                <mat-checkbox [checked]="saleConfigAccessRights.PasswordEditRemovePending != null" (change)="onCheck('PasswordEditRemovePending', $event.checked, saleConfigAccessRights.PasswordEditRemovePending, 'String')">Password EditRemovePending:</mat-checkbox>
+            </label>
+            <input class="PasswordEditRemovePending" matInput placeholder="Input PasswordEditRemovePending" autocomplete="off" type="password" formControlName="PasswordEditRemovePending">
+        </div>
+    </div>
+</div>
+
+<div mat-dialog-actions [align]="'end'" class="mb-3">
+    <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="saleConfigAccessRightForm.invalid || loading == true">{{btnText}}</button>
+</div>
+</form>

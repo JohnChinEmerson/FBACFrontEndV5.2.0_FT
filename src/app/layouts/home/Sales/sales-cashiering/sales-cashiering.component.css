@@ -1,0 +1,47 @@
+
+.search-div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .search-field {
+    width: 250px; /* Set to desired width */
+    min-width: 200px;
+  }
+  
+.content{
+    width: 100%;
+    margin-top: 5px;
+    position: fixed;
+}
+mat-card{
+    width:  1500px;
+    min-height:  625px;
+    max-height:  625px;
+    margin: auto;
+}
+mat-form-field {
+    width: 100%;
+    line-height: -10%;
+}
+.table-cont-pop-up{
+    min-height: 440px;
+    max-height: 440px;
+    overflow: auto;
+}
+.mat-column-ItemName {
+    flex: 0 0 30%;
+}
+
+.auto-adjust-cell {
+  white-space: normal !important;  
+  word-wrap: break-word !important;             
+  line-height: 1.4em !important;               
+  padding: 4px 8px !important;                  
+}
+
+.mat-row, .mat-cell {
+  height: auto !important;         
+}

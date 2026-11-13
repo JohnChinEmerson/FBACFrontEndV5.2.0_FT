@@ -1,0 +1,53 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+</div>
+<div class="p text-center">
+    <app-aprint-header></app-aprint-header>
+</div>
+<div class="title">
+    {{Title}}
+</div>
+<div class="filters" *ngIf="filters">{{filters}}</div>
+
+<table class="table table-bordered" #tableToExport>
+    <thead class="thead-background">
+        <tr>
+            <th scope="col">Order Time</th>
+            <th scope="col">Table</th>
+            <th scope="col">Item Name</th>
+            <th scope="col">Qty</th>
+            <th scope="col">UM</th>
+            <th scope="col">Area</th>
+            <th scope="col">Status</th>
+            <th scope="col">Status Time</th>
+            <th scope="col">By</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of history">
+            <td>{{data.SentDateTime | date:'MM/dd/yyyy h:mm a'}}</td>
+            <td>{{data.TableName}}</td>
+            <td>{{data.ItemName}}</td>
+            <td class="numeric">{{data.Qty | number:'1.0-2'}}</td>
+            <td>{{data.UM}}</td>
+            <td>{{data.Area}}</td>
+            <td>{{data.Status}}</td>
+            <td>{{data.StatusTime | date:'h:mm a'}}</td>
+            <td>{{data.StatusBy}}</td>
+        </tr>
+        <tr class="footer">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="numeric">{{getTotal('Qty') | number:'1.0-2'}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<app-aprint-footer [totalRecords]="history.length"></app-aprint-footer>
+<div class="printed">Printed by: {{printedBy}} &middot; {{printedAt | date:'MM/dd/yyyy h:mm a'}}</div>

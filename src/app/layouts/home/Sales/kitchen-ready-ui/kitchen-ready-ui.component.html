@@ -1,0 +1,44 @@
+<button mat-icon-button class="close-button" aria-label="Close" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>Ready to Serve</h2>
+<mat-divider></mat-divider>
+<div mat-dialog-content class="kr">
+    <!-- the tables (default) -->
+    <ng-container *ngIf="!selectedCard">
+        <div class="kr-summary" *ngIf="cards.length > 0">{{cards.length}} table(s) &middot; {{totalItems}} item(s) waiting</div>
+        <div class="kr-list">
+            <button type="button" class="kr-table" *ngFor="let card of cards; trackBy: trackByKey" (click)="viewDetails(card)">
+                <span class="kr-icon"><mat-icon>table_restaurant</mat-icon></span>
+                <span class="kr-info">
+                    <span class="kr-name">{{card.TableName}}</span>
+                    <span class="kr-sub">{{card.OrderType}} &middot; ready {{minutesWaiting(card)}} min</span>
+                </span>
+                <span class="kr-count">{{card.ItemCount}} item(s)</span>
+                <span class="kr-view">View details<mat-icon>chevron_right</mat-icon></span>
+            </button>
+        </div>
+        <div class="kr-empty" *ngIf="cards.length == 0">
+            <mat-icon>check_circle</mat-icon>
+            <span>No items ready to serve.</span>
+        </div>
+    </ng-container>
+
+    <!-- one table: its items with Served / Serve All -->
+    <ng-container *ngIf="selectedCard">
+        <button type="button" class="kr-back" (click)="backToTables()"><mat-icon>arrow_back</mat-icon>All tables</button>
+        <app-kitchen-order-cards class="kr-details"
+            [cards]="[selectedCard]"
+            view="ready"
+            [canServe]="true"
+            [expandAll]="true"
+            [isSaving]="isSaving"
+            [now]="now"
+            (statusChange)="onStatus($event)">
+        </app-kitchen-order-cards>
+    </ng-container>
+</div>
+<div mat-dialog-actions class="kr-actions">
+    <button mat-stroked-button color="primary" class="kr-btn" *ngIf="selectedCard" (click)="backToTables()">Back</button>
+    <button mat-raised-button color="primary" class="kr-btn" cdkFocusInitial (click)="onClose()">Close</button>
+</div>

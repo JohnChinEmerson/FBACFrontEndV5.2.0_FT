@@ -1,0 +1,63 @@
+<h1 mat-dialog-title>{{btnSave}} Client</h1>
+<mat-divider></mat-divider>
+<form [formGroup]="clientLicenseUIFrom" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <mat-form-field class="" appearance="standard">
+            <mat-label>ClientName</mat-label> 
+            <input matInput placeholder="Input ClientName" formControlName="ClientName" autocomplete="off" required>
+            <mat-error>Must not be empty.</mat-error>
+        </mat-form-field>
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>Address</mat-label> 
+                    <input matInput placeholder="Input Address" formControlName="Address" autocomplete="off" required>
+                    <mat-error>Must not be empty.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>ContactNo</mat-label> 
+                    <input matInput placeholder="Input ContactNo" formControlName="ContactNo" autocomplete="off" required>
+                    <mat-error>Must not be empty.</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <ng-select 
+                [items]="products" 
+                [virtualScroll]="true"
+                appendTo="body"
+                bindLabel="ProductName" 
+                bindValue="id" 
+                [searchable]="true" 
+                formControlName = "ProductId"
+                (change) = "onChangeProduct($event)"
+                [clearable] = "false"
+                placeholder = "ProductName"
+                >
+            </ng-select>
+        </div>
+       
+        <mat-form-field class="" appearance="standard">
+            <mat-label>Host</mat-label> 
+            <input matInput placeholder="Input Host" formControlName="Host" autocomplete="off" required readonly>
+        </mat-form-field>
+        <div class="row">
+                <ng-select 
+                [items]="licensePlans" 
+                formControlName="LicensePlan"
+                [searchable]="true"    
+                [clearable] = "false" 
+                appendTo="body"
+                placeholder="LicensePlan"
+                required
+                >
+            </ng-select>
+        </div>
+      </div>
+      
+      <div mat-dialog-actions [align]="'end'">
+          <button type="submit" style="margin-right: 2px;" mat-raised-button color="primary" [disabled]="clientLicenseUIFrom.invalid || loading == true">{{btnSave}}</button>
+      </div>
+    </form>

@@ -1,0 +1,198 @@
+
+<div class="main-transaction-container g-5">
+  <div class="mat-elevation-z4 left-panel">
+    <div class="sticky-top-toolbar">
+      <div class="row g-2 ms-2 me-2">
+        <div class="col-12 col-md-9 align-elements">
+          <mat-checkbox  [(ngModel)]="withDate"> </mat-checkbox> <span></span>
+          <mat-form-field appearance="standard">
+              <mat-label>Date From</mat-label>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="dateFrom"  autocomplete="off" required [disabled]="!withDate"> 
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+              <mat-label>Date To</mat-label>
+              <input matInput [matDatepicker]="picker2" [(ngModel)]="dateTo"  autocomplete="off"  required [disabled]="!withDate">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3 ">
+          <button mat-raised-button color="default" class="mt-3 w-100" *ngFor="let tB of toggleButtons2"
+                  [title]="tB.Label"
+                  [disabled]="!tB.Disabled"
+                  (click)="tB.Function()">
+            <mat-label>{{tB.Label}}</mat-label>
+          </button>
+        </div>
+      </div>
+      <div class="row g-2 ms-2 me-2">
+        <div class="col-12 col-md-12">
+          <mat-form-field class="w-100" appearance="standard" floatLabel="never">
+            <input #searchInput matInput [(ngModel)]="searchKey1" placeholder="Search" (keyup)="applyFilter()" (keyup.enter)="applyFilter2()" (keyup.arrowdown)="getFirstRecord()" autocomplete="off">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div #tableContainer class="itemListTransaction" appTouchContextMenu (contextmenu)="onContextMenu($event, null, 'sHeaders')">
+        <mat-table #dataTable [dataSource]="listData1" matSort   tabindex="0" (keydown)="onKeyDown($event)" (keyup.enter)="saveToDeliveryHeaders()">
+          <ng-container *ngFor="let dc of defaultColumns">
+          <ng-container [matColumnDef]="dc">
+            <mat-header-cell *matHeaderCellDef sticky>{{ dc }}</mat-header-cell>
+            <mat-cell *matCellDef="let element"
+                      class="auto-adjust-cell"
+                      [ngClass]="element | rowClasses:dc:columnTypeMap[dc]"
+                      [title]="element[dc]">
+              <span>{{ element | rowDisplay:dc:columnTypeMap[dc] }}</span>
+            </mat-cell>
+          </ng-container>
+        </ng-container>
+            <ng-container matColumnDef="loading">
+                <mat-footer-cell *matFooterCellDef colspan="6">
+                    <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+                </mat-footer-cell>
+            </ng-container>
+            <ng-container matColumnDef="noData">
+                <mat-footer-cell *matFooterCellDef colspan="6">
+                    No data.
+                </mat-footer-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="defaultColumns; sticky:true"></mat-header-row>
+            <mat-row   #rowElement (click)="getRecord1(row)" (dblclick)="saveToDeliveryHeaders()" *matRowDef="let row; columns: defaultColumns;" [ngClass]="{'data-selected': receiptNo == row.TransNo ||  row === selectedRowIndex}" ></mat-row>
+            <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading1}"></mat-footer-row>
+            <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData1!=null && listData1.data.length==0)}"></mat-footer-row>
+        </mat-table>
+    </div>
+  </div>
+
+  <div class="mat-elevation-z4 right-panel">
+    <div class="sticky-top-toolbar2 ">
+      <div class="row g-2 ms-2 me-2 mt-3 mb-4">
+        <div class="subtitle-row">
+          <h2 class="m-0 me-2 totalAmount">
+            TOTAL AMOUNT: {{ totalAmount | number: '1.2-2' }}
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div class="itemListTransaction2"  appTouchContextMenu (contextmenu)="onContextMenu($event, null, 'deliverydetails')"> 
+        <mat-table [dataSource]="listData2" matSort>
+          <ng-container *ngFor="let dc of defaultColumns2">
+            <ng-container [matColumnDef]="dc">
+              <mat-header-cell *matHeaderCellDef sticky>{{ dc }}</mat-header-cell>
+              <mat-cell *matCellDef="let element"
+                        class="auto-adjust-cell"
+                        [ngClass]="element | rowClasses:dc:columnTypeMap2[dc]"
+                        [title]="element[dc]">
+                <ng-container [ngSwitch]="dc">
+                  <span *ngSwitchCase="'Qty'">
+                      <input matInput placeholder="Input Qty"  class="clickable inputtable" title="Input Qty " type="text" step="0.01"  (keyup.enter)="updateElementDeliveryDetail($event,element.id, 'Qty' )"   [value]="element.Qty | number:'1.2-2'" autocomplete="false">
+                  </span>
+                  <span *ngSwitchDefault>
+                    {{ element | rowDisplay:dc:columnTypeMap2[dc] }}
+                  </span>
+                </ng-container>
+              </mat-cell>
+            </ng-container>
+          </ng-container>
+            <!-- <ng-container matColumnDef="Qty" >
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="numeric">Qty</mat-header-cell>
+                <mat-cell *matCellDef="let element"  >
+                    <input matInput placeholder="Input Qty"  class="clickable inputtable" title="Input Qty " type="text" step="0.01"  (keyup.enter)="updateElementDeliveryDetail($event,element.id, 'Qty' )"   [value]="element.Qty | number:'1.2-2'" autocomplete="false">
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="UM">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>UM</mat-header-cell>
+                <mat-cell *matCellDef="let element" >{{element.UM}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="ItemName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>ItemName</mat-header-cell>
+                <mat-cell *matCellDef="let element" class="auto-adjust-cell" [title]="element.ItemName">{{element.ItemName}}</mat-cell> 
+            </ng-container>
+            <ng-container matColumnDef="Price">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+                <mat-cell *matCellDef="let element" class="numeric">{{element.Price |  number:'1.2-2'}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Discount">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Disc.</mat-header-cell>
+                <mat-cell *matCellDef="let element" class="numeric">{{element.Discount |  number:'1.2-2'}}</mat-cell>
+            </ng-container>
+           <ng-container matColumnDef="Amount" >
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Amount</mat-header-cell>
+                <mat-cell *matCellDef="let element" class="numeric">{{element.Amount | number:'1.2-2'}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="QtyDelivered" >
+                <mat-header-cell *matHeaderCellDef mat-sort-header>QtyDelivered</mat-header-cell>
+                <mat-cell *matCellDef="let element" class="numeric">{{element.QtyDelivered | number:'1.2-2'}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="TobeDelivered" >
+                <mat-header-cell *matHeaderCellDef mat-sort-header>TobeDelivered</mat-header-cell>
+                <mat-cell *matCellDef="let element" class="numeric">{{element.TobeDelivered | number:'1.2-2'}}</mat-cell>
+            </ng-container> -->
+            <ng-container matColumnDef="loading">
+                <mat-footer-cell *matFooterCellDef colspan="6">
+                    <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+                </mat-footer-cell>
+            </ng-container>
+            <ng-container matColumnDef="noData">
+                <mat-footer-cell *matFooterCellDef colspan="6">
+                    No data.
+                </mat-footer-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="defaultColumns2; sticky:true"></mat-header-row>
+            <mat-row  (click)="getRecord2(row)"  *matRowDef="let row; columns: defaultColumns2;" [ngClass]="{'data-selected': selectedId == row.id}"></mat-row>
+            <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading2}"></mat-footer-row>
+            <mat-footer-row *matFooterRowDef="['noData']"[ngClass]="{'hide':!(listData2!=null && listData2.data.length==0)}"></mat-footer-row>
+        </mat-table>
+    </div>
+  </div>
+</div>
+
+<div class="fixed-bottom-button-group">
+  <div class="row g-2">
+    <div class="col-12 col-md-4 mat-elevation-z2 left-panel">
+      <mat-button-toggle-group style="width:100%;" >
+        <mat-button-toggle style="width:100%"  >
+            TOTAL COUNT : {{sHeaders.length | number: '1.2-2'}}
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div class="col-12 col-md-8 mat-elevation-z2 right-panel">
+      <div class="save-button">
+        <mat-button-toggle-group style="width:100%;" color="primary">
+          <mat-button-toggle style="width:20%"  [disabled]="true" >
+            TOTAL QTY - {{ getTotal('Qty') | number:'1.2-2' }}
+          </mat-button-toggle>
+          <mat-button-toggle style="width:100%" *ngFor="let tB of toggleButtons"
+            [title]="tB.Label" [disabled]="!tB.Disabled" (click)="tB.Function()">
+            {{tB.Label}}
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div style="visibility: hidden; position: fixed"
+    [style.left]="contextMenuPosition.x"
+    [style.top]="contextMenuPosition.y"
+    [matMenuTriggerFor]="contextMenu">
+</div>
+<mat-menu #contextMenu="matMenu">
+	<ng-template matMenuContent let-data="data">
+     <ng-container *ngIf="rightClickType === 'deliverydetails'; else itemsRightClick">
+            <button mat-menu-item *ngFor="let cB of contextButtons2" [disabled]="!cB.Disabled" (click)="cB.Function()">
+                <mat-icon>read_more</mat-icon> {{ cB.Label }}
+            </button>
+        </ng-container> 
+        <ng-template #itemsRightClick>
+            <button mat-menu-item *ngFor="let cB of contextButtons1" [disabled]="!cB.Disabled" (click)="cB.Function()">
+                <mat-icon>read_more</mat-icon> {{ cB.Label }}
+            </button>
+        </ng-template>
+
+	</ng-template>
+</mat-menu>

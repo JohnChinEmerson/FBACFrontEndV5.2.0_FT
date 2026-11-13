@@ -1,0 +1,128 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>CustomerUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <div class="row">
+            <mat-form-field class="" appearance="standard">
+                <mat-label>CustomerName</mat-label>
+                <input matInput placeholder="Input CustomerName" autocomplete="off" required formControlName="CustomerName">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="w-100"  appearance="standard">
+                <mat-label>ContactNo</mat-label>
+                <input matInput placeholder="Input ContactNo" autocomplete="off" required formControlName="ContactNo">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="w-100"  appearance="standard">
+                <mat-label>Address</mat-label>
+                <input matInput placeholder="Input Address" autocomplete="off" required formControlName="Address">
+            </mat-form-field>
+        </div>
+        
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>CustomerTIN</mat-label>
+                    <input matInput placeholder="Input CustomerTIN" autocomplete="off" required formControlName="CustomerTIN">
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>TermDays</mat-label>
+                    <input matInput placeholder="Input TermDays" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="TermDays">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 align-elements">
+                <ng-select  
+                    [items]="priceCategorys" 
+                    [virtualScroll]="true" 
+                    appendTo="body" 
+                    formControlName="PriceCategory" 
+                    bindLabel="PriceCategory" 
+                    bindValue="PriceCategory"  
+                    [searchable]="true" 
+                    [clearable] = "false" 
+                    placeholder="PriceCategory" 
+                    required>
+                </ng-select>
+            </div>
+            <div class="col-6">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>CreditLimit</mat-label>
+                    <input matInput placeholder="Input CreditLimit" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true"  autocomplete="off" required formControlName="CreditLimit" >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+           <div class="col-3">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>DiscountPerson</mat-label>
+                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="DiscountPerson" (selectionChange)="onChangeDiscountPerson($event.value)">
+                        <mat-option  *ngFor="let dP of discountPersons" [value]="dP.DiscountPerson"> {{dP.DiscountPerson}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+           </div> 
+           <div class="col-3">
+            <mat-form-field class="" appearance="standard">
+                <mat-label>DiscountPercent</mat-label>
+                <input matInput placeholder="Input DiscountPercent" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true"  autocomplete="off" required formControlName="DiscountPercent" [readonly]="readonlyDiscountPercent">
+            </mat-form-field>
+           </div> 
+           <div class="col-6">
+            <mat-form-field class="" appearance="standard">
+                <mat-label>DiscountId</mat-label>
+                <input matInput placeholder="Input DiscountId"  autocomplete="off" required formControlName="DiscountId">
+            </mat-form-field>
+           </div> 
+        </div>
+        <div class="row">
+            <div class="col align-elements">
+                <ng-select  
+                    class="w-15" 
+                    [items]="businessStyles" 
+                    [virtualScroll]="true" 
+                    appendTo="body" 
+                    formControlName="BusinessStyle" 
+                    bindLabel="BusinessStyle" 
+                    bindValue="BusinessStyle"  
+                    [searchable]="true" 
+                    [clearable] = "false" 
+                    placeholder="BusinessStyle" 
+                    required>
+                </ng-select>
+                <button type="button"  (click)="onClickBusinessStyle()"mat-icon-button color="primary"> <mat-icon>list</mat-icon></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>HasRebate</mat-label>
+                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="HasRebate" (selectionChange)="onChangeHasRebate($event.value)">
+                        <mat-option value="no">
+                            No
+                        </mat-option>
+                        <mat-option value="yes">
+                            Yes
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>BeginningRebate</mat-label>
+                    <input matInput placeholder="Input BeginningRebate" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true"  autocomplete="off" required formControlName="BeginningRebate" >
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+        <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="customerForm.invalid || loading == true">{{btnText}}</button>
+    </div>
+  </form>

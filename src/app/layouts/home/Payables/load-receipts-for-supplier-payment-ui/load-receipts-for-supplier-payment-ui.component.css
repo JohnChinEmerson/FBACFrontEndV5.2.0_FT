@@ -1,0 +1,28 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.mat-column-SourceName{
+    flex: 0 0 30%;
+}
+
+.mat-column-SourceTransNo,.mat-column-TransDate, .mat-column-DueDate,.mat-column-TotalDue,.mat-column-AmountPaid,.mat-column-Balance,.mat-column-SourceId{
+    flex: 0 0 10%;
+}

@@ -1,0 +1,48 @@
+<button mat-icon-button class="close-button"  (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>ChangeUI</h2>
+<mat-divider></mat-divider>
+    <div class="mat-elevation-z2 table-cont-pop-up">
+      <div class="d-flex align-items-center justify-content-between w-100">
+        <div class="col-6 text-right">
+            <mat-form-field class="w-100 compact-field2" floatLabel="never" appearance="standard">
+              <input matInput value="TOTAL DUE :" autocomplete="false" readonly="true">
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+            <mat-form-field class="w-100 compact-field" floatLabel="never" appearance="standard">
+                <input matInput [(ngModel)]="totalDue" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="false" readonly="true">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-between w-100">
+        <div class="col-6 text-right">
+            <mat-form-field class="w-100 compact-field2" floatLabel="never" appearance="standard">
+              <input matInput value="TENDERED :" autocomplete="false" readonly="true">
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+            <mat-form-field class="w-100 compact-field" floatLabel="never" appearance="standard">
+                <input matInput [(ngModel)]="tendered" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="false" [readonly]="readonly" (keyup)="onChangeTenderedAmount()" (keyup.enter)="onCloseSubmit()">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-between w-100">
+        <div class="col-6 text-right">
+            <mat-form-field class="w-100 compact-field2" floatLabel="never" appearance="standard">
+              <input matInput value="CHANGE :" autocomplete="false" readonly="true">
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+            <mat-form-field class="w-100 compact-field" floatLabel="never" appearance="standard">
+                <input matInput [(ngModel)]="change" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="false"  readonly="true">
+            </mat-form-field>
+        </div>
+    </div>
+    
+      <div class="row ">
+          <button mat-raised-button  (click)="onCloseSubmit()" color="primary" class="col-12 col-md-12 ok-button" > OK </button>
+      </div>
+    </div>
+

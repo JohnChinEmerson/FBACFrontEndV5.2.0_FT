@@ -1,0 +1,28 @@
+<div class="signature-container">
+    <div class="signature-column">
+      <div *ngFor="let f of firstColumn" class="signature-block">
+        <div class="signature-header">
+          <p class="signature-label">{{f.SignLabel}}</p>
+          <p class="signature-name">{{ f.SignName || ' ' }}</p>
+        </div>
+        <div class="signature-footer">
+          <div class="signature-spacer"></div>
+          <p class="signature-position">{{f.SignPosition || ' '}}</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="signature-column">
+      <div *ngFor="let f of secondColumn" class="signature-block">
+        <div class="signature-header">
+          <p class="signature-label">{{f.SignLabel}}</p>
+          <p class="signature-name">{{ f.SignName || ' ' }}</p>
+        </div>
+        <div class="signature-footer">
+          <div class="signature-spacer"></div>
+          <p class="signature-position">{{f.SignPosition || ' '}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

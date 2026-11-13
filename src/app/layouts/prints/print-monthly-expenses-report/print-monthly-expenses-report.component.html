@@ -1,0 +1,53 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+  <div *ngIf="FilterBy.toLowerCase() == 'particular'">
+    <table class="table table-bordered" #tableToExport>
+      <thead class="thead-background">
+        <tr>
+          <th scope="col">PARTICULAR</th>
+          <th  class="numeric" scope="col"> AMT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of Data">
+          <td>{{data.ParticularName}}</td>
+          <td  class="numeric">{{data.Amount | number:'1.2-2'}}</td>
+        </tr>
+        <tr class="footer">
+            <td class="no-border" ></td>
+            <td  class="numeric">{{ getTotal('Amount')| number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  
+  </div>
+  <div *ngIf="FilterBy.toLowerCase() == 'category'">
+    <table class="table table-bordered" #tableToExport>
+      <thead class="thead-background">
+        <tr>
+          <th scope="col">CATEGORY</th>
+          <th  class="numeric" scope="col"> AMT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of Data">
+          <td>{{data.Category}}</td>
+          <td  class="numeric">{{data.Amount | number:'1.2-2'}}</td>
+        </tr>
+        <tr class="footer">
+            <td class="no-border"></td>
+            <td  class="numeric">{{getTotal('Amount')|number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  
+  </div>
+   

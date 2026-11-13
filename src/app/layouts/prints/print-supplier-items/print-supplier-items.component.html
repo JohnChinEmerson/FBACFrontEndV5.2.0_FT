@@ -1,0 +1,108 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+    <div *ngIf="filteredData.filterType?.toLowerCase() == 'summary'">
+        <table class="table table-bordered" #tableToExport>
+            <thead class="thead-background">
+                <tr>
+                <th scope="col">ITEMID</th>
+                <th scope="col">ITEMNAME</th>
+                <th  class="numeric" scope="col"> QTY</th>
+                <th  class="numeric" scope="col"> DISCOUNT</th>
+                <th  class="numeric" scope="col"> AMOUNT</th>
+                </tr>
+            </thead>
+          <tbody>
+            <tr *ngFor="let data of Data">
+              <td>{{data.ItemId }}</td>
+              <td>{{data.ItemName }}</td>
+              <td  class="numeric">{{data.Qty  | number:'1.2-2'}}</td>
+              <td  class="numeric">{{data.Discount  | number:'1.2-2'}}</td>
+              <td  class="numeric">{{data.Amount  | number:'1.2-2'}}</td>
+            </tr>
+            <tr class="footer">
+                <td class="no-border" colspan="2"></td>
+                <td  class="numeric">{{ getTotal('Qty')| number:'1.2-2'}}</td>
+                <td  class="numeric">{{ getTotal('Discount')| number:'1.2-2'}}</td>
+                <td  class="numeric">{{ getTotal('Amount')| number:'1.2-2'}}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    <div *ngIf="filteredData.filterType?.toLowerCase() == 'details' && filteredData.supplierName?.toLowerCase() == 'all'">
+        <table class="table table-bordered" #tableToExport>
+            <thead class="thead-background">
+                <tr>
+                <th scope="col">TRANSNO</th>
+                <th scope="col">TRANSDATE </th>
+                <th scope="col">SUPPLIERNAME</th>
+                <th scope="col">ITEMNAME</th>
+                <th  class="numeric" scope="col"> COST</th>
+                <th  class="numeric" scope="col"> QTY</th>
+                <th  class="numeric" scope="col"> DISCOUNT</th>
+                <th  class="numeric" scope="col"> AMOUNT</th>
+                </tr>
+            </thead>
+          <tbody>
+            <tr *ngFor="let data of Data">
+              <td>{{data.TransNo }}</td>
+              <td>{{data.TransDate | date:'MM/dd/yyyy' }}</td>
+              <td>{{data.SupplierName }}</td>
+              <td>{{data.ItemName }}</td>
+              <td  class="numeric">{{data.Cost  | number:'1.2-2'}}</td>
+              <td  class="numeric">{{data.Qty  | number:'1.2-2'}}</td>
+              <td  class="numeric">{{data.Discount  | number:'1.2-2'}}</td>
+              <td  class="numeric">{{data.Amount  | number:'1.2-2'}}</td>
+            </tr>
+            <tr class="footer">
+                <td class="no-border" colspan="4"></td>
+                <td  class="numeric">{{ getTotal('Cost')| number:'1.2-2'}}</td>
+                <td  class="numeric">{{ getTotal('Qty')| number:'1.2-2'}}</td>
+                <td  class="numeric">{{ getTotal('Discount')| number:'1.2-2'}}</td>
+                <td  class="numeric">{{ getTotal('Amount')| number:'1.2-2'}}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    <div *ngIf="filteredData.filterType?.toLowerCase() == 'details' && filteredData.supplierName?.toLowerCase() != 'all'">
+        <table class="table table-bordered" #tableToExport>
+            <thead class="thead-background">
+                <tr>
+                <th scope="col">TRANSNO</th>
+                <th scope="col">TRANSDATE </th>
+                <th scope="col">ITEMNAME</th>
+                <th  class="numeric" scope="col"> COST</th>
+                <th  class="numeric" scope="col"> QTY</th>
+                <th  class="numeric" scope="col"> DISCOUNT</th>
+                <th  class="numeric" scope="col"> AMOUNT</th>
+                </tr>
+            </thead>
+          <tbody>
+            <tr *ngFor="let data of Data">
+              <td>{{data.TransNo }}</td>
+              <td>{{data.TransDate | date:'MM/dd/yyyy' }}</td>
+              <td>{{data.ItemName }}</td>
+              <td  class="numeric">{{data.Cost  | number:'1.2-2'}}</td>
+              <td  class="numeric">{{data.Qty  | number:'1.2-2'}}</td>
+              <td  class="numeric">{{data.Discount  | number:'1.2-2'}}</td>
+              <td  class="numeric">{{data.Amount  | number:'1.2-2'}}</td>
+            </tr>
+            <tr class="footer">
+                <td class="no-border" colspan="3"></td>
+                <td  class="numeric">{{ getTotal('Cost')| number:'1.2-2'}}</td>
+                <td  class="numeric">{{ getTotal('Qty')| number:'1.2-2'}}</td>
+                <td  class="numeric">{{ getTotal('Discount')| number:'1.2-2'}}</td>
+                <td  class="numeric">{{ getTotal('Amount')| number:'1.2-2'}}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  
+
+   

@@ -1,0 +1,167 @@
+<section class="content">
+    <div class="search-div">
+        <ng-select 
+            [items]="months" 
+            [virtualScroll]="true" 
+            bindLabel="Label"
+            bindValue="Value"
+            appendTo="body" 
+            [(ngModel)]="month" 
+            [searchable]="true" 
+            [clearable] = "false" 
+            placeholder="Month"
+            class="w-10"
+            >
+        </ng-select>
+        <ng-select 
+                [items]="years" 
+                [virtualScroll]="true" 
+                appendTo="body" 
+                [(ngModel)]="year" 
+                [searchable]="true" 
+                [clearable] = "false" 
+                placeholder="Year"
+                class="w-10"
+                >
+        </ng-select>
+        <ng-select
+                [items]="categorys" 
+                bindLabel="Category"
+                bindValue="Category"
+                [virtualScroll]="true" 
+                appendTo="body" 
+                [(ngModel)]="category" 
+                [searchable]="true" 
+                [clearable] = "false" 
+                placeholder="Category"
+                class="w-10"
+                (change)="getItemNames()"
+                >
+        </ng-select>
+            <ng-select 
+                [items]="items" 
+                [virtualScroll]="true" 
+                bindLabel="ItemName"
+                bindValue="ItemId"
+                appendTo="body" 
+                [(ngModel)]="item" 
+                [searchable]="true" 
+                [clearable] = "false" 
+                placeholder="ItemName"
+                class="w-10"
+                [disabled]="month.toString().toLowerCase()  == 'all'"
+                (change)="onChangeItemName()"
+                >
+            </ng-select>
+            <button mat-raised-button color="primary" *ngFor="let tB of toolButtons" [disabled]="!tB.Disabled" (click)="tB.Function()" >{{tB.Label}}</button> 
+    </div>
+    <div class="mat-elevation-z2 w-100">
+        <div class="mat-elevation-z2" *ngIf="month.toString().toLowerCase()  == 'all'">
+            <mat-table [dataSource]="listData" matSort>
+                 <ng-container *ngFor="let dc of defaultColumns">
+                    <ng-container  [matColumnDef]="dc">
+                    <mat-header-cell *matHeaderCellDef sticky>{{ dc }}</mat-header-cell>
+                        <mat-cell  *matCellDef="let element"  class="auto-adjust-cell" [ngClass]="element | rowClasses:dc:columnTypeMap[dc]" [title]="element[dc]">
+                        <span>{{ element | rowDisplay:dc:columnTypeMap[dc] }}</span>
+                        </mat-cell>
+                         <mat-footer-cell *matFooterCellDef class="footer" [ngClass]="columnTypeMap[dc]">
+                            <ng-container [ngSwitch]="columnTypeMap[dc]">
+                                <span *ngSwitchCase="'decimal'">{{ listData | columnTotal:dc | number:'1.2-2' }}</span>
+                                <span *ngSwitchCase="'int'">{{ listData | columnTotal:dc | number:'1.0-0' }}</span>
+                                <span *ngSwitchDefault></span>
+                            </ng-container>
+                        </mat-footer-cell>
+                    </ng-container>
+                </ng-container>
+                <ng-container matColumnDef="loading">
+                    <mat-footer-cell *matFooterCellDef colspan="6">
+                        <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+                    </mat-footer-cell>
+                </ng-container>
+                <ng-container matColumnDef="noData">
+                    <mat-footer-cell *matFooterCellDef colspan="6">
+                        No data.
+                    </mat-footer-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="defaultColumns; sticky:true"></mat-header-row>
+                <mat-row  *matRowDef="let row; columns: defaultColumns;"></mat-row>
+                <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+                <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
+                <mat-footer-row [ngClass]="{'hide':(listData!=null && listData.data.length==0)}" *matFooterRowDef="defaultColumns;"></mat-footer-row>
+            </mat-table>
+          <mat-paginator class="mat-paginator-sticky" [pageSize]="20" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons> </mat-paginator>
+        </div>
+
+        <div class="mat-elevation-z2"  *ngIf="month.toString().toLowerCase()  != 'all' && item.toLowerCase() == 'all' ">
+            <mat-table [dataSource]="listData2" matSort>
+                 <ng-container *ngFor="let dc of defaultColumns2">
+                    <ng-container  [matColumnDef]="dc">
+                    <mat-header-cell *matHeaderCellDef sticky>{{ dc }}</mat-header-cell>
+                        <mat-cell  *matCellDef="let element"  class="auto-adjust-cell" [ngClass]="element | rowClasses:dc:columnTypeMap2[dc]" [title]="element[dc]">
+                        <span>{{ element | rowDisplay:dc:columnTypeMap2[dc] }}</span>
+                        </mat-cell>
+                        <mat-footer-cell *matFooterCellDef class="footer" [ngClass]="columnTypeMap2[dc]">
+                            <ng-container [ngSwitch]="columnTypeMap2[dc]">
+                                <span *ngSwitchCase="'decimal'">{{ listData2 | columnTotal:dc | number:'1.2-2' }}</span>
+                                <span *ngSwitchCase="'int'">{{ listData2 | columnTotal:dc | number:'1.0-0' }}</span>
+                                <span *ngSwitchDefault></span>
+                            </ng-container>
+                        </mat-footer-cell>
+                    </ng-container>
+                </ng-container>
+                <ng-container matColumnDef="loading">
+                    <mat-footer-cell *matFooterCellDef colspan="6">
+                        <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+                    </mat-footer-cell>
+                </ng-container>
+                <ng-container matColumnDef="noData">
+                    <mat-footer-cell *matFooterCellDef colspan="6">
+                        No data.
+                    </mat-footer-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="defaultColumns2; sticky:true"></mat-header-row>
+                <mat-row  *matRowDef="let row; columns: defaultColumns2;"></mat-row>
+                <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+                <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData2!=null && listData2.data.length==0)}"></mat-footer-row>
+                <mat-footer-row [ngClass]="{'hide':(listData2!=null && listData2.data.length==0)}" *matFooterRowDef="defaultColumns2;"></mat-footer-row>
+            </mat-table>
+          <mat-paginator class="mat-paginator-sticky" [pageSize]="20" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons> </mat-paginator>
+        </div>
+
+        <div class="mat-elevation-z2"  *ngIf="month.toString().toLowerCase()  != 'all' && item.toLowerCase() != 'all'">
+            <mat-table [dataSource]="listData2" matSort>
+                 <ng-container *ngFor="let dc of defaultColumns3">
+                <ng-container  [matColumnDef]="dc">
+                <mat-header-cell *matHeaderCellDef sticky>{{ dc }}</mat-header-cell>
+                    <mat-cell  *matCellDef="let element"  class="auto-adjust-cell" [ngClass]="element | rowClasses:dc:columnTypeMap3[dc]" [title]="element[dc]">
+                    <span>{{ element | rowDisplay:dc:columnTypeMap3[dc] }}</span>
+                    </mat-cell>
+                     <mat-footer-cell *matFooterCellDef class="footer" [ngClass]="columnTypeMap3[dc]">
+                            <ng-container [ngSwitch]="columnTypeMap3[dc]">
+                                <span *ngSwitchCase="'decimal'">{{ listData2 | columnTotal:dc | number:'1.2-2' }}</span>
+                                <span *ngSwitchCase="'int'">{{ listData2 | columnTotal:dc | number:'1.0-0' }}</span>
+                                <span *ngSwitchDefault></span>
+                            </ng-container>
+                        </mat-footer-cell>
+                </ng-container>
+            </ng-container>
+                <ng-container matColumnDef="loading">
+                    <mat-footer-cell *matFooterCellDef colspan="6">
+                        <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+                    </mat-footer-cell>
+                </ng-container>
+                <ng-container matColumnDef="noData">
+                    <mat-footer-cell *matFooterCellDef colspan="6">
+                        No data.
+                    </mat-footer-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="defaultColumns3; sticky:true"></mat-header-row>
+                <mat-row  *matRowDef="let row; columns: defaultColumns3;"></mat-row>
+                <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+                <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData2!=null && listData2.data.length==0)}"></mat-footer-row>
+                <mat-footer-row [ngClass]="{'hide':(listData2!=null && listData2.data.length==0)}" *matFooterRowDef="defaultColumns3;"></mat-footer-row>
+            </mat-table>
+          <mat-paginator class="mat-paginator-sticky" [pageSize]="20" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons> </mat-paginator>
+        </div>
+    </div>
+</section>

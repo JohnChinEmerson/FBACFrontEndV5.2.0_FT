@@ -1,0 +1,13 @@
+<!-- Desktop SaleHeadersBAL.POSPrintOrderSlip: one slip per printer / area, line for line (ReceiptLinesService.orderSlip) -->
+<ng-container *ngIf="slipData.Type == 'slips'">
+  <div class="slip" *ngFor="let lines of slipLines; let last = last" [class.page-break]="!last">
+    <app-receipt-lines [lines]="lines" [fontSizePt]="+slipData.FontSize || null"></app-receipt-lines>
+  </div>
+</ng-container>
+
+<!-- Desktop BillOutHeadersBAL.POSPrintBillBIR (BIR registered machine) / POSPrintBill -->
+<ng-container *ngIf="slipData.Type == 'bill'">
+  <div class="slip">
+    <app-receipt-lines [lines]="billLines" [fontSizePt]="+slipData.FontSize || null"></app-receipt-lines>
+  </div>
+</ng-container>

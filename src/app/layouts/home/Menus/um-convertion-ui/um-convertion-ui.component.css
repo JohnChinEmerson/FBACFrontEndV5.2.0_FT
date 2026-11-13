@@ -1,0 +1,13 @@
+.conv-actions{
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+.description{
+    display: block;
+    color: #555;
+    margin: -6px 0 6px;
+}
+.grid-list{
+    max-height: 30vh;
+}

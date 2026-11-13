@@ -1,0 +1,53 @@
+.signature-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 2rem;
+  }
+  
+  .signature-column {
+    width: 50%;
+  }
+  
+  .signature-block {
+    margin-bottom: 2rem;
+  }
+  
+  .signature-header {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .signature-label {
+    width: 30%;
+    text-align: end;
+    margin: 0;
+  }
+  
+  .signature-name {
+    border-bottom: 1px solid black;
+    padding-bottom: 2px;
+    width: 60%;
+    text-align: center;
+    margin: 0;
+    text-transform: uppercase;
+    min-height: 1em; /* Ensures space even when empty */
+  }
+  
+  .signature-footer {
+    display: flex;
+  }
+  
+  .signature-spacer {
+    width: 30%;
+  }
+  
+  .signature-position {
+    width: 60%;
+    font-size: 10px;
+    text-align: center;
+    margin: 0;
+    min-height: 1em; /* Ensures space even when empty */
+  }
+  

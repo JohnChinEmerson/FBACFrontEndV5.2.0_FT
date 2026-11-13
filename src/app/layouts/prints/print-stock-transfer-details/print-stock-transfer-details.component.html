@@ -1,0 +1,80 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+        <app-aprint-header></app-aprint-header>
+    </div>
+    
+    <div class="title">
+        <h3>{{Title}}</h3>
+    </div>
+
+    <table  class="w-100">
+        <tr class="no-border">
+            <td class="no-border">REASON : </td>
+            <td class="no-border w-45">{{Header.ReasonName}}</td>
+            <td class="no-border">TRANSNO : </td>
+            <td class="no-border w-25">{{Header.TransNo}}</td>
+        </tr>
+        <tr class="no-border">
+            <td class="no-border">ADJUSTMENT TYPE : </td>
+            <td class="no-border w-45">{{Header.AdjustmentType}}</td>
+            <td class="no-border">TRANSDATE : </td>
+            <td class="no-border w-25">{{Header.TransDate | date:'MM/dd/yyyy'}}</td>
+        </tr>
+    </table>
+
+    <table class="table table-bordered w-100" *ngIf="Header.AdjustmentType.toLowerCase() == 'stockout'">
+        <thead class="thead-background">
+            <tr>
+                <th class="numeric" scope="col"> QTY</th>
+                <th scope="col">UM</th>
+                <th scope="col" >ITEM NAME</th>
+                <th class="numeric" scope="col">STOCKIN QTY</th>
+                <th class="numeric" scope="col">PENDING QTY</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of Details">
+            <td class="numeric">{{item.Qty| number: '1.2-2'}}</td>
+            <td >{{item.UM}}</td>
+            <td class="ItemName">{{getItemName(item)}}</td>
+            <td class="numeric">{{item.StockOutQty | number: '1.2-2'}}</td>
+            <td class="numeric">{{item.PendingQty | number: '1.2-2'}}</td>
+        </tr>
+        <tr class="no-border footer">
+            <td class="numeric">{{getTotal('Qty') | number: '1.2-2'}}</td>
+            <td class="no-border" colspan="2"></td>
+            <td class="numeric">{{getTotal('StockOutQty') | number: '1.2-2'}}</td>
+            <td class="numeric">{{getTotal('PendingQty') | number: '1.2-2'}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered w-100" *ngIf="Header.AdjustmentType.toLowerCase() == 'stockin'">
+        <thead class="thead-background">
+            <tr>
+                <th class="numeric" scope="col"> QTY</th>
+                <th scope="col">UM</th>
+                <th scope="col" >ITEM NAME</th>
+                <th class="numeric" scope="col">STOCKOUT QTY</th>
+                <th class="numeric" scope="col">PENDING QTY</th>
+            </tr>
+        </thead>
+        <tbody>
+         <tr *ngFor="let item of Details">
+            <td class="numeric">{{item.Qty| number: '1.2-2'}}</td>
+            <td >{{item.UM}}</td>
+            <td class="ItemName">{{getItemName(item)}}</td>
+            <td class="numeric">{{item.StockInQty | number: '1.2-2'}}</td>
+            <td class="numeric">{{item.PendingQty| number: '1.2-2'}}</td>
+        </tr>
+        <tr class="no-border footer">
+            <td class="numeric">{{getTotal('Qty') | number: '1.2-2'}}</td>
+            <td class="no-border" colspan="2"></td>
+            <td class="numeric">{{getTotal('StockInQty') | number: '1.2-2'}}</td>
+            <td class="numeric">{{getTotal('PendingQty') | number: '1.2-2'}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <app-print-set-signatures [data]="Header.Signatures"></app-print-set-signatures>
+   

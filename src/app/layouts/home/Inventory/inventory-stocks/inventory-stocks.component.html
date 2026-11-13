@@ -1,0 +1,166 @@
+<section class="content">
+    <div class="row g-1 ">
+        <div class="col-12 col-md-6 mat-elevation-z2 table-cont ">
+            <div class="search-div">
+                <mat-form-field class="w-20" floatLabel="never"  appearance="standard">
+                    <input matInput [(ngModel)]="searchKey" placeholder="Search" (keyup)="applyFilter()" autocomplete="false">
+                    <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                    <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+                <ng-select  
+                    class="w-20"
+                    [items]="categorys" 
+                    [virtualScroll]="true" 
+                    appendTo="body" 
+                    bindLabel="Category"
+                    bindValue="Category"
+                    [searchable]="true" 
+                    [clearable] = "false" 
+                    placeholder="Category"
+                    [(ngModel)]="category"
+                    required>
+                </ng-select>
+                <button mat-raised-button color="primary" *ngFor="let tB of toolButtons" [disabled]="!tB.Disabled" (click)="tB.Function()" >{{tB.Label}}</button> 
+                <button mat-raised-button
+                        color="primary"
+                        [matMenuTriggerFor]="newInventoryMenu1"
+                        [disabled]="btnAddToFinishDisable">
+                    {{ btnAddToFinishText }}
+                </button>
+
+                <mat-menu #newInventoryMenu1="matMenu">
+                <button mat-menu-item *ngFor="let x of finishinventoryOptions"
+                        (click)="onClickFinishInventory(x)">
+                    {{ x }}
+                </button>
+                </mat-menu>
+            </div>
+            <mat-table [dataSource]="listData" matSort  #sort="matSort">
+                <ng-container *ngFor="let dc of defaultColumns">
+                    <ng-container [matColumnDef]="dc">
+                    <mat-header-cell *matHeaderCellDef sticky>{{ dc }}</mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="auto-adjust-cell" [ngClass]="element | rowClasses:dc:columnTypeMap[dc]" [title]="element[dc]">
+                        <ng-container *ngIf="dc == 'PhysicalCount'; else displayValue">
+                            <input matInput #physicalCountInput class="clickable inputtable" title="Input PhysicalCount " type="text" [value]="element.PhysicalCount" autocomplete="false" (keyup.enter)="onEnterPhysicalCount(element.ItemId, $event, element.SystemCount)" (focusout)="onEnterPhysicalCount(element.ItemId, $event, element.SystemCount)" (focusin)="onCheckHasMultipleUMs(element)" [readonly]="PhysicalCountReadOnly">
+                        </ng-container>
+                        <ng-template #displayValue>
+                            <span>{{ element | rowDisplay:dc:columnTypeMap[dc] }}</span>
+                        </ng-template>
+                    </mat-cell>
+                    </ng-container>
+                </ng-container>
+                <ng-container matColumnDef="loading">
+                    <mat-footer-cell *matFooterCellDef colspan="6">
+                        <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+                    </mat-footer-cell>
+                </ng-container>
+                <ng-container matColumnDef="noData">
+                    <mat-footer-cell *matFooterCellDef colspan="6">
+                        No data.
+                    </mat-footer-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="defaultColumns; sticky:true"></mat-header-row>
+                <mat-row  (click)="getRecord1(row)"  *matRowDef="let row; columns: defaultColumns;" [ngClass]="{'data-selected': selectedId1 == row.ItemId, 'data-out': (row.Available <= 0 && selectedId != row.ItemId && isColorOutOfStock),'data-alert': (+row.Available > 0 &&+row.Available <= +row.AlertQty &&selectedId !== row.ItemId &&isColorOutOfStock)}" appTouchContextMenu (contextmenu)="onContextMenu($event, row, 'ongoing')" ></mat-row>
+                <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+                <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
+            </mat-table>
+            <mat-paginator #paginator [pageSize]="20" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
+
+        </div>
+        <div class="col-12 col-md-6 mat-elevation-z2 table-cont ">
+            <div class="search-div">
+                <mat-form-field class="w-20" floatLabel="never"  appearance="standard">
+                    <input matInput [(ngModel)]="searchKey2" placeholder="Search" (keyup)="applyFilter2()" autocomplete="false">
+                    <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch2()">
+                    <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+                <ng-select  
+                    class="w-20"
+                    [items]="categorys2" 
+                    [virtualScroll]="true" 
+                    appendTo="body" 
+                    bindLabel="Category"
+                    bindValue="Category"
+                    [searchable]="true" 
+                    [clearable] = "false" 
+                    placeholder="Category"
+                    [(ngModel)]="category2"
+                    required>
+                </ng-select>
+                <mat-form-field appearance="standard" class="w-10">
+                    <mat-label>SaleDateFrom</mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="dtFrom"  autocomplete="off" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="standard" class="w-10">
+                    <mat-label>SaleDateTo</mat-label>
+                    <input matInput [matDatepicker]="picker2" [(ngModel)]="dtTo"  autocomplete="off"  required>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+                <button mat-raised-button color="primary" *ngFor="let tB of toolButtons2" [disabled]="!tB.Disabled" (click)="tB.Function()" >{{tB.Label}}</button> 
+                <mat-menu #newInventoryMenu="matMenu">
+                    <button mat-menu-item *ngFor="let x of inventoryOptions" (click)="onClickNewInventory(x)" >
+                        {{ x }}
+                    </button>
+                </mat-menu>
+                <button mat-raised-button color="primary" [matMenuTriggerFor]="newInventoryMenu">
+                    New Inventory
+                </button>
+               
+            </div>
+                <mat-table [dataSource]="listData2" matSort #sort2="matSort">
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            <mat-checkbox (change)="onCheckAllToNewInventory($event.checked)" title="Select All"></mat-checkbox>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <mat-checkbox (change)="onCheckToNewInventory(element, $event.checked)" [checked]="existInCashReadingsToNewInventory(element)"></mat-checkbox>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container *ngFor="let dc of defaultColumns2">
+                        <ng-container *ngIf="dc != 'actions'" [matColumnDef]="dc">
+                        <mat-header-cell *matHeaderCellDef sticky>{{ dc }}</mat-header-cell>
+                        <mat-cell *matCellDef="let element" class="auto-adjust-cell" [ngClass]="element | rowClasses:dc:columnTypeMap2[dc]" [title]="element[dc]">
+                            <span>{{ element | rowDisplay:dc:columnTypeMap2[dc] }}</span>
+                        </mat-cell>
+                        </ng-container>
+                    </ng-container>
+
+...
+              
+                    <ng-container matColumnDef="loading">
+                        <mat-footer-cell *matFooterCellDef colspan="6">
+                            <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+                        </mat-footer-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="noData">
+                        <mat-footer-cell *matFooterCellDef colspan="6">
+                            No data.
+                        </mat-footer-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+                    <mat-row (click)="getRecord(row)" *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'data-selected': selectedId == row.ItemId, 'data-out': (row.Available <= 0 && selectedId != row.ItemId && isColorOutOfStock),'data-alert': (+row.Available > 0 &&+row.Available <= +row.AlertQty &&selectedId !== row.ItemId &&isColorOutOfStock)}" appTouchContextMenu (contextmenu)="onContextMenu($event, row, 'finish')"></mat-row>
+                    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading2}"></mat-footer-row>
+                    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData2!=null && listData2.data.length==0)}"></mat-footer-row>
+                </mat-table>
+              <mat-paginator #paginator2 [pageSize]="20" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</section>
+
+<div style="visibility: hidden; position: fixed"
+    [style.left]="contextMenuPosition.x"
+    [style.top]="contextMenuPosition.y"
+    [matMenuTriggerFor]="contextMenu">
+</div>
+<mat-menu #contextMenu="matMenu">
+	<ng-template matMenuContent let-data="data">
+        <button mat-menu-item *ngFor="let cB of contextButtons" [disabled]="!cB.Disabled" (click)="cB.Function()" >
+            <mat-icon>read_more</mat-icon> {{cB.Label}}
+        </button>
+    </ng-template>
+</mat-menu>

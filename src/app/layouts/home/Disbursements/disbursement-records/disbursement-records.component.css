@@ -1,0 +1,22 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.mat-column-TransNo ,.mat-column-Amount,.mat-column-VoucherNo{
+    flex: 0 0 5%;
+}
+.mat-column-PaymentType,.mat-column-RecordStatus  ,.mat-column-VoucherStatus  ,.mat-column-VoucherDate  {
+    flex: 0 0 7%;
+}
+.mat-column-CustomerName {
+    flex: 0 0 20%;
+}
+::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+  }

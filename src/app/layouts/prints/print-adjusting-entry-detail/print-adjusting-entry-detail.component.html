@@ -1,0 +1,78 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+        <app-aprint-header></app-aprint-header>
+    </div>
+    <div *ngIf="ReferenceNo == 'all'">
+        <div class="title">
+            <h3>{{Title}}</h3>
+        </div>
+        <table class="table table-bordered" #tableToExport  >
+          <thead class="thead-background">
+            <tr>
+              <th scope="col">TRANSDATE</th>
+              <th scope="col">REFERENCE NO</th>
+              <th scope="col">DESCRIPTION</th>
+              <th scope="col">ACCOUNT TITLE</th>
+              <th scope="col">DEBIT</th>
+              <th scope="col">CREDIT</th>
+             
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of Details">
+              <td>{{data.TransDate | date:'MM/dd/yyyy'}}</td>
+              <td>{{data.ReferenceNo}}</td>
+              <td>{{data.Description}}</td>
+              <td>{{data.AccountTitle}}</td>
+              <td class="numeric">{{data.Debit == 0 ? ''  : (data.Debit | number:'1.2-2' )}}</td>
+              <td class="numeric">{{data.Credit == 0 ? ''  : (data.Credit | number:'1.2-2' )}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <app-aprint-footer [totalRecords]="Details.length"></app-aprint-footer>  
+    </div>
+    <div *ngIf="ReferenceNo != 'all'">
+        <div class="title">
+            <h3>{{Title}}</h3>
+        </div>
+
+        <table  class="w-100">
+            <tr class="no-border">
+                <td class="no-border">TRANSNAME : </td>
+                <td class="no-border w-45">{{Header.TransName}}</td>
+                <td class="no-border">REFERENCE NO : </td>
+                <td class="no-border w-25">{{Header.ReferenceNo}}</td>
+            </tr>
+            <tr class="no-border">
+                <td class="no-border">TRANSDATE : </td>
+                <td class="no-border w-45">{{Header.TransDate | date:'MM/dd/yyyy'}}</td>
+            </tr>
+        </table>
+
+        <table class="table table-bordered w-100">
+            <thead class="thead-background">
+            <tr>
+                <th scope="col">DESCRIPTION</th>
+                <th scope="col" >ACCOUNT TITLE</th>
+                <th class="numeric" scope="col">DEBIT</th>
+                <th class="numeric" scope="col">CREDIT</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of Details">
+                <td class="ItemName">{{item.Description}}</td>
+                <td >{{item.AccountTitle}}</td>
+                <td class="numeric">{{item.Debit| number: '1.2-2'}}</td>
+                <td class="numeric">{{item.Credit | number: '1.2-2'}}</td>
+            </tr>
+            <tr class="no-border footer">
+                <td class="no-border" colspan="2"></td>
+                <td class="numeric">{{getTotal('DebitAmt') | number: '1.2-2'}}</td>
+                <td class="numeric">{{getTotal('CreditAmt')| number: '1.2-2'}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+   

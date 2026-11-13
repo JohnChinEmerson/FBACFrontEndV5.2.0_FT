@@ -1,0 +1,107 @@
+/* Shared by the Menus module pages (Menu Costing, Menu Sales Report, End-of-Day Inventory, Production) */
+.content{
+    margin: 10px;
+}
+.search-div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.total-count{
+    margin-left: auto;
+    font-weight: 500;
+}
+.mat-table .mat-cell,
+.mat-table .mat-header-cell {
+    max-width: 100% !important;
+}
+.auto-adjust-cell {
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    line-height: 1.4em !important;
+    padding: 4px 8px !important;
+}
+.mat-row, .mat-cell {
+    height: auto !important;
+}
+.numeric{
+    justify-content: flex-end;
+    text-align: right;
+}
+.negative{
+    color: #c62828;
+}
+.inputtable{
+    width: 100%;
+    max-width: 120px;
+    border: 1px solid #cfd8dc;
+    border-radius: 4px;
+    padding: 3px 6px;
+    background: #fffde7;
+}
+/* plain grids used inside dialogs and two-panel pages */
+.grid-panel{
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    min-height: 0;
+}
+.grid-toolbar{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+.grid-list{
+    overflow: auto;
+    max-height: 55vh;
+    border-top: 1px solid #e0e0e0;
+}
+.grid-list table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.grid-list th{
+    position: sticky;
+    top: 0;
+    background: #fafafa;
+    font-weight: 600;
+    text-align: left;
+    z-index: 1;
+}
+.grid-list th, .grid-list td{
+    padding: 5px 8px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.grid-list tr.clickable{
+    cursor: pointer;
+}
+.grid-list tr.clickable:hover{
+    background: #f5f5f5;
+}
+.grid-list tr.data-selected{
+    background: #e3f2fd;
+}
+.grid-list tfoot td{
+    font-weight: 600;
+    background: #fafafa;
+}
+.grid-empty{
+    padding: 12px;
+    color: #888;
+}
+.two-panel{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+@media (max-width: 900px){
+    .two-panel{ grid-template-columns: 1fr; }
+}
+.summary{
+    font-weight: 600;
+    font-size: 15px;
+}

@@ -1,0 +1,111 @@
+:host { display: block; }
+
+.ug-page { max-width: 1320px; margin: 0 auto; padding: 16px; box-sizing: border-box; }
+
+/* ---------- header ---------- */
+.ug-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.ug-header-icon { font-size: 40px; width: 40px; height: 40px; color: #1976d2; }
+.ug-title { margin: 0; font-size: 26px; font-weight: 500; line-height: 1.2; }
+.ug-subtitle { margin: 2px 0 0; color: rgba(0, 0, 0, .6); font-size: 14px; }
+
+/* ---------- tabs ---------- */
+.ug-tab-icon { margin-right: 8px; }
+.ug-edition-note {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin: 16px 0 12px; padding: 10px 14px;
+  background: rgba(25, 118, 210, .08); border-left: 4px solid #1976d2; border-radius: 4px;
+  font-size: 14px;
+}
+.ug-count { font-size: 12px; color: rgba(0, 0, 0, .6); white-space: nowrap; }
+
+/* ---------- two-panel layout ---------- */
+.ug-layout { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 16px; align-items: start; }
+
+.ug-nav {
+  position: sticky; top: 8px;
+  max-height: calc(100vh - 32px);
+  display: flex; flex-direction: column;
+  padding: 12px; overflow: hidden;
+}
+.ug-search { width: 100%; }
+.ug-nav-tools {
+  display: flex; justify-content: space-between; align-items: center; gap: 4px;
+  margin: 6px 0 2px; font-size: 12px; color: rgba(0, 0, 0, .6);
+}
+.ug-nav-tools button { font-size: 12px; min-width: 0; padding: 0 8px; }
+.ug-nav-tools mat-icon { font-size: 18px; width: 18px; height: 18px; margin-right: 2px; }
+.ug-list { overflow-y: auto; flex: 1 1 auto; padding-bottom: 4px; }
+
+/* contents rows */
+.ug-row {
+  display: flex; align-items: center; min-height: 40px; padding-right: 8px;
+  border-radius: 6px; cursor: pointer;
+}
+.ug-row:hover { background: rgba(0, 0, 0, .05); }
+.ug-row.active { background: rgba(25, 118, 210, .14); }
+.ug-row.active .ug-label { color: #0d47a1; font-weight: 500; }
+.ug-row.group > .ug-label { font-weight: 500; }
+.ug-chevron { width: 32px; height: 32px; padding: 4px; flex: 0 0 32px; line-height: 24px; }
+.ug-chevron-gap { flex: 0 0 32px; }
+.ug-label {
+  flex: 1 1 auto; text-align: left; background: none; border: 0; cursor: pointer;
+  font: inherit; font-size: 14px; color: inherit; padding: 8px 4px;
+}
+
+/* search hits */
+.ug-hit {
+  display: block; width: 100%; text-align: left; background: none; border: 0; cursor: pointer;
+  padding: 8px 10px; border-radius: 6px; font: inherit; color: inherit;
+}
+.ug-hit:hover { background: rgba(0, 0, 0, .05); }
+.ug-hit-title { display: block; font-size: 14px; font-weight: 500; }
+.ug-hit-path { display: block; font-size: 12px; color: rgba(0, 0, 0, .55); }
+.ug-empty { padding: 12px; color: rgba(0, 0, 0, .55); font-size: 14px; }
+
+/* ---------- content ---------- */
+.ug-content-card { padding: 20px 24px; min-height: 360px; scroll-margin-top: 8px; }
+.ug-crumbs { display: flex; flex-wrap: wrap; align-items: center; font-size: 12px; color: rgba(0, 0, 0, .55); margin-bottom: 4px; }
+.ug-crumb-sep { font-size: 16px; width: 16px; height: 16px; }
+.ug-page-title { margin: 0 0 12px; font-size: 24px; font-weight: 500; }
+
+.ug-children { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.ug-children p { margin: 0 0 4px; color: rgba(0, 0, 0, .6); }
+.ug-child-btn { min-width: 220px; justify-content: flex-start; }
+
+.ug-pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; }
+.ug-pager button { max-width: 48%; }
+.ug-pager-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 220px; display: inline-block; vertical-align: middle; }
+.ug-footer { margin-top: 24px; font-size: 12px; color: rgba(0, 0, 0, .45); text-align: center; }
+
+/* HTML that comes from the guide pages */
+.guide-content { margin-top: 12px; font-size: 15px; line-height: 1.65; }
+.guide-content ::ng-deep p { margin: 0 0 10px; }
+.guide-content ::ng-deep ul, .guide-content ::ng-deep ol { margin: 0 0 10px; padding-left: 24px; }
+.guide-content ::ng-deep ul ul { margin-bottom: 0; }
+.guide-content ::ng-deep li { margin: 3px 0; }
+.guide-content ::ng-deep blockquote { margin: 8px 0 8px 12px; padding-left: 14px; border-left: 3px solid rgba(25, 118, 210, .35); }
+.guide-content ::ng-deep strong { font-weight: 600; }
+.guide-content ::ng-deep a { color: #1565c0; text-decoration: none; cursor: pointer; }
+.guide-content ::ng-deep a:hover { text-decoration: underline; }
+
+/* ---------- mobile ---------- */
+.ug-nav-toggle { display: none; margin-bottom: 12px; }
+
+@media (max-width: 900px) {
+  .ug-layout { grid-template-columns: 1fr; }
+  .ug-nav-toggle { display: inline-flex; align-items: center; gap: 4px; }
+  .ug-nav { display: none; position: static; max-height: 60vh; }
+  .ug-nav.open { display: flex; }
+  .ug-content-card { padding: 16px; }
+  .ug-pager-text { max-width: 110px; }
+}
+
+/* ---------- when shown inside the footer popup ---------- */
+.ug-spacer { flex: 1 1 auto; }
+:host { height: 100%; }
+.ug-page.in-dialog { height: 100%; overflow: auto; max-width: none; }
+.ug-page.in-dialog .ug-header { position: sticky; top: 0; z-index: 2; background: #fff; padding-bottom: 4px; }
+.ug-page.in-dialog .ug-nav { max-height: calc(88vh - 230px); top: 64px; }
+@media (max-width: 900px) {
+  .ug-page.in-dialog .ug-nav { max-height: 55vh; top: auto; }
+}

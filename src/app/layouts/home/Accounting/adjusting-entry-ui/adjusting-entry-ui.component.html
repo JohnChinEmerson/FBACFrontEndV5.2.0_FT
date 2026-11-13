@@ -1,0 +1,143 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>AdjustingEntryUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="adjustingEntryHeaderForm" >
+    <div mat-dialog-content>
+        <div class="row col-md-12 align-elements">
+            <div class="col-4">
+                <mat-form-field appearance="standard" class="w-100">
+                    <mat-label>TransDate</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="TransDate"  autocomplete="off" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>TransName</mat-label>
+                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="TransName" required>
+                        <mat-option  *ngFor="let x of transNames" [value]="x.TransName">  {{x.TransName.toUpperCase()}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-2">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-checkbox (change)="onCheck($event.checked)" [checked]="!adjustingEntryHeader || ( adjustingEntryHeader.ReferenceNo != null ? adjustingEntryHeader.ReferenceNo.includes('ADJ') :  true) " [disabled]="adjustingEntryHeader?.ReferenceNo"></mat-checkbox>
+                    <mat-label>ReferenceNo</mat-label>
+                    <input matInput placeholder="Input ReferenceNo" autocomplete="off"  formControlName="ReferenceNo" required >
+                </mat-form-field>
+            </div>
+            <div class="col-2">
+                <button type="button"(click)="validateForm()" class="w-100" mat-raised-button color="primary" [disabled]="adjustingEntryHeaderForm.invalid || loading == true">{{btnText}}</button>
+            </div>
+        </div>
+    </div>
+  </form>
+  <div class="mat-elevation-z2 table-cont-pop-up">
+    <mat-table [dataSource]="listData" matSort>
+        <ng-container matColumnDef="Description">
+            <mat-header-cell *matHeaderCellDef >Description</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <input
+                matInput
+                type="text"
+                [value]="element.Description"
+                (focusout)="updateElementAdjustingEntry($event, element.id, 'Description', element)"
+                (keyup.enter)="updateElementAdjustingEntry($event, element.id, 'Description', element)"
+                [id]="'Description-' + element.id"
+                autocomplete="false"
+              />
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef class="footer"> </mat-footer-cell>
+          </ng-container>
+          
+          <ng-container matColumnDef="AccountTitle">
+            <mat-header-cell *matHeaderCellDef>AccountTitle</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <mat-select
+                #AccountTitleInput
+                role="combobox"
+                [disableOptionCentering]="true"
+                required
+                (selectionChange)="onSelectionChange($event, AccountTitleInput, element)"
+                (focus)="AccountTitleInput.open()"
+                [id]="'AccountTitle-' + element.id"
+                [(value)]="element.AccountTitle"
+              >
+                <mat-option *ngFor="let x of accountTitles" [value]="x.AccountTitle">
+                  {{ x.AccountTitle.toUpperCase() }}
+                </mat-option>
+              </mat-select>
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef class="footer"> </mat-footer-cell>
+          </ng-container>
+          
+          
+          <ng-container matColumnDef="DebitAmt">
+            <mat-header-cell *matHeaderCellDef >DebitAmt</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <input
+                matInput
+                type="number"
+                step="0.01"
+                [value]="element.DebitAmt"
+                (focusout)="updateElementAdjustingEntry($event, element.id, 'DebitAmt', element)"
+                (keyup.enter)="updateElementAdjustingEntry($event, element.id, 'DebitAmt', element)"
+                [id]="'DebitAmt-' + element.id"
+                autocomplete="false"
+              />
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef class="footer">
+              {{ getTotal('DebitAmt') | number: '1.2-2' }}
+            </mat-footer-cell>
+          </ng-container>
+          
+          <ng-container matColumnDef="CreditAmt">
+            <mat-header-cell *matHeaderCellDef >CreditAmt</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <input
+                matInput
+                type="number"
+                step="0.01"
+                [value]="element.CreditAmt"
+                (focusout)="updateElementAdjustingEntry($event, element.id, 'CreditAmt', element)"
+                (keyup.enter)="updateElementAdjustingEntry($event, element.id, 'CreditAmt', element)"
+                [id]="'CreditAmt-' + element.id"
+                autocomplete="false"
+              />
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef class="footer">
+              {{ getTotal('CreditAmt') | number: '1.2-2' }}
+            </mat-footer-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Action">
+            <mat-header-cell *matHeaderCellDef>
+                <button mat-raised-button (click)="onClickNew()" color="primary" class="w-100"> Add Entry</button>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-icon-button (click)="onClickDelete(element)" color="warn"><mat-icon>delete</mat-icon></button>
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef class="footer"> </mat-footer-cell>
+          </ng-container>
+       
+        <ng-container matColumnDef="loading">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+                <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+            </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="noData">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+                No data.
+            </mat-footer-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="mergeColumns; sticky:true"></mat-header-row>
+        <mat-row  (click)="getRecord(row)"  *matRowDef="let row; columns: mergeColumns;"  [ngClass]="{'data-selected': selectedId == row.id}" ></mat-row>
+        <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+        <mat-footer-row *matFooterRowDef="['noData']" (click)="onClickNew()" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
+        <mat-footer-row [ngClass]="{'hide':(listData!=null && listData.data.length==0)}" *matFooterRowDef="mergeColumns;"></mat-footer-row>
+    </mat-table>
+    <mat-paginator class="mat-paginator-sticky" [pageSize]="20" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons> </mat-paginator>
+</div>

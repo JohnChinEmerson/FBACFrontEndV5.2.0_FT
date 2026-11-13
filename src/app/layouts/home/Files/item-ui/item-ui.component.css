@@ -1,0 +1,33 @@
+mat-form-field{
+    width: 100% !important;
+}
+/* mat-checkbox{
+    position:absolute;
+    left: -20px;
+} */
+.align-elements ng-select{
+    width: 100% !important;
+}
+/* Branch Update (menu icon) right beside Save */
+.item-actions{
+    gap: 4px;
+}
+.align-elements{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap:nowrap;
+}
+
+/* ItemType dropdown panel (appended to body): never wider than the viewport, list height follows the screen */
+::ng-deep .ng-dropdown-panel.item-type-select{
+    max-width: calc(100vw - 16px);
+}
+::ng-deep .ng-dropdown-panel.item-type-select .ng-dropdown-panel-items{
+    max-height: min(240px, 40vh) !important;
+    overflow-y: auto;
+}
+
+::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+  }

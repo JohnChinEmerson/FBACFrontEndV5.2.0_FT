@@ -1,0 +1,37 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+  <div >
+    <table class="table table-bordered" #tableToExport>
+        <thead class="thead-background">
+          <tr>
+            <th scope="col">QUARTER</th>
+            <th  class="numeric" scope="col">DEBT</th>
+            <th  class="numeric" scope="col">CASH</th>
+            <th  class="numeric" scope="col">PERCENT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of Data">
+            <td>{{data.Quarter}}</td>
+            <td  class="numeric">{{data.Debt | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.Cash | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.Percent | number:'1.2-2'}}</td>
+          </tr>
+          <tr class="footer">
+              <td class="no-border" colspan="1"></td>
+              <td  class="numeric">{{ getTotal('Debt')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('Cash')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('Percent')| number:'1.2-2'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  
+  </div>
+   

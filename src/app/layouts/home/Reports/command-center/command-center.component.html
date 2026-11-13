@@ -1,0 +1,61 @@
+<section class="content cc">
+    <!-- filters: quick ranges, or any dates -->
+    <div class="cc-filters">
+        <app-date-range-filter class="cc-range-filter" preset="today" (rangeChange)="onRangeChange($event)"></app-date-range-filter>
+        <ng-select
+                [items]="branches"
+                [virtualScroll]="true"
+                appendTo="body"
+                bindLabel="BranchName"
+                bindValue="BranchId"
+                [(ngModel)]="branchId"
+                [searchable]="true"
+                [clearable] = "false"
+                placeholder="Branch"
+                class="cc-branch"
+                >
+        </ng-select>
+        <button mat-raised-button color="primary" class="cc-view" *ngFor="let tB of toolButtons" [disabled]="!tB.Disabled || isLoading" (click)="tB.Function()">{{tB.Label.toUpperCase()}}</button>
+    </div>
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate" class="cc-progress"></mat-progress-bar>
+
+    <!-- summary figures, one card per group (labels come as "Name : value"); tap a figure for its details -->
+    <div class="cc-summary">
+        <ng-container *ngFor="let group of [
+            { title: 'Sales', icon: 'trending_up', tone: 'green', buttons: panelButtons11 },
+            { title: 'Sales by Payment', icon: 'payments', tone: 'blue', buttons: panelButtons10 },
+            { title: 'Records', icon: 'inventory_2', tone: 'amber', buttons: panelButtons9 }]">
+            <div class="cc-panel" [ngClass]="'tone-' + group.tone" *ngIf="enabled(group.buttons).length">
+                <div class="cc-panel-title"><mat-icon>{{group.icon}}</mat-icon>{{group.title}}</div>
+                <div class="cc-figures">
+                    <button type="button" *ngFor="let tB of enabled(group.buttons)" class="cc-figure" [class.loading]="isLoading" (click)="onClickButton(tB)">
+                        <span class="cc-figure-label">{{ figureName(tB) }}</span>
+                        <span class="cc-figure-value">{{ figureValue(tB) }}</span>
+                        <mat-icon class="cc-figure-go">chevron_right</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    <!-- report shortcuts: only the reports this edition has -->
+    <h2 class="cc-heading">Reports</h2>
+    <div class="cc-groups">
+        <ng-container *ngFor="let group of [
+            { title: 'Sales', icon: 'point_of_sale', buttons: panelButtons2 },
+            { title: 'Inventory', icon: 'inventory', buttons: panelButtons },
+            { title: 'Purchases & Expenses', icon: 'shopping_cart', buttons: panelButtons3 },
+            { title: 'Customers', icon: 'groups', buttons: panelButtons4 },
+            { title: 'Suppliers', icon: 'local_shipping', buttons: panelButtons5 },
+            { title: 'Accounting', icon: 'account_balance', buttons: panelButtons6 },
+            { title: 'Vouchers', icon: 'receipt_long', buttons: panelButtons7 },
+            { title: 'Administration', icon: 'admin_panel_settings', buttons: panelButtons8 }]">
+            <div class="cc-group" *ngIf="enabled(group.buttons).length">
+                <div class="cc-group-title"><span class="cc-group-icon"><mat-icon>{{group.icon}}</mat-icon></span>{{group.title}}</div>
+                <button type="button" class="cc-link" *ngFor="let tB of enabled(group.buttons)" (click)="tB.Function()">
+                    <span>{{tB.Label}}</span><mat-icon>open_in_new</mat-icon>
+                </button>
+            </div>
+        </ng-container>
+    </div>
+</section>

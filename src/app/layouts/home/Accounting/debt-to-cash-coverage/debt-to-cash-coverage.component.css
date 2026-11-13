@@ -1,0 +1,24 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.mat-column-Description {
+    flex: 0 0 20%;
+}
+
+::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+}
+
+.chart {
+  display: block;
+  width: 100% !important;
+  height: 400px; /* Adjust as needed */
+}

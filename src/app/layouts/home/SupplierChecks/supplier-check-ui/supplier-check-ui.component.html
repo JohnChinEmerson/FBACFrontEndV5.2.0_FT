@@ -1,0 +1,79 @@
+<button mat-icon-button class="close-button"  (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>SupplierCheckUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="supplierCheckForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+            <div class="row">
+                <mat-form-field appearance="standard" class="w-100">
+                    <mat-label>TransDate</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="TransDate"  autocomplete="off" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <div class="col align-elements">
+                        <ng-select  
+                        class="w-15" 
+                        [items]="suppliers" 
+                        [virtualScroll]="true" 
+                        appendTo="body" 
+                        formControlName="SupplierName" 
+                        bindLabel="SupplierName" 
+                        bindValue="SupplierName"  
+                        [searchable]="true" 
+                        [clearable] = "false" 
+                        placeholder="SupplierName" 
+                        (change)="onChangeSupplier($event)"
+                        required>
+                    </ng-select>
+                    <button type="button" (click)="onClickSupplier()"  mat-icon-button color="primary" class=""><mat-icon>add_circle</mat-icon> </button>
+                </div>  
+            </div>
+
+            <div class="row">
+               <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>CashAccount</mat-label>
+                    <mat-select
+                        role="combobox"
+                        [disableOptionCentering]="true"
+                        formControlName="CashAccount"
+                        autocomplete="off"
+                        (selectionChange)="onChangeCashAccount($event.value)">
+                        <mat-option
+                            *ngFor="let x of cashAccounts"
+                            [value]="x.CashAccount">
+                            {{ x.CashAccount }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>CheckNo</mat-label>
+                    <input matInput placeholder="Input CheckNo" autocomplete="off" required formControlName="CheckNo">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="w-100"  appearance="standard">
+                    <mat-label>Amount</mat-label>
+                    <input matInput placeholder="Input Amount" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="Amount">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field appearance="standard" class="w-100">
+                    <mat-label>CheckDate</mat-label>
+                    <input matInput [matDatepicker]="picker2" formControlName="CheckDate2"  autocomplete="off" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+            
+        </div>
+        <div mat-dialog-actions [align]="'end'" class="mb-3">
+            <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="supplierCheckForm.invalid || loading == true">{{btnText}}</button>
+        </div>
+  </form>

@@ -1,0 +1,92 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>ReceivableOldReceiptUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="receivableOldReceiptForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <div class="row">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>TransName</mat-label>
+                <mat-select role="combobox" [disableOptionCentering]="true" formControlName="TransName" required (selectionChange)="onChangeTransName($event)">
+                    <mat-option  *ngFor="let x of transNames" [value]="x"> {{x}} </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="row " *ngIf="transName.toLowerCase() == 'sales'">
+            <div class="col-12 align-elements">
+                <ng-select 
+                    [items]="customers"  
+                    placeholder="CustomerName" 
+                    bindLabel="CustomerName"  
+                    bindValue="CustomerName"   
+                    [searchable]="true"   
+                    [clearable] = "false"
+                    [virtualScroll]="true"
+                    appendTo="body" 
+                    formControlName="CustomerName"
+                    (change)="onChangeCustomer($event)"
+                    >
+                </ng-select>
+                <button type="button" mat-icon-button color="primary"  title="New Customer" (click)="onClickNewCustomer()" > <mat-icon>add_circle</mat-icon></button> 
+            </div>
+        </div>
+        <div class="row" *ngIf="transName.toLowerCase() == 'adjustment'">
+            <div class="col-12 align-elements">
+                <ng-select 
+                    [items]="reasons"  
+                    placeholder="ReasonName" 
+                    bindLabel="ReasonName"  
+                    bindValue="ReasonName"   
+                    [searchable]="true"   
+                    [clearable] = "false"
+                    [virtualScroll]="true"
+                    appendTo="body" 
+                    formControlName="CustomerName"
+                    (change)="onChangeReason($event)"
+                    >
+                </ng-select>
+                <button type="button" mat-icon-button color="primary"  title="New Reason" (click)="onClickNewReason()" > <mat-icon>add_circle</mat-icon></button> 
+            </div>
+        </div>
+        <div class="row">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>RemainingAmount</mat-label>
+                <input matInput placeholder="Input TotalAmount" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true"  autocomplete="off" required formControlName="TotalAmount">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="standard" class="w-100">
+                <mat-label>TransDate</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="TransDate"  autocomplete="off" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+              
+        </div>
+        <div class="row">
+            <mat-form-field appearance="standard" class="w-100">
+                <mat-label>DueDate</mat-label>
+                <input matInput [matDatepicker]="picker2" formControlName="DueDate"  autocomplete="off" required>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>Remarks</mat-label>
+                <textarea  matInput placeholder="Input Remarks" rows="1" autocomplete="off" required formControlName="Remarks" ></textarea>
+            </mat-form-field>
+        </div>
+       
+        
+        <div mat-dialog-actions [align]="'end'" class="mb-3">
+            <button type="button"    mat-button color="primary" class="me-3" >
+                <mat-checkbox  [checked]="printReceipt"  (change)="onChangePrintReceipt($event.checked)" [disabled]="disablePrintReceipt">
+                    <mat-label>Print Receipt</mat-label>
+                </mat-checkbox>
+            </button>
+            <button type="button" class="me-3" (click)="validateForm()" mat-raised-button color="primary" [disabled]="receivableOldReceiptForm.invalid || loading == true">{{btnText}}</button>
+          </div>
+    </div>
+  </form>

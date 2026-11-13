@@ -1,0 +1,45 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+    <table class="table table-bordered" #tableToExport>
+        <thead class="thead-background">
+          <tr>
+            <th scope="col">MONTH</th>
+            <th scope="col">TOTAL AMT</th>
+            <th scope="col">VATABLE AMT</th>
+            <th scope="col">VAT AMT</th>
+            <th scope="col">DISC AMT</th>
+            <th scope="col">WHTAX AMT</th>
+            <th scope="col">TOTAL DUE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of Data">
+            <td>{{data.Month}}</td>
+            <td  class="numeric">{{data.TotalAmount | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.VATableAmount | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.VATAmount | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.DiscountAmount | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.WHTaxAmount | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.TotalDue | number:'1.2-2'}}</td>
+          </tr>
+          <tr class="footer">
+              <td class="no-border"></td>
+              <td  class="numeric">{{getTotal('TotalAmount') | number:'1.2-2'}}</td>
+              <td  class="numeric">{{getTotal('VATableAmount') | number:'1.2-2'}}</td>
+              <td  class="numeric">{{getTotal('VATAmount') | number:'1.2-2'}}</td>
+              <td  class="numeric">{{getTotal('DiscountAmount') | number:'1.2-2'}}</td>
+              <td  class="numeric">{{getTotal('WHTaxAmount') | number:'1.2-2'}}</td>
+              <td  class="numeric">{{getTotal('TotalDue') | number:'1.2-2'}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  

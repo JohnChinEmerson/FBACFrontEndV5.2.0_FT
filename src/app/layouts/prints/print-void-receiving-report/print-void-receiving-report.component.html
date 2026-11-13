@@ -1,0 +1,85 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+  <div *ngIf="FilterBy.toLowerCase() == 'items'">
+    <table class="table table-bordered" #tableToExport>
+      <thead class="thead-background">
+        <tr>
+          <th scope="col">VOID DATE</th>
+          <th scope="col">TRANSDATE</th>
+          <th scope="col">TRANSNO</th>
+          <th scope="col">SUPPLIER</th>
+          <th scope="col">ITEM NAME</th>
+          <th scope="col">UM</th>
+          <th  class="numeric" scope="col">COST</th>
+          <th  class="numeric" scope="col"> QTY</th>
+          <th  class="numeric" scope="col"> AMT</th>
+          <th scope="col">VOID BY</th>
+          <th scope="col">TERMINAL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of Data">
+          <td>{{data.VoidByDateTime | date:'MM/dd/yyyy h:mm a'}}</td>
+          <td>{{data.TransDate | date:'MM/dd/yyyy'}}</td>
+          <td>{{data.TransNo}}</td>
+          <td>{{data.SupplierName}}</td>
+          <td>{{data.ItemName}}</td>
+          <td>{{data.UM}}</td>
+          <td  class="numeric">{{data.Cost | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.Qty | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.Amount | number:'1.2-2'}}</td>
+          <td>{{data.VoidBy}}</td>
+          <td>{{data.VoideByTerminal}}</td>
+        </tr>
+        <tr class="footer">
+            <td class="no-border" colspan="6"></td>
+            <td  class="numeric">{{ getTotal('Cost')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('Qty')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('Amount')| number:'1.2-2'}}</td>
+            <td class="no-border" colspan="2"></td>
+        </tr>
+      </tbody>
+    </table>
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  
+  </div>
+  <div *ngIf="FilterBy.toLowerCase() == 'receipts'">
+    <table class="table table-bordered" #tableToExport>
+        <thead class="thead-background">
+          <tr>
+            <th scope="col">VOID DATE</th>
+            <th scope="col">TRANSDATE</th>
+            <th scope="col">TRANSNO</th>
+            <th scope="col">SUPPLIER</th>
+            <th  class="numeric" scope="col">TOTAL DUE</th>
+            <th scope="col">VOID BY</th>
+            <th scope="col">TERMINAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of Data">
+            <td>{{data.VoidByDateTime | date:'MM/dd/yyyy h:mm a'}}</td>
+            <td>{{data.TransDate | date:'MM/dd/yyyy'}}</td>
+            <td>{{data.TransNo}}</td>
+            <td>{{data.SupplierName}}</td>
+            <td  class="numeric">{{data.TotalDue | number:'1.2-2'}}</td>
+            <td>{{data.VoidBy}}</td>
+            <td>{{data.VoideByTerminal}}</td>
+          </tr>
+          <tr class="footer">
+              <td class="no-border" colspan="4"></td>
+              <td  class="numeric">{{ getTotal('TotalDue')| number:'1.2-2'}}</td>
+              <td class="no-border" colspan="2"></td>
+          </tr>
+        </tbody>
+      </table>
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  
+  </div>
+   

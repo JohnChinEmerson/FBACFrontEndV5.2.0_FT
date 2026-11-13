@@ -1,0 +1,25 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>DepositToUI</h2>
+<mat-divider></mat-divider>
+<div class="row">
+    <ng-select  
+        [items]="cashAccounts" 
+        [virtualScroll]="true" 
+        appendTo="body" 
+        bindLabel="CashAccount"
+        bindValue="CashAccount"
+        [searchable]="true" 
+        [clearable] = "false" 
+        placeholder="DepositTo" 
+        (change)="onChangeCashAccount($event)"
+        required>
+    </ng-select>
+</div>
+<div class="row">
+    <button type="submit" class="w-100" mat-raised-button color="primary" (click)="validateCashDrawer()">{{btnText}}</button>
+</div>
+
+       
+      

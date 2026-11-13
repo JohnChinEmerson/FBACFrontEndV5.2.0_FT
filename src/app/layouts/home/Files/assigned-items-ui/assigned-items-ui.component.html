@@ -1,0 +1,50 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>Assigned Items - {{ printer?.Area | uppercase }}</h2>
+<mat-divider></mat-divider>
+<mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"></mat-progress-bar>
+<div mat-dialog-content class="assign-grid">
+    <div class="panel mat-elevation-z2">
+        <div class="panel-toolbar">
+            <ng-select class="w-category" [items]="categorys" appendTo="body" [(ngModel)]="category"
+                bindLabel="Category" bindValue="Category" [clearable]="false" placeholder="Category" (change)="refresh()">
+            </ng-select>
+            <mat-form-field floatLabel="never" appearance="standard" class="search">
+                <input matInput placeholder="Search" [(ngModel)]="searchKey" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="panel-toolbar">
+            <button mat-stroked-button (click)="toggleAll()">{{ allChecked ? 'UnCheck All' : 'Check All' }}</button>
+            <button mat-raised-button color="primary" (click)="onClickAssign()">Assign ({{ checkedIds.size }})</button>
+            <span class="count">Total Count : {{ filteredUnassigned.length | number:'1.0-0' }}</span>
+        </div>
+        <div class="list">
+            <div class="list-row three header"><span class="chk"></span><span class="name">ItemName</span><span>Category</span></div>
+            <div class="list-row three clickable" *ngFor="let item of filteredUnassigned" (click)="toggleItem(item.ItemId)" [class.checked]="checkedIds.has(item.ItemId)">
+                <span class="chk"><mat-checkbox [checked]="checkedIds.has(item.ItemId)" (click)="$event.preventDefault()"></mat-checkbox></span>
+                <span class="name">{{ item.ItemName }}</span>
+                <span>{{ item.Category }}</span>
+            </div>
+            <div class="empty" *ngIf="!isLoading && filteredUnassigned.length == 0">No data.</div>
+        </div>
+    </div>
+    <div class="panel mat-elevation-z2">
+        <div class="panel-toolbar">
+            <b>ASSIGNED TO {{ printer?.Area | uppercase }}</b>
+            <span class="count">Total Count : {{ assignedItems.length | number:'1.0-0' }}</span>
+        </div>
+        <div class="panel-toolbar">
+            <button mat-raised-button color="warn" (click)="onClickRemove()">Remove</button>
+            <button mat-stroked-button color="warn" (click)="onClickRemoveAll()">Remove All</button>
+        </div>
+        <div class="list">
+            <div class="list-row header"><span class="name">ItemName</span><span>Category</span></div>
+            <div class="list-row clickable" *ngFor="let item of assignedItems" (click)="selectedAssigned = item" [class.data-selected]="selectedAssigned?.id == item.id">
+                <span class="name">{{ item.ItemName }}</span>
+                <span>{{ item.Category }}</span>
+            </div>
+            <div class="empty" *ngIf="!isLoading && assignedItems.length == 0">No data.</div>
+        </div>
+    </div>
+</div>

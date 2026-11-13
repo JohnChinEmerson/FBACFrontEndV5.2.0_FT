@@ -1,0 +1,48 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>WithdrawalUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="withdrawalForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <div class="row">
+            <mat-form-field  appearance="standard">
+                <mat-label>TotalCash</mat-label>
+                <input class="TotalCash" matInput placeholder="Input TotalCash" autocomplete="off"  formControlName="TotalCash" readonly>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field  appearance="standard">
+                <mat-label>Amount</mat-label>
+                <input class="Amount" matInput type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" placeholder="Input Amount" autocomplete="off"  formControlName="Amount" required>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field  appearance="standard">
+                <mat-label>Reason</mat-label>
+                <input class="Reason" matInput placeholder="Input Reason" autocomplete="off"  formControlName="Reason"  required>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <ng-select  
+            [items]="cashAccounts" 
+            [virtualScroll]="true" 
+            appendTo="body" 
+            formControlName="Destination" 
+            bindLabel="CashAccount" 
+            bindValue="CashAccount"  
+            [searchable]="true" 
+            [clearable] = "false" 
+            placeholder="Destination" 
+            (change)="onChangeCashAccount($event)"
+            required>
+        </ng-select>
+        </div>
+    </div>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+        <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="withdrawalForm.invalid || loading == true">{{btnText}}</button>
+        </div>
+</form>
+
+       
+      

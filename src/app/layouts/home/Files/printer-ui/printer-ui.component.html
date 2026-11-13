@@ -1,0 +1,21 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>PrinterUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="printerForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <mat-form-field appearance="standard">
+            <mat-label>Area</mat-label>
+            <input matInput placeholder="e.g. KITCHEN, BAR" autocomplete="off" required formControlName="Area">
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>PrinterName</mat-label>
+            <input matInput placeholder="Printer used for this area's order slips" autocomplete="off" required formControlName="PrinterName">
+            <mat-hint>The browser print dialog opens for each area when an order is sent.</mat-hint>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button mat-raised-button color="primary" type="submit" [disabled]="isSaving">{{ printer ? 'Update' : 'Save' }}</button>
+    </div>
+</form>

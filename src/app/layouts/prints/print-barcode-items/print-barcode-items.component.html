@@ -1,0 +1,27 @@
+<div class="hideOnPrint">
+<app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+</div>
+<div class="p text-center">
+        <app-aprint-header></app-aprint-header>
+    </div>
+<div class="title">
+    <h3>{{Title}}</h3>
+</div>
+<table class="table table-bordered" #tableToExport>
+    <thead class="thead-background">
+    <tr>
+        <th scope="col">ItemName</th>
+        <th scope="col">UM</th>
+        <th scope="col">Barcode</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of data">
+        <td>{{data.ItemName}}</td>
+        <td>{{data.UM}}</td>
+        <td>{{data.Barcode}}</td>
+    </tr>
+    </tbody>
+</table>
+<app-aprint-footer [totalRecords]="data.length"></app-aprint-footer>  
+

@@ -1,0 +1,22 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>Selected SubMenuUI - {{this.updateData[1].MenuName}} </h2>
+<mat-divider></mat-divider>
+<form [formGroup]="subMenuForm" (ngSubmit)="onSubmit()">
+        <mat-form-field  class="w-100" floatLabel="never" appearance="standard">
+            <mat-label>SubMenuName</mat-label>
+            <input matInput placeholder="SubMenuName" formControlName="SubMenuName" autocomplete="false" required>
+        </mat-form-field>
+        <mat-form-field  class="w-100" floatLabel="never" appearance="standard">
+            <mat-label>RouteName</mat-label>
+            <input matInput placeholder="RouteName" formControlName="RouteName" autocomplete="false" required>
+        </mat-form-field>
+        <mat-form-field  class="w-100" floatLabel="never" appearance="standard">
+            <mat-label>Order</mat-label>
+            <input matInput placeholder="Order" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" formControlName="Order" autocomplete="false" required>
+        </mat-form-field>
+        <div mat-dialog-actions [align]="'end'" class="mb-3">
+            <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="subMenuForm.invalid || loading == true">{{btnText}} </button>
+        </div>
+</form>

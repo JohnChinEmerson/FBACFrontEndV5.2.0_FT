@@ -1,0 +1,84 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>{{ mode == 'qty' ? 'QuantityUI' : (mode == 'additem' ? 'AddItemToReceiptUI' : 'ProductionHeaderUI') }}</h2>
+<mat-divider></mat-divider>
+<form (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <ng-container *ngIf="mode == 'qty'">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>ItemName</mat-label>
+                <input matInput [value]="item.ItemName" readonly>
+            </mat-form-field>
+            <div class="row">
+                <div class="col-8">
+                    <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>Quantity</mat-label>
+                        <input matInput name="qty" type="text" mask="separator.4" thousandSeparator="," [(ngModel)]="qty" autocomplete="off" cdkFocusInitial required>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>UM</mat-label>
+                        <input matInput [value]="item.UM" readonly>
+                    </mat-form-field>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="mode == 'additem'">
+            <ng-select class="pt-3" [items]="items" bindLabel="ItemName" bindValue="ItemId" name="itemId" [(ngModel)]="itemId"
+                       [virtualScroll]="true" [searchable]="true" [clearable]="false" appendTo="body" placeholder="Production Item"></ng-select>
+            <div class="row">
+                <div class="col-8">
+                    <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>Quantity</mat-label>
+                        <input matInput name="addQty" type="text" mask="separator.4" thousandSeparator="," [(ngModel)]="qty" autocomplete="off" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>UM</mat-label>
+                        <input matInput [value]="selectedItem?.UM || ''" readonly>
+                    </mat-form-field>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="mode == 'header'">
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>AdjustmentType</mat-label>
+                        <input matInput value="StockIn" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>ReasonName</mat-label>
+                        <input matInput value="From Production" readonly>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>TransDate</mat-label>
+                        <input matInput name="transDate" [matDatepicker]="picker" [(ngModel)]="transDate" autocomplete="off" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>ReportAs</mat-label>
+                        <mat-select name="reportAs" [(ngModel)]="reportAs" [disableOptionCentering]="true">
+                            <mat-option *ngFor="let r of reportAsList" [value]="r">{{ r }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+        <button type="submit" class="mt-4 me-2" mat-raised-button color="primary">{{ mode == 'qty' ? 'OK' : (mode == 'additem' ? 'Add' : (isUpdate ? 'Update' : 'Save')) }}</button>
+    </div>
+</form>

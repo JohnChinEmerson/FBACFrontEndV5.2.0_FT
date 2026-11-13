@@ -1,0 +1,43 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>CanvassDetailUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="canvassDetailForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <div class="row">
+            <mat-form-field class="" appearance="standard">
+                <mat-label>ItemName</mat-label>
+                <input matInput placeholder="Input ItemName" autocomplete="off" required formControlName="ItemName" readonly>
+            </mat-form-field>
+        </div>
+        <div class="row">
+              <ng-select  
+                [items]="unitMeasures" 
+                [virtualScroll]="true" 
+                appendTo="body" 
+                formControlName="UM" 
+                bindLabel="UM" 
+                bindValue="UM"  
+                [searchable]="true" 
+                [clearable] = "false" 
+                placeholder="UM" 
+                (change)="onChangeUM($event)"
+                required>
+            </ng-select>
+            <!-- <mat-form-field class="w-100"  appearance="standard">
+                <mat-label>UM</mat-label>
+                <input matInput placeholder="Input UM" autocomplete="off" required formControlName="UM" readonly>
+            </mat-form-field> -->
+        </div>
+        <div class="row">
+            <mat-form-field class="w-100"  appearance="standard">
+                <mat-label>Qty</mat-label>
+                <input #qtyInput matInput placeholder="Input Qty" autocomplete="off" required formControlName="Qty" (keyup.enter)="onSubmit()">
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+        <button type="button"  (click)="onSubmit()" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="canvassDetailForm.invalid || loading == true">{{btnText}}</button>
+    </div>
+  </form>

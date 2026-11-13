@@ -1,0 +1,25 @@
+.content{
+    margin: 10px;
+}
+.table-cont{
+  overflow: auto;
+  min-height: 450px;
+  max-height: 450px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+.search-form-field
+{
+    width: 300px;
+}
+.forward-icon{
+    font-size: 23px;
+}
+.tab-content{
+    padding: 5px;
+}

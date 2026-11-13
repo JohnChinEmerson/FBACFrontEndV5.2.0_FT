@@ -1,0 +1,49 @@
+mat-toolbar{
+    justify-content: space-between;
+}
+
+.productLogo {
+    display: flex;
+    align-items: center;
+}
+
+.productLogo a img {
+    margin-right: 5px; 
+    margin-top: 5px; 
+}
+
+.header {
+    padding: 0;
+    position: fixed; 
+    top: 0;
+    width: 100%;
+    z-index: 1000; 
+}
+
+.product-name {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 200;
+  }
+
+/* phones: the long system title shortens itself so the login button stays on screen */
+@media (max-width: 600px) {
+    .productLogo {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+    .product-name {
+        text-align: left;
+        font-size: 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .header > button {
+        flex: 0 0 auto;
+        margin: 0 8px;
+    }
+}
+  

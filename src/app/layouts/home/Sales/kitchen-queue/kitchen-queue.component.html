@@ -1,0 +1,78 @@
+<section class="content kq">
+    <div class="kq-tabs" role="tablist">
+        <button *ngFor="let v of views" class="kq-tab" role="tab" [attr.aria-selected]="view == v.Value" [class.active]="view == v.Value" (click)="selectView(v.Value)">{{v.Label}}</button>
+    </div>
+
+    <div class="search-div kq-toolbar">
+        <ng-container *ngIf="view == 'history'">
+            <mat-form-field appearance="standard" class="kq-date">
+                <mat-label>Date From</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="dateFrom" autocomplete="off" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="standard" class="kq-date">
+                <mat-label>Date To</mat-label>
+                <input matInput [matDatepicker]="picker2" [(ngModel)]="dateTo" autocomplete="off" required>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="standard" class="kq-date">
+                <mat-label>Status</mat-label>
+                <mat-select [(ngModel)]="historyStatus" (selectionChange)="applyFilter()">
+                    <mat-option *ngFor="let s of historyStatuses" [value]="s.Value">{{s.Label}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+        <mat-form-field class="kq-search" floatLabel="never" appearance="standard">
+            <input matInput [(ngModel)]="searchKey" placeholder="Search table / item / area" (keyup)="applyFilter()" autocomplete="off">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="kq-btn" (click)="loadQueue()" [disabled]="isLoading">
+            {{ view == 'history' ? 'View' : 'Refresh' }}
+        </button>
+        <button mat-stroked-button color="primary" class="kq-btn" *ngIf="view == 'history'" (click)="onClickPrint()" [disabled]="isLoading || historyLines.length == 0">
+            <mat-icon>print</mat-icon> Print
+        </button>
+    </div>
+    <mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"></mat-progress-bar>
+
+    <!-- QUEUE: one card per order / READY TO SERVE: one card per table -->
+    <div class="kq-scroll" *ngIf="view != 'history'">
+        <app-kitchen-order-cards
+            [cards]="cards"
+            [view]="view == 'ready' ? 'ready' : 'active'"
+            [canPrepare]="canPrepare" [canReady]="canReady" [canServe]="canServe"
+            [isSaving]="isSaving" [now]="now"
+            [emptyText]="isLoading ? '' : (view == 'active' ? 'No orders in the kitchen queue.' : 'No items ready to serve.')"
+            (statusChange)="onClickStatus($event)"
+            (acknowledge)="onClickAcknowledge($event)">
+        </app-kitchen-order-cards>
+    </div>
+
+    <!-- HISTORY: every line sent between the dates, with its current status -->
+    <div class="mat-elevation-z2 kq-history" *ngIf="view == 'history'">
+        <table>
+            <thead>
+                <tr>
+                    <th>Order Time</th><th>Table</th><th>Item Name</th><th class="num">Qty</th><th>Area</th><th>Status</th><th>Status Time</th><th>By</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let line of historyLines; trackBy: trackById">
+                    <td>{{line.SentDateTime | date:'MM/dd/yyyy h:mm a'}}</td>
+                    <td>{{tableName(line)}}</td>
+                    <td>{{isComponent(line) ? '↳ ' : ''}}{{line.ItemName}}<span class="kq-upgrade" *ngIf="isUpgrade(line)"> (UPGRADE of {{line.SetName}})</span></td>
+                    <td class="num">{{line.Qty | number:'1.0-2'}}</td>
+                    <td>{{line.Area}}</td>
+                    <td><span class="kq-status" [ngClass]="'st-' + line.KitchenStatus">{{statusLabels[line.KitchenStatus]}}</span></td>
+                    <td>{{statusTime(line) | date:'h:mm a'}}</td>
+                    <td>{{line.StatusBy}}</td>
+                </tr>
+                <tr *ngIf="!isLoading && historyLines.length == 0"><td colspan="8" class="kq-empty">No data.</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>

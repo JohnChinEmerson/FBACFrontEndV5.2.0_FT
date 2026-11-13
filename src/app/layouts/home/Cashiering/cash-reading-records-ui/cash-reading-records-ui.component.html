@@ -1,0 +1,84 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>CashReadingRecordsUI</h2>
+<mat-divider></mat-divider>
+<div class="search-div">
+    <mat-checkbox [checked]="withDate" [(ngModel)]="withDate"></mat-checkbox>
+    <mat-form-field appearance="standard">
+        <mat-label>Date From</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="dateFrom"  autocomplete="off" required [disabled]="!withDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+        <mat-label>Date To</mat-label>
+        <input matInput [matDatepicker]="picker2" [(ngModel)]="dateTo"  autocomplete="off"  required [disabled]="!withDate">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="standard" >
+        <mat-label>DepositStatus</mat-label>
+        <mat-select role="combobox"  [disableOptionCentering]="true"   [(ngModel)]="depositStatus">
+            <mat-option  value="UnDeposited"> UnDeposited</mat-option>
+            <mat-option  value="Deposited"> Deposited</mat-option>
+            <mat-option  value="all"  *ngIf="text == 'OtherPaymentTypesUI'"> All</mat-option> 
+        </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" *ngFor="let tB of toolButtons" [disabled]="!tB.Disabled" (click)="tB.Function()" >{{tB.Label}}</button> 
+    <mat-icon>more_vert</mat-icon>
+    <mat-form-field class="w-10" floatLabel="never"  appearance="standard">
+        <input matInput [(ngModel)]="searchKey" placeholder="Search" (keyup)="applyFilter()" autocomplete="false">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <button mat-raised-button color="primary" *ngFor="let tB of toolButtons2" [disabled]="!tB.Disabled" (click)="tB.Function()" >{{tB.Label}}</button> 
+</div>
+<div class="mat-elevation-z2 table-cont-pop-up">
+    <mat-table [dataSource]="listData" matSort>
+        <ng-container *ngFor="let dc of defaultColumns">
+            <ng-container  [matColumnDef]="dc">
+            <mat-header-cell *matHeaderCellDef sticky>{{ dc }}</mat-header-cell>
+                <mat-cell  *matCellDef="let element"  class="auto-adjust-cell" [ngClass]="element | rowClasses:dc:columnTypeMap[dc]" [title]="element[dc]">
+                    <ng-container [ngSwitch]="dc">
+                        <span *ngSwitchCase="'actions'">
+                            <mat-checkbox (change)="onCheckToDeposit(element, $event.checked)" [checked]="existInCashReadingsToDeposit(element)"></mat-checkbox>
+                        </span>
+                        <span *ngSwitchDefault>
+                            {{ element | rowDisplay:dc:columnTypeMap[dc] }}
+                        </span>
+                    </ng-container>
+                </mat-cell>
+            </ng-container>
+        </ng-container>
+        <ng-container matColumnDef="loading">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+                <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+            </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="noData">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+                No data.
+            </mat-footer-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="defaultColumns; sticky:true"></mat-header-row>
+        <mat-row  (click)="getRecord(row)"  *matRowDef="let row; columns: defaultColumns;" [ngClass]="{'data-selected': selectedId == row.ReadingNo, 'data-void': (row.RecordStatus == 'void' && selectedId != row.TransNo)}" appTouchContextMenu (contextmenu)="onContextMenu($event, row)"></mat-row>
+        <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+        <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
+    </mat-table>
+    <mat-paginator class="mat-paginator-sticky" [pageSize]="20" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons> </mat-paginator>
+</div>
+
+<div style="visibility: hidden; position: fixed"
+    [style.left]="contextMenuPosition.x"
+    [style.top]="contextMenuPosition.y"
+    [matMenuTriggerFor]="contextMenu">
+</div>
+<mat-menu #contextMenu="matMenu">
+	<ng-template matMenuContent let-data="data">
+        <button mat-menu-item *ngFor="let cB of contextButtons" [disabled]="!cB.Disabled" (click)="cB.Function()" >
+            <mat-icon>read_more</mat-icon> {{cB.Label}}
+        </button>
+    </ng-template>
+</mat-menu>

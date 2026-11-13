@@ -1,0 +1,44 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+  <table class="table table-bordered" #tableToExport >
+      <thead class="thead-background">
+        <tr>
+          <th scope="col">DATE</th>
+          <th scope="col">TRANSNO</th>
+          <th scope="col">TRANSNAME</th>
+          <th scope="col">DESCRIPTION</th>
+          <th scope="col">PAYMENT TYPE</th>
+          <th scope="col">AMOUNT IN</th>
+          <th scope="col">AMOUNT OUT</th>
+          <th scope="col">RUNNING</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of Data">
+          <td class="InputDate">{{data.InputDate}}</td>
+          <td>{{data.TransNo }}</td>
+          <td>{{data.TransName }}</td>
+          <td >{{data.Description }}</td>
+          <td >{{data.PaymentType }}</td>
+          <td class="numeric">{{data.AmountIn | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.AmountOut | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.RunningTotal | number:'1.2-2'}}</td>
+        </tr>
+        <tr class="footer">
+            <td class="no-border" colspan="5"></td>
+            <td class="numeric"> {{getTotal('AmountIn') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('AmountOut') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('RunningTotal') | number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  

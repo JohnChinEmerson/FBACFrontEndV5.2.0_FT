@@ -1,0 +1,97 @@
+
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>VoucherTransUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="voucherTransForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>TransName</mat-label>
+                    <input matInput placeholder="Input TransName" autocomplete="off" required formControlName="TransName" readonly>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>TransNo</mat-label>
+                    <input matInput placeholder="Input TransNo" autocomplete="off" required formControlName="TransNo" readonly>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field appearance="standard">
+                    <mat-label>VoucherDate</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="VoucherDate"  autocomplete="off" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                    <mat-form-field class="" appearance="standard">
+                        <mat-label>InvNo</mat-label>
+                        <input matInput placeholder="Input InvNo" autocomplete="off" required formControlName="InvNo" >
+                    </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <mat-form-field class="" appearance="standard">
+                <mat-label>PayTo</mat-label>
+                <input matInput placeholder="Input PayToName" autocomplete="off" required formControlName="PayToName" readonly>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>PaymentType</mat-label>
+                <mat-select role="combobox" [disableOptionCentering]="true" formControlName="PaymentType" required>
+                    <mat-option *ngFor="let x of paymentTypes" [value]="x"> {{x}} </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="" appearance="standard">
+                <mat-label>Amount</mat-label>
+                <input matInput placeholder="Input Amount" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="Amount" >
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="" appearance="standard">
+                <mat-label>Description</mat-label>
+                <textarea matInput placeholder="Input Description" autocomplete="off" required formControlName="Description" ></textarea>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <div class="col align-elements">
+                <ng-select  
+                    class="w-15" 
+                    [items]="employees" 
+                    [virtualScroll]="true" 
+                    appendTo="body" 
+                    formControlName="RequestedById" 
+                    bindLabel="EmpName" 
+                    bindValue="EmpId"  
+                    [searchable]="true" 
+                    [clearable] = "false" 
+                    placeholder="RequestedBy" 
+                    (change)="onChangeRequestedById($event)"
+                    required>
+                </ng-select>
+                <button type="button"  (click)="onClickEmployees()"mat-icon-button color="primary"> <mat-icon>list</mat-icon></button>
+            </div>
+        </div>
+        
+    </div>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+        <button type="button"    mat-button color="primary" class="me-3" >
+            <mat-checkbox  [checked]="printReceipt"  (change)="onChangePrintReceipt($event.checked)" [disabled]="disablePrintReceipt">
+                <mat-label>Print Receipt</mat-label>
+            </mat-checkbox>
+        </button>
+        <button type="button"    mat-button color="primary" class="me-3" (click)="onClickSignatures()">
+                <mat-label>Signatures</mat-label>
+        </button>
+        <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="voucherTransForm.invalid || loading == true">{{btnText}}</button>
+    </div>
+</form>

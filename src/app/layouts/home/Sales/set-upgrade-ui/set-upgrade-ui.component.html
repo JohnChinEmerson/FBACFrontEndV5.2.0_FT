@@ -1,0 +1,29 @@
+<button mat-icon-button class="close-button" (click)="onClose()" aria-label="Close">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>Upgrade</h2>
+<mat-divider></mat-divider>
+<div mat-dialog-content class="up-body">
+    <p class="up-from"><b>{{ component?.ItemName }}</b> in <b>{{ set?.ItemName }}</b> is replaced by:</p>
+    <ng-select class="up-item" [items]="items" bindLabel="ItemName" [searchable]="true" [clearable]="false"
+               appendTo="body" placeholder="Upgrade to..." [(ngModel)]="selected" (change)="onSelect($event)">
+        <ng-template ng-option-tmp let-item="item">
+            {{ item.ItemName }} <small class="up-option-price">&#8369;{{ item.Price | number:'1.2-2' }}</small>
+        </ng-template>
+    </ng-select>
+    <div class="up-price" *ngIf="selected">
+        <mat-form-field appearance="standard">
+            <mat-label>Upgrade price (each)</mat-label>
+            <input matInput type="number" min="0" step="0.01" inputmode="decimal" autocomplete="off" [(ngModel)]="price" [readonly]="lockPrice" (keyup.enter)="onConfirm()">
+        </mat-form-field>
+        <small class="up-hint">
+            {{ selected.ItemName }} sells for &#8369;{{ selected.Price | number:'1.2-2' }}; {{ component?.ItemName }} is &#8369;{{ fromPrice | number:'1.2-2' }}.
+            <ng-container *ngIf="!lockPrice">Lower the price to charge less. </ng-container>
+            <ng-container *ngIf="lockPrice">You are not allowed to change prices. </ng-container>
+            The Set price does not change.
+        </small>
+    </div>
+</div>
+<div mat-dialog-actions [align]="'end'" class="mb-3">
+    <button type="button" class="mt-3 me-2" mat-raised-button color="primary" [disabled]="!valid" (click)="onConfirm()">Upgrade</button>
+</div>

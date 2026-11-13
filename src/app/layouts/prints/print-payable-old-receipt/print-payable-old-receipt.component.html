@@ -1,0 +1,43 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+        <app-aprint-header></app-aprint-header>
+    </div>
+        <div class="title">
+            {{Title}}
+        </div>
+        <table  class="w-100 table table-bordered" #tableToExport >
+            <tr>
+                <td class="w-18">TRANSNO</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Data.TransNo}}</td>
+      
+                <td class="w-18">SUPPLIER</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Data.SupplierName }}</td>
+              </tr>
+              <tr>
+                <td class="w-18">TOTAL AMOUNT</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Data.TotalAmount | number: '1.2-2'}}</td>
+      
+                <td class="w-18">TRANSDATE</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Data.TransDate | date:'MM/dd/yyyy'}}</td>
+              </tr>
+              <tr>
+                <td class="w-18">REMARKS</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Data.Remarks }}</td>
+      
+                <td class="w-18">DUEDATE</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Data.DueDate | date:'MM/dd/yyyy'}}</td>
+              </tr>
+        </table>
+
+
+     
+
+   

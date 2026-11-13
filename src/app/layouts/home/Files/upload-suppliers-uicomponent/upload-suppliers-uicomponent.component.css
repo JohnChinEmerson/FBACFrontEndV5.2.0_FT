@@ -1,0 +1,27 @@
+
+.mat-dialog-content{
+    padding: 0px 35px 10px 35px;
+    /* width: 500px; */
+  }
+
+  mat-form-field{
+    width: 100%;
+  }
+  
+  mat-checkbox{
+    position:absolute;
+    left: -25px;
+  }
+  
+  ::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+  }
+
+  .file-input {
+    width: 100%; /* Make the file input fill the container */
+  }
+
+  .loading-bar {
+    width: 100%;
+    height: 10px;
+}

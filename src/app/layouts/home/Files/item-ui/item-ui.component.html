@@ -1,0 +1,165 @@
+
+<button mat-icon-button class="close-button"  (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>ItemUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>ItemName</mat-label>
+                    <input matInput placeholder="Input ItemName" autocomplete="off" required formControlName="ItemName" (input)="onChangeItemName()">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>Alias</mat-label>
+                    <input matInput placeholder="Input Alias" autocomplete="off" maxlength="3000" formControlName="Alias" (input)="onChangeAlias()">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <div class="col-12 align-elements">
+                    <!-- not w-100: with appendTo="body" ng-select copies its classes to the dropdown panel,
+                         and Bootstrap's w-100 (!important) stretched the panel past the screen edge -->
+                    <ng-select
+                        class="w-15 item-type-select"
+                        [items]="itemTypes"
+                        [virtualScroll]="true"
+                        appendTo="body"
+                        formControlName="ItemType"
+                        bindLabel="ItemType"
+                        bindValue="ItemType"
+                        [searchable]="true"
+                        [clearable] = "false"
+                        placeholder="ItemType"
+                        (change)="onChangeItemType($event?.ItemType)"
+                        required>
+                    </ng-select>
+                    <button type="button"  (click)="onClickItemType()"mat-icon-button color="primary" title="New"> <mat-icon>list</mat-icon></button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field class="w-100"  appearance="standard">
+                        <mat-label>Purchase Cost</mat-label>
+                        <input matInput placeholder="Input Cost" type="text" mask="separator.4" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="Cost" (keyup)="onChangeAveCost($event)">
+                    </mat-form-field>
+                </div>
+                <div class="col-6 align-elements">
+                    <mat-form-field  appearance="standard">
+                        <mat-label>Selling Price</mat-label>
+                        <input matInput placeholder="Input Price" type="text" mask="separator.4" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true"  autocomplete="off" required formControlName="Price">
+                    </mat-form-field>
+                    <mat-checkbox  (change)="onCheckMultiple($event.checked)" [checked]="chkMultiple"> Multiple</mat-checkbox>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 align-elements">
+                    <ng-select
+                        class="w-15"
+                        [items]="unitMeasures"
+                        [virtualScroll]="true"
+                        appendTo="body"
+                        formControlName="UM"
+                        bindLabel="UM"
+                        bindValue="UM"
+                        [searchable]="true"
+                        [clearable] = "false"
+                        placeholder="UnitMeasure"
+                        required>
+                    </ng-select>
+                    <button type="button" (click)="onClickUM()"  mat-icon-button color="primary" title="New"><mat-icon>list</mat-icon> </button>
+                </div>
+                <div class="col-6 align-elements">
+                    <ng-select
+                        class="w-15"
+                        [items]="categorys"
+                        [virtualScroll]="true"
+                        appendTo="body"
+                        formControlName="Category"
+                        bindLabel="Category"
+                        bindValue="Category"
+                        [searchable]="true"
+                        [clearable] = "false"
+                        placeholder="Category"
+                        required>
+                    </ng-select>
+                    <button type="button"  (click)="onClickCategory()"mat-icon-button color="primary" title="New"> <mat-icon>list</mat-icon></button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <ng-select
+                        [items]="vATTypes"
+                        [virtualScroll]="true"
+                        appendTo="body"
+                        formControlName="VATType"
+                        bindLabel="VATType"
+                        bindValue="VATType"
+                        [searchable]="true"
+                        [clearable] = "false"
+                        placeholder="VATType"
+                        (change)="onChangeVATType($event)"
+                        required>
+                    </ng-select>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>Consumable</mat-label>
+                        <mat-select role="combobox" [disableOptionCentering]="true" formControlName="Consumable">
+                            <mat-option value="no">  No </mat-option>
+                            <mat-option value="yes">  Yes </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field class="" appearance="standard">
+                        <mat-label>Available</mat-label>
+                        <input matInput placeholder="Input Available" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" min="0"  autocomplete="off" required formControlName="Available">
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="" appearance="standard">
+                        <mat-label>AlertQty</mat-label>
+                        <input matInput placeholder="Input AlertQty" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="AlertQty">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6">
+                    <mat-checkbox  (change)="onCheckWSerial($event.checked)" [checked]="chkSerial"> W/Serial</mat-checkbox>
+                </div>
+                <div class="col-6">
+                    <mat-checkbox  (change)="onCheckWithExpiry($event.checked)"  [checked]="chkExpiry"> W/Expiry</mat-checkbox>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field class="" appearance="standard">
+                        <mat-label>AveCost</mat-label>
+                        <input matInput placeholder="Input AveCost" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" min="0"  autocomplete="off" required formControlName="AveCost" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-6 align-elements">
+                    <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>AveCostMethod</mat-label>
+                        <mat-select role="combobox" [disableOptionCentering]="true" formControlName="AveCostMethod">
+                            <mat-option value="Average Costing Method"> Average Costing Method  </mat-option>
+                            <mat-option value="Last Highest Item Cost"> Last Highest Item Cost </mat-option>
+                            <mat-option value="Last Purchase Cost"> Last Purchase Cost </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <button type="button"  (click)="onClickAveCostHistory()"mat-icon-button color="primary" title="AveCost History"> <mat-icon>list</mat-icon></button>
+                </div>
+            </div>
+
+        </div>
+        <div mat-dialog-actions [align]="'end'" class="mb-3 item-actions">
+            <button type="button" class="mt-4" (click)="onClickBranchUpdateUI()" mat-icon-button color="primary" title="Branch Update" aria-label="Branch Update"><mat-icon>menu</mat-icon></button>
+            <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="itemForm.invalid || loading == true">{{btnText}}</button>
+        </div>
+</form>

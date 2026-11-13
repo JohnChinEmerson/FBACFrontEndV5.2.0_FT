@@ -1,0 +1,327 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><title>Discount Sample Computation</title>
+<META content="text/html; charset=iso-8859-1" http-equiv=Content-Type>
+<META name=GENERATOR content="MSHTML 11.00.10570.1001"><LINK rel=stylesheet 
+href="_template.css"></HEAD>
+<BODY>
+<DIV id=nsbanner>
+<DIV id=titlerow>
+<H1 class=dtH1>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>BIR Sample 
+Computation</FONT><o:p></O:P></B></P>  </H1></DIV></DIV><B><FONT size=2><o:p></O:P></FONT></B>
+<BLOCKQUOTE style="MARGIN-RIGHT: 0px" dir=ltr>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>Discount 
+Types<o:p></O:P></FONT></B></P>
+<DIV >
+<UL style="MARGIN-TOP: 0in" type=disc>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l0 level1 lfo1; tab-stops: list .5in"><FONT size=2><B>Senior</B> - Senior Citizen Discount (20% or as per BIR memorandum 
+  order)<o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l0 level1 lfo1; tab-stops: list .5in"><FONT size=2><B>PWD</B> - Persons with Disability Discount (20% or BIR memorandum 
+  order)<o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l0 level1 lfo1; tab-stops: list .5in"><FONT size=2><B>Solo Parent</B> - Solo Parent Discount (10% or BIR memorandum 
+  order)<o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l0 level1 lfo1; tab-stops: list .5in"><FONT size=2><B>Regular</B> - Regular Customer Discount (set by company policy, 
+  e.g., 5% -10%)<o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l0 level1 lfo1; tab-stops: list .5in"><FONT size=2><B>NAAC</B> - National Athletes and Coaches Discount (20% or BIR 
+  memorandum order)<o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l0 level1 lfo1; tab-stops: list .5in"><FONT size=2><B>MOV</B> - Medal of Valor Awardee Discount (20% or BIR memorandum 
+  order)<o:p></O:P></FONT></LI></UL></DIV>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><BR><FONT size=2>Scenario 
+Structure<o:p></O:P></FONT></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>For each 
+scenario, document the following:<o:p></O:P></FONT></B></P>
+<OL style="MARGIN-TOP: 0in" type=1>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l10 level1 lfo2; tab-stops: list .5in"><FONT size=2><B>Sale Total Amount - </B>Total sales or receipts for the 
+  transaction.<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l10 level1 lfo2; tab-stops: list .5in"><FONT size=2><B>Pax Count - </B>Number of customers involved in the 
+  transaction.<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l10 level1 lfo2; tab-stops: list .5in"><FONT size=2><B>Discount Name - </B>Discount category (e.g., Senior, PWD, Solo 
+  Parent, Regular, NAAC, MOV).<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l10 level1 lfo2; tab-stops: list .5in"><FONT size=2><B>Discount Person - </B>Name of the person receiving the 
+  discount.<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l10 level1 lfo2; tab-stops: list .5in"><FONT size=2><B>Discount TIN - </B>TIN number of the discounted person (if 
+  applicable).<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l10 level1 lfo2; tab-stops: list .5in"><FONT size=2><B>Discount ID - </B>Valid ID number of the discounted 
+  person.<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l10 level1 lfo2; tab-stops: list .5in"><FONT size=2><B>Discount Count - </B>Number of persons receiving the 
+  discount.<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l10 level1 lfo2; tab-stops: list .5in"><FONT size=2><B>Discount Value - </B>Discount percentage based on law (for Senior, 
+  PWD, Solo Parent, NAAC, MOV) or company policy (for 
+  Regular).<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l10 level1 lfo2; tab-stops: list .5in"><FONT size=2><B>Discount Amount - </B>Expected total discount amount applied to the 
+  sale.<B><o:p></O:P></B></FONT></LI></OL>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><U><SPAN 
+style="FONT-SIZE: 14pt; LINE-HEIGHT: 115%"><FONT size=2>Example 
+Scenarios<o:p></O:P></FONT></SPAN></U></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>Scenario 1: 
+Regular Invoice<o:p></O:P></FONT></B></P>
+<UL style="MARGIN-TOP: 0in" type=disc>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l6 level1 lfo3; tab-stops: list .5in"><FONT size=2><B>Description:</B> One customer.<o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l6 level1 lfo3; tab-stops: list .5in"><FONT size=2><B>Pax Count:</B> 1<o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l6 level1 lfo3; tab-stops: list .5in"><FONT size=2><B>Discount Type(s):</B> N/A<o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l6 level1 lfo3; tab-stops: list .5in"><FONT size=2><B>Discount Basis:</B> N/A<o:p></O:P></FONT></LI></UL>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>Calculation 
+Steps<o:p></O:P></FONT></B></P>
+<OL style="MARGIN-TOP: 0in" type=1>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l2 level1 lfo4; tab-stops: list .5in"><FONT size=2><B>Start with Total Sales:<BR></B>?150.00<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l2 level1 lfo4; tab-stops: list .5in"><B><FONT size=2>Total Due:<BR>?150.00<o:p></O:P></FONT></B>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in; mso-list: l2 level1 lfo4; tab-stops: list .5in; mso-margin-top-alt: 0in; mso-margin-bottom-alt: 8.0pt; mso-add-space: auto"><FONT size=2><B>VAT-Breakdown on the receipt:<BR></B>VATable Sales: 
+  133.93<o:p></O:P></FONT></LI></OL>
+<P class=MsoNormal style="MARGIN: 0in 0in 0in 0.5in; mso-add-space: auto"><FONT size=2>VATAmount: 16.07 <o:p></O:P></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0in 0.5in; mso-add-space: auto"><FONT size=2>VAT-ExemptSales: 0.00<o:p></O:P></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0in 0.5in; mso-add-space: auto"><FONT size=2>Zero-RatedSales: 
+0.00</FONT></P></BLOCKQUOTE>
+<BLOCKQUOTE style="MARGIN-RIGHT: 0px" dir=ltr>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>Scenario 2: 
+Single Senior Customer (applicable also for PWD)<o:p></O:P></FONT></B></P>
+<UL style="MARGIN-TOP: 0in" type=disc>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l6 level1 lfo3; tab-stops: list .5in"><FONT size=2><B>Description:</B> One customer qualifies for Senior 
+  discount.<o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l6 level1 lfo3; tab-stops: list .5in"><FONT size=2><B>Pax Count:</B> 1<o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l6 level1 lfo3; tab-stops: list .5in"><FONT size=2><B>Discount Type(s):</B> Senior or PWD<o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l6 level1 lfo3; tab-stops: list .5in"><FONT size=2><B>Discount Basis:</B> 20% discount on eligible items, VAT 
+  exempt<o:p></O:P></FONT></LI></UL>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>Calculation 
+Steps<o:p></O:P></FONT></B></P>
+<OL style="MARGIN-TOP: 0in" type=1 start=4>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l2 level1 lfo4; tab-stops: list .5in"><FONT size=2><B>Start with Total Sales:<BR></B>?150.00<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l2 level1 lfo4; tab-stops: list .5in"><FONT size=2><B>Divide by Pax Count to get per-person share:<BR></B>?150.00 ÷ 1 pax 
+  = <B>?150.00 per person<o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l2 level1 lfo4; tab-stops: list .5in"><FONT size=2><B>Determine total amount for discounted persons:<BR></B>Discounted 
+  Persons Count = 1<BR>?150.00 × 1 discounted person = <B>?150.00</B> (eligible 
+  for discount)<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l2 level1 lfo4; tab-stops: list .5in"><FONT size=2><B>Remove VAT (12%) for VAT-exempt Senior:<BR></B>?150.00 ÷ 1.12 = 
+  ?133.93 (VAT Exempt Sales)<BR>Less VAT = ?150.00 ? ?133.93 = 
+  <B>?16.07<o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l2 level1 lfo4; tab-stops: list .5in"><FONT size=2><B>Apply 20% Senior Discount or PWD:<BR></B>?133.93 × 20% = 
+  <B>?26.79<o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l2 level1 lfo4; tab-stops: list .5in"><FONT size=2><B>Compute Total Due:<BR></B>?133.93 ? ?26.79 = 
+  <B>?107.14<o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in; mso-list: l2 level1 lfo4; tab-stops: list .5in; mso-margin-top-alt: 0in; mso-margin-bottom-alt: 8.0pt; mso-add-space: auto"><FONT size=2><B>VAT-Breakdown on the receipt:<BR></B>VATable Sales: 
+  0.00<o:p></O:P></FONT></LI></OL>
+<P class=MsoNormal style="MARGIN: 0in 0in 0in 0.5in; mso-add-space: auto"><FONT size=2>VATAmount: 0.00 <o:p></O:P></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0in 0.5in; mso-add-space: auto"><FONT size=2>VAT-ExemptSales: 133.93<o:p></O:P></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0in 0.5in; mso-add-space: auto"><FONT size=2>Zero-RatedSales: 
+0.00 
+</FONT></P></BLOCKQUOTE><FONT size=2></FONT>
+<BLOCKQUOTE style="MARGIN-RIGHT: 0px" dir=ltr>
+<P><B><FONT size=2>Scenario 3: 
+Single Solo Parent Customer<o:p></O:P></FONT></B></P>
+<DIV >
+<UL style="MARGIN-TOP: 0in" type=disc>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l6 level1 lfo3; tab-stops: list .5in"><FONT size=2><B>Description:</B> One customer qualifies for Senior 
+  discount.<o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l6 level1 lfo3; tab-stops: list .5in"><FONT size=2><B>Pax Count:</B> 1<o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l6 level1 lfo3; tab-stops: list .5in"><FONT size=2><B>Discount Type(s):</B> Solo Parent<o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l6 level1 lfo3; tab-stops: list .5in"><FONT size=2><B>Discount Basis:</B> 10% discount on eligible items, VAT 
+  exempt<o:p></O:P></FONT></LI></UL></DIV>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt 0.5in"><o:p><FONT size=2></FONT></O:P></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>Calculation 
+Steps<o:p></O:P></FONT></B></P>
+<OL style="MARGIN-TOP: 0in" type=1>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l5 level1 lfo5; tab-stops: list .5in"><FONT size=2><B>Start with Total Sales:<BR></B>?300.00<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l5 level1 lfo5; tab-stops: list .5in"><FONT size=2><B>Divide by Pax Count to get per-person share:<BR></B>?300.00 ÷ 1 pax 
+  = ?<B>300.00 per person<o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l5 level1 lfo5; tab-stops: list .5in"><FONT size=2><B>Determine total amount for discounted persons:<BR></B>Discounted 
+  Persons Count = 1<BR>?300.00 × 1 discounted person <B>= 
+ 
+  ?300.00</B> (eligible 
+  for discount)<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l5 level1 lfo5; tab-stops: list .5in"><FONT size=2><B>Remove VAT (12%) for VAT-exempt Solo Parent:<BR></B>?300.00 ÷ 1.12 = 
+  ?267.86 (VAT Exempt Sales)<BR>Less VAT = ?300.00 ? ?267.86 = 
+  <B>?32.14<o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l5 level1 lfo5; tab-stops: list .5in"><FONT size=2><B>Apply 10% Solo Parent Discount:<BR></B>?267.86 × 10% = 
+  <B>?26.79<o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l5 level1 lfo5; tab-stops: list .5in"><FONT size=2><B>Compute Total Due:<BR></B>?267.86 ? ?26.79 = <B>?241.07 
+  <o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in; mso-list: l5 level1 lfo5; tab-stops: list .5in; mso-margin-top-alt: 0in; mso-margin-bottom-alt: 8.0pt; mso-add-space: auto"><FONT size=2><B>VAT-Breakdown on the receipt:<BR></B>VATable Sales: 
+  0.00<o:p></O:P></FONT></LI></OL>
+<P class=MsoNormal style="MARGIN: 0in 0in 0in 0.5in; mso-add-space: auto"><FONT size=2>VATAmount: 0.00 <o:p></O:P></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0in 0.5in; mso-add-space: auto"><FONT size=2>VAT-ExemptSales: 267.86<o:p></O:P></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0in 0.5in; mso-add-space: auto"><FONT size=2>Zero-RatedSales: 0.00<o:p></O:P></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt 0.5in"><B><o:p><FONT size=2></FONT></O:P></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt 0.5in"><B><o:p><FONT size=2></FONT></O:P></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt 0.5in"><B><o:p><FONT size=2></FONT></O:P></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt 0.5in"><B><o:p><FONT size=2></FONT></O:P></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>Scenario 4: NAAC 
+(National Artist Awardee Customer) - applicable also to Medal of Valor 
+(MOV)<o:p></O:P></FONT></B></P>
+<UL style="MARGIN-TOP: 0in" type=disc>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l1 level1 lfo11; tab-stops: list .5in"><B><FONT size=2>Description: 1 NAAC discount or MOV discount (20% + VAT Exempt), rest 
+  no discount<o:p></O:P></FONT></B>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l1 level1 lfo11; tab-stops: list .5in"><B><FONT size=2>Pax Count: 1<o:p></O:P></FONT></B>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l1 level1 lfo11; tab-stops: list .5in"><B><FONT size=2>Discount Type(s): NAAC or MOV (20% + VAT 
+  Exempt)<o:p></O:P></FONT></B>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l1 level1 lfo11; tab-stops: list .5in"><B><FONT size=2>Discount Basis: Per-person share<o:p></O:P></FONT></B></LI></UL>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt 0.25in"><B><FONT size=2>Calculation Steps<o:p></O:P></FONT></B></P>
+<OL style="MARGIN-TOP: 0in" type=1>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l11 level1 lfo12; tab-stops: list .5in"><B><FONT size=2>Start with Total Sales:<BR>?450.00<o:p></O:P></FONT></B>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l11 level1 lfo12; tab-stops: list .5in"><FONT size=2><B>Divide by Pax Count to get per-person share:<BR></B>?450.00 ÷ 1 
+  pax<B> = ?450.00 per person<o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l11 level1 lfo12; tab-stops: list .5in"><B><FONT size=2>NAAC or MOV Discount Calculation:<o:p></O:P></FONT></B>
+  <UL style="MARGIN-TOP: 0in" type=circle>
+    <LI class=MsoNormal 
+    style="MARGIN: 0in 0in 8pt; mso-list: l11 level2 lfo12; tab-stops: list 1.0in"><B><FONT size=2>Remove VAT (VAT-exempt):<BR>?450.00 ÷ 1.12 = ?401.79 (VAT Exempt 
+    Sales)<o:p></O:P></FONT></B>
+    <LI class=MsoNormal 
+    style="MARGIN: 0in 0in 8pt; mso-list: l11 level2 lfo12; tab-stops: list 1.0in"><B><FONT size=2>Apply 20% NAAC or MOV Discount (VAT is deductible when applying a 
+    discount but not subject to vat exempt)<BR>?401.79 × 20% = 
+    ?80.36<o:p></O:P></FONT></B>
+    <LI class=MsoNormal 
+    style="MARGIN: 0in 0in 8pt; mso-list: l11 level2 lfo12; tab-stops: list 1.0in"><FONT size=2><B>NAAC or MOV Total Due (vat is not deductible to total due as per 
+    BIR Memorandum Order)<BR></B>?450.00 ? ?80.36<B> = ?</B> 
+    <B>369.64<o:p></O:P></B></FONT></LI></UL>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in; mso-list: l11 level1 lfo12; tab-stops: list .5in; mso-margin-top-alt: 0in; mso-margin-bottom-alt: 8.0pt; mso-add-space: auto"><FONT size=2><B>VAT-Breakdown on the receipt:<BR></B>VATable Sales: 
+  401.79<o:p></O:P></FONT></LI></OL>
+<P class=MsoNormal style="MARGIN: 0in 0in 0in 0.5in; mso-add-space: auto"><FONT size=2>VATAmount: 48.21 <o:p></O:P></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0in 0.5in; mso-add-space: auto"><FONT size=2>VAT-ExemptSales: 0.00<o:p></O:P></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0in 0.5in; mso-add-space: auto"><FONT size=2>Zero-RatedSales: 0.00<o:p></O:P></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><o:p><FONT size=2></FONT></O:P></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><o:p><FONT size=2></FONT></O:P></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><o:p><FONT size=2></FONT></O:P></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><o:p><FONT size=2></FONT></O:P></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><o:p><FONT size=2></FONT></O:P></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>Scenario 5: Mixed 
+Discounts - Senior and Regular<o:p></O:P></FONT></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><FONT size=2><B>Description: 
+</B>Group of 5 customers: 1 Senior, 1 Regular (5% discount), and 3 with no 
+discount.<B><o:p></O:P></B></FONT></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><FONT size=2><B>Pax Count: 
+</B>5</FONT><B><BR><FONT size=2>Discount Type(s): </FONT></B><FONT size=2>Senior 
+(20% discount, VAT exempt) + Regular (5% discount, company 
+policy)</FONT><B><BR><FONT size=2>Discount Basis:<o:p></O:P></FONT></B></P>
+<UL style="MARGIN-TOP: 0in" type=disc>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l4 level1 lfo6; tab-stops: list .5in"><FONT size=2><B>Senior - </B>20% discount on eligible items, VAT 
+  exempt<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l4 level1 lfo6; tab-stops: list .5in"><FONT size=2><B>Regular - </B>5% discount on eligible items, not VAT 
+  exempt<B><o:p></O:P></B></FONT></LI></UL>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>Calculation 
+Steps<o:p></O:P></FONT></B></P>
+<OL style="MARGIN-TOP: 0in" type=1>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l3 level1 lfo7; tab-stops: list .5in"><FONT size=2><B>Start with Total 
+  Sales:<BR></B>?1,000.00<B><o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l3 level1 lfo7; tab-stops: list .5in"><FONT size=2><B>Divide by Pax Count to get per-person share:<BR></B>?1,000.00 ÷ 5 
+  pax =<B> ?200.00 per person<o:p></O:P></B></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l3 level1 lfo7; tab-stops: list .5in"><B><FONT size=2>Determine total amount for each discounted 
+  person:<o:p></O:P></FONT></B>
+  <UL style="MARGIN-TOP: 0in" type=circle>
+    <LI class=MsoNormal 
+    style="MARGIN: 0in 0in 8pt; mso-list: l3 level2 lfo7; tab-stops: list 1.0in"><FONT size=2>Senior: ?200.00<o:p></O:P></FONT>
+    <LI class=MsoNormal 
+    style="MARGIN: 0in 0in 8pt; mso-list: l3 level2 lfo7; tab-stops: list 1.0in"><FONT size=2>Regular: ?200.00<o:p></O:P></FONT></LI></UL></LI></OL>
+<P class=MsoNormal 
+style="MARGIN: 0in 0in 8pt; LINE-HEIGHT: normal; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-outline-level: 4"><B><SPAN 
+style='mso-fareast-font-family: "Times New Roman"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 0pt; mso-ligatures: none'><FONT size=2>Senior Discount Calculation (VAT Exempt)<o:p></O:P></FONT></SPAN></B></P>
+<OL type=1 start=4>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; LINE-HEIGHT: normal; mso-list: l3 level1 lfo7; tab-stops: list .5in; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto"><B><SPAN 
+  style='mso-fareast-font-family: "Times New Roman"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 0pt; mso-ligatures: none'><FONT size=2>Remove VAT (12%) from Senior's share:</FONT></SPAN></B><SPAN 
+  style='mso-fareast-font-family: "Times New Roman"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 0pt; mso-ligatures: none'><BR><FONT size=2>?200.00 ÷ 1.12 = <B>?178.57</B> (VAT Exempt Sales)<BR>Less VAT = 
+  ?200.00 ? ?178.57 = <B>?21.43</B><o:p></O:P></FONT></SPAN>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; LINE-HEIGHT: normal; mso-list: l3 level1 lfo7; tab-stops: list .5in; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto"><B><SPAN 
+  style='mso-fareast-font-family: "Times New Roman"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 0pt; mso-ligatures: none'><FONT size=2>Apply 20% Senior Discount:</FONT></SPAN></B><SPAN 
+  style='mso-fareast-font-family: "Times New Roman"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 0pt; mso-ligatures: none'><BR><FONT size=2>?178.57 × 20% = <B>?35.71</B><o:p></O:P></FONT></SPAN>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; LINE-HEIGHT: normal; mso-list: l3 level1 lfo7; tab-stops: list .5in; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto"><B><SPAN 
+  style='mso-fareast-font-family: "Times New Roman"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 0pt; mso-ligatures: none'><FONT size=2>Senior Total After Discount:</FONT></SPAN></B><SPAN 
+  style='mso-fareast-font-family: "Times New Roman"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 0pt; mso-ligatures: none'><BR><FONT size=2>?178.57 ? ?35.71 = <B>?142.86</B><o:p></O:P></FONT></SPAN></LI></OL>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>Regular Discount 
+Calculation (Company Policy)<o:p></O:P></FONT></B></P>
+<OL style="MARGIN-TOP: 0in" type=1 start=7>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l7 level1 lfo8; tab-stops: list .5in"><FONT size=2><B>Apply 5% Regular Discount (no VAT exemption):</B><BR>?200.00 × 5% = 
+  <B>?10.00</B><o:p></O:P></FONT>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l7 level1 lfo8; tab-stops: list .5in"><FONT size=2><B>Regular Total After Discount:</B><BR>?200.00 ? ?10.00 = 
+  <B>?190.00</B><o:p></O:P></FONT></LI></OL>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>Non-Discounted 
+Customers (3 pax)<o:p></O:P></FONT></B></P>
+<OL style="MARGIN-TOP: 0in" type=1 start=9>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l9 level1 lfo9; tab-stops: list .5in"><FONT size=2><B>Total for 3 regular-paying pax:</B><BR>3 × ?200.00 = 
+  <B>?600.00</B><o:p></O:P></FONT></LI></OL>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>Final Total Due 
+Calculation<o:p></O:P></FONT></B></P>
+<OL style="MARGIN-TOP: 0in" type=1 start=10>
+  <LI class=MsoNormal 
+  style="MARGIN: 0in 0in 8pt; mso-list: l8 level1 lfo10; tab-stops: list .5in"><FONT size=2><B>Add all amounts:</B><BR>Senior: ?142.86<BR>Regular: 
+  ?190.00<BR>Non-discounted pax: ?600.00<o:p></O:P></FONT></LI></OL>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><FONT size=2>Total Due = 
+?142.86 + ?190.00 + ?600.00 = ?932.86<o:p></O:P></FONT></B></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 8pt"><B><o:p><FONT size=2></FONT></O:P></B></P>
+<P class=MsoListParagraphCxSpFirst 
+style="MARGIN: 0in 0in 0in 0.5in; TEXT-INDENT: -0.25in; mso-list: l8 level1 lfo10; tab-stops: list .5in"><SPAN 
+style="mso-bidi-font-family: Aptos; mso-bidi-theme-font: minor-latin"><SPAN 
+style="mso-list: Ignore"><FONT size=2>11.<SPAN 
+style='FONT: 7pt "Times New Roman"'><FONT face=Verdana> 
+</FONT></SPAN></FONT></SPAN></SPAN><FONT size=2><B>VAT-Breakdown on the 
+receipt:<BR></B>VATable Sales: 714.29<o:p></O:P></FONT></P>
+<P class=MsoListParagraphCxSpMiddle style="MARGIN: 0in 0in 0in 0.5in"><FONT size=2>VATAmount: 85.71 <o:p></O:P></FONT></P>
+<P class=MsoListParagraphCxSpMiddle style="MARGIN: 0in 0in 0in 0.5in"><FONT size=2>VAT-ExemptSales: 178.57<o:p></O:P></FONT></P>
+<P class=MsoListParagraphCxSpLast style="MARGIN: 0in 0in 8pt 0.5in"><FONT size=2>Zero-RatedSales: 0.00<o:p></O:P></FONT></P></BLOCKQUOTE>
+<P></FONT>&nbsp;</P>
+<DIV id=nstext>
+<HR>
+</DIV>
+<DIV class=footer>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copyright © 2024 <A 
+href="https://www.mariosoftsolutions.ph" target=_blank>Mariosoft Solutions</A>. 
+All Rights Reserved. </P></DIV></BODY></HTML>

@@ -1,0 +1,19 @@
+<div class="drf">
+    <div class="drf-presets" role="group" aria-label="Date range">
+        <button type="button" *ngFor="let p of presets" class="drf-preset" [class.active]="preset == p.Value" [attr.aria-pressed]="preset == p.Value" [disabled]="disabled" (click)="select(p.Value)">{{p.Label}}</button>
+    </div>
+    <div class="drf-dates">
+        <mat-form-field appearance="standard" class="drf-field">
+            <mat-label>From</mat-label>
+            <input matInput [matDatepicker]="fromPicker" [(ngModel)]="dateFrom" (dateChange)="onDateChange('from')" [disabled]="disabled" autocomplete="off">
+            <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromPicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="standard" class="drf-field">
+            <mat-label>To</mat-label>
+            <input matInput [matDatepicker]="toPicker" [(ngModel)]="dateTo" (dateChange)="onDateChange('to')" [disabled]="disabled" autocomplete="off">
+            <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+            <mat-datepicker #toPicker></mat-datepicker>
+        </mat-form-field>
+    </div>
+</div>

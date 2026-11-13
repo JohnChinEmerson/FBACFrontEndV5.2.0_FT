@@ -1,0 +1,818 @@
+/* ===== Desktop SaleTransUI arrangement: left tiles panel / right order panel ===== */
+.main-transaction-container {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  /* the screen under the toolbars and above the fixed footer (both measured by HomeComponent), so the last
+     button row is never under the footer; 100vh first for browsers without dvh */
+  height: calc(100vh - var(--app-top-h, 100px) - var(--app-footer-h, 45px) - 16px);
+  height: calc(100dvh - var(--app-top-h, 100px) - var(--app-footer-h, 45px) - 16px);
+  margin: 8px;
+  overflow: hidden;
+}
+.left-panel, .right-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 6px;
+}
+.left-panel { flex: 1 1 57%; }
+.right-panel { flex: 1 1 43%; padding-bottom: 10px; }   /* gap under the last button row */
+
+/* panel28: customer + toolbar strip */
+.pos-toolbar { padding: 6px 10px 0; border-bottom: 1px solid #e3e6ef; }
+.customer-row, .strip-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pos-label { font-weight: 600; margin: 0; }
+.customer-select { flex: 1 1 260px; min-width: 200px; }
+.pos-small-btn { min-height: 48px; min-width: 72px; font-size: 15px; }
+.strip-search { flex: 1 1 180px; }
+/* LOAD S.O / POINTS / HIDE PRICE (and READY TO SERVE) on the right of the strip */
+.strip-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; margin-left: auto; }
+/* Ready to Serve icon (laptop / tablet): finger-sized, highlighted with a soft pulse while tables are ready */
+.ready-icon-btn {
+  flex: 0 0 auto; width: 48px; height: 48px; line-height: 48px;
+  border: 1px solid #a5d6a7; border-radius: 12px; background: #fff; color: #1b5e20;
+}
+.ready-icon-btn mat-icon { font-size: 28px; width: 28px; height: 28px; line-height: 28px; }
+.ready-icon-btn.has-ready { background: #2e7d32; border-color: #2e7d32; color: #fff; animation: ready-pulse 1.8s ease-out infinite; }
+@keyframes ready-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(46, 125, 50, .55); }
+  70% { box-shadow: 0 0 0 10px rgba(46, 125, 50, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(46, 125, 50, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ready-icon-btn.has-ready { animation: none; }
+}
+.strip-btn { font-weight: 600; min-height: 48px; min-width: 96px; font-size: 14px; }
+
+/* tabControl */
+.pos-tabs { display: flex; border-bottom: 2px solid #3F51B5; }
+.pos-tab {
+  flex: 1;
+  padding: 10px 4px;
+  border: 0;
+  background: #eef0f8;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .5px;
+  cursor: pointer;
+  border-right: 1px solid #fff;
+}
+.pos-tab.active { background: #3F51B5; color: #fff; }
+.table-mode-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: #fff3e0;
+  color: #e65100;
+  font-weight: 600;
+}
+
+.itemListTransaction {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* Tile sizes follow the screen: the Sales Config ButtonWidth / ButtonHeight (--btn-w / --btn-h) is the largest size,
+   each screen size caps it (--tile-w / --tile-h, set in the media queries below) so smaller screens get more,
+   smaller tiles instead of a few huge ones. */
+.itemListTransaction { --tile-w: 170px; --tile-h: 400px; }
+
+/* big tiles for TABLE CATEGORY / TABLE / CATEGORY */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--btn-w, 130px), var(--tile-w)), 1fr));
+  grid-auto-rows: min(var(--btn-h, 96px), var(--tile-h));   /* fixed row height: the page size is computed from the panel height */
+  gap: 10px;
+  padding: 12px;
+}
+.big-tile {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid #d5d9e8;
+  border-radius: 10px;
+  background: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(20, 30, 70, 0.08);
+  transition: transform .08s, box-shadow .15s;
+}
+.big-tile:hover { box-shadow: 0 6px 16px rgba(63, 81, 181, 0.22); }
+.big-tile:active { transform: scale(0.97); }
+.big-tile.selected { box-shadow: 0 0 0 3px #3F51B5; }
+.category-tile { background: linear-gradient(135deg, #e8ecff, #fdf1e3); }
+.table-tile .table-name { font-size: 17px; }
+.table-tile .table-status { font-size: 11px; letter-spacing: .5px; }
+.table-tile .table-amount { font-size: 13px; }
+.table-tile.status-vacant { background: #e8f5e9; border-color: #a5d6a7; color: #1b5e20; }
+.table-tile.status-occupied, .table-tile.status-pending { background: #fff8e1; border-color: #ffcc80; color: #e65100; }
+.table-tile.status-preparing { background: #fff3e0; border-color: #ffb74d; color: #bf360c; }
+.table-tile.status-sent { background: #fffde7; border-color: #fff176; color: #8d6e00; }
+.table-tile.status-ready { background: #e0f2f1; border-color: #80cbc4; color: #00695c; }
+.table-tile.status-served { background: #e3f2fd; border-color: #90caf9; color: #0d47a1; }
+.table-tile.status-paid { background: #ede7f6; border-color: #b39ddb; color: #4527a0; }
+/* billed out, waiting for payment: red frame + a timer strip on the bottom edge (tiles have a fixed height, so
+   the strip takes no row of its own and is never clipped); the tile keeps its status colour */
+.table-tile.billed-out { position: relative; border: 2px solid #d32f2f; padding-bottom: 18px; gap: 2px; }
+.table-tile .table-billout {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 2px 4px; background: #d32f2f; color: #fff;
+  font-size: 10px; line-height: 12px; letter-spacing: .3px; text-align: center;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* PREV / NEXT */
+.pager-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  border-top: 1px solid #e3e6ef;
+}
+.pager-btn { min-width: 122px; height: 64px; font-weight: 700; font-size: 16px; }
+.pager-label { color: #555; font-size: 13px; }
+
+/* panel8: TOTAL AMOUNT */
+.total-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #263238;
+  color: #fff;
+}
+.table-label { font-weight: 700; font-size: 18px; margin-right: auto; color: #ffd54f; }
+.total-label { font-weight: 600; font-size: 16px; margin-left: auto; }
+.total-value { font-weight: 800; font-size: 28px; }
+
+.itemListTransaction2 {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: auto;
+  min-height: 0;
+}
+.split-cell { flex: 0 0 56px !important; justify-content: center; }
+
+/* SPLIT: by items / by amount, and what the new bill will be */
+.split-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 8px 12px; background: #fff3e0; border-bottom: 1px solid #ffcc80; }
+.split-modes { display: inline-flex; border: 1px solid #ff9800; border-radius: 6px; overflow: hidden; }
+.split-mode { border: 0; background: #fff; color: #e65100; font-weight: 700; font-size: 13px; min-height: 36px; padding: 0 14px; cursor: pointer; }
+.split-mode.on { background: #ff9800; color: #fff; }
+.split-amount { width: 150px; min-height: 36px; padding: 0 10px; font-size: 16px; font-weight: 700; border: 1px solid #ff9800; border-radius: 6px; background: #fff; }
+.split-sum { margin-left: auto; font-size: 14px; color: #5d4037; }
+.split-sum b { font-size: 16px; color: #e65100; }
+.ph-split-bar { padding: 8px 12px; }
+.ph-split-check { flex: 0 0 auto; }
+.ph-split-check { transform: scale(1.25); }
+.order-status {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 6px;
+  border-radius: 8px;
+  background: #eceff1;
+  color: #455a64;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+/* the kitchen status of the line (same colours as the Kitchen Queue) */
+.order-status.os-sent { background: #fff8e1; color: #e65100; }
+.order-status.os-preparing { background: #fff3e0; color: #bf360c; }
+.order-status.os-ready { background: #e8f5e9; color: #1b5e20; font-weight: 700; }
+.order-status.os-served { background: #e3f2fd; color: #0d47a1; }
+
+/* UpgradePanel */
+.upgrade-panel { border-top: 3px solid #3F51B5; padding: 4px 10px; max-height: 160px; overflow-y: auto; background: #f5f7ff; }
+.upgrade-title { display: flex; align-items: center; justify-content: space-between; }
+.upgrade-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 3px 0; border-bottom: 1px solid #e3e6ef; }
+.upgrade-actions { display: inline-flex; gap: 6px; flex: 0 0 auto; }
+.upgrade-name { min-width: 0; }
+.upgrade-price { color: #6b7280; margin-left: 4px; }
+/* UPGRADE label on an order line / panel row */
+.upgrade-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .3px; padding: 1px 6px; border-radius: 8px; background: #ede7f6; color: #4527a0; margin: 0 4px; vertical-align: middle; }
+
+/* pnlAmountPaid */
+/* Desktop pnlAmountPaid: AMOUNT PAID (green) / CHANGE (black) in large type, made taller for touch */
+.amount-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px;
+  background: #f5f5f5;
+  flex-wrap: nowrap;
+}
+.amount-label { font-weight: 700; font-size: 18px; margin: 0; color: #555; white-space: nowrap; }
+/* AMOUNT PAID and CHANGE share the row: the boxes shrink instead of CHANGE dropping to a second line */
+.amount-row input.form-control {
+  width: auto;
+  min-width: 0;
+  flex: 1 1 0;
+  height: 64px;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  background-color: #fff;
+}
+.amount-row .amount-paid { color: rgb(31, 100, 31) !important; }
+.amount-row .change { color: #000 !important; }
+
+/* On Screen Keyboard for AMOUNT PAID (touch) */
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  padding: 6px 10px;
+  background: #eceff1;
+}
+.keypad .key {
+  height: 56px;
+  border: 1px solid #cfd8dc;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.keypad .key:active { transform: scale(0.97); }
+.keypad .key.fn { font-size: 15px; background: #f5f5f5; }
+.keypad .key.enter { background: #2e7d32; color: #fff; font-size: 16px; }
+
+/* panel12 / panel15 action rows (Desktop buttons are ~70px tall) */
+.action-row { display: flex; gap: 6px; padding: 5px 6px; }
+.action-row .action-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 72px;
+  padding: 0 6px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.15;
+  background: #3F51B5;
+  color: #fff;
+  white-space: normal;
+  border-radius: 8px;
+}
+.action-row.big .action-btn { height: 80px; font-size: 17px; }
+.action-row .action-btn[disabled] { background: #9fa8da; color: #eee; }
+.action-row .action-btn.active-mode { background: #ff9800; }
+.action-row .action-btn.pay-btn { background: #2e7d32; }
+.action-row .action-btn.complete-btn { background: #6a1b9a; }
+
+mat-table:focus { outline: none !important; }
+.mat-table .mat-cell, .mat-table .mat-header-cell { max-width: 100% !important; }
+.auto-adjust-cell {
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  line-height: 1.4em !important;
+  padding: 4px 8px !important;
+}
+.mat-row, .mat-cell { height: auto !important; }
+
+/* ===== LEFT TABLE (Item picker) ===== */
+::ng-deep .itemListTransaction .mat-column-ItemId {
+    flex: 0 0 18% !important;
+}
+::ng-deep .itemListTransaction .mat-column-ItemName {
+    flex: 1 1 37% !important;
+}
+::ng-deep .itemListTransaction .mat-column-UM {
+    flex: 0 0 10% !important;
+}
+::ng-deep .itemListTransaction .mat-column-Price {
+    flex: 0 0 17% !important;
+    text-align: right !important;
+    justify-content: end !important;
+    padding-right: 10px !important;
+    /* font-weight: 600; */
+}
+::ng-deep .itemListTransaction .mat-column-Available {
+    flex: 0 0 18% !important;
+    text-align: right !important;
+    justify-content: end !important;
+    padding-right: 10px !important;
+}
+::ng-deep .itemListTransaction .mat-row {
+    align-items: flex-start !important;
+}
+
+/* ===== RIGHT TABLE (Order lines) ===== */
+::ng-deep .itemListTransaction2 .mat-column-DiscountValue,
+::ng-deep .itemListTransaction2 .mat-column-Amount {
+    text-align: right !important;
+    justify-content: end !important;
+    padding-right: 10px !important;
+    flex: 0 0 12% !important;
+}
+::ng-deep .itemListTransaction2 .mat-column-Qty,
+::ng-deep .itemListTransaction2 .mat-column-Price,
+::ng-deep .itemListTransaction2 .mat-column-Discount {
+    text-align: right !important;
+    justify-content: end !important;
+    padding-right: 10px !important;
+    flex: 0 0 8% !important;
+}
+::ng-deep .itemListTransaction2 .mat-column-UM {
+    flex: 0 0 7% !important;
+}
+::ng-deep .itemListTransaction2 .mat-column-ItemName {
+    flex: 0 0 40% !important;
+}
+
+/* ---- Right-align text INSIDE the editable inputs (right table) ---- */
+::ng-deep .itemListTransaction2 .mat-column-Qty input,
+::ng-deep .itemListTransaction2 .mat-column-Price input,
+::ng-deep .itemListTransaction2 .mat-column-DiscountValue input {
+    text-align: right !important;
+    width: 100%;
+}
+
+/* ---- DiscountValue: input + Percent checkbox aligned as one unit ---- */
+::ng-deep .itemListTransaction2 .mat-column-DiscountValue .discount-cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    width: 100%;
+}
+::ng-deep .itemListTransaction2 .mat-column-DiscountValue .discount-cell input {
+    text-align: right !important;
+    width: 60px;
+    flex: 0 0 auto;
+}
+::ng-deep .itemListTransaction2 .mat-column-DiscountValue .discount-cell .mat-checkbox {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+}
+
+::ng-deep .discount-select-wrap {
+    position: relative;
+    display: inline-block;
+}
+
+::ng-deep .discount-select-wrap.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+::ng-deep .discount-select-wrap .discount-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 22px;
+    border-radius: 5px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    pointer-events: none;
+}
+
+::ng-deep .discount-select-wrap .discount-select {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    border: none;
+}
+
+/* ===== LEFT ITEM TILES (modern cards) ===== */
+/* Sales Config ButtonWidth / ButtonHeight (Desktop dynamic buttons) come in as --btn-w / --btn-h */
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--btn-w, 150px), var(--tile-w)), 1fr));
+  gap: 12px;
+  padding: 12px;
+  outline: none;
+}
+/* Item Photo = no (Desktop default): text buttons with the item Alias, ButtonHeight tall */
+.item-grid.no-photo {
+  grid-auto-rows: min(var(--btn-h, 110px), var(--tile-h));
+}
+.item-grid.no-photo .item-tile {
+  height: 100%;
+}
+.item-grid.no-photo .tile-body {
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(135deg, #e8ecff, #fdf1e3);
+}
+.item-grid.no-photo .tile-name {
+  font-size: 15px;
+  -webkit-line-clamp: 3;
+  min-height: 0;
+}
+.tile-um-inline {
+  font-size: 11px;
+  color: #546e7a;
+}
+.item-tile {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+  cursor: pointer;
+  background: #fff;
+  color: #212529;
+  border: 1px solid #e3e6ef;
+  border-radius: 14px;
+  font-family: inherit;
+  box-shadow: 0 1px 3px rgba(20, 30, 70, 0.08);
+  transition: box-shadow .15s, border-color .15s, transform .08s;
+}
+.item-tile:hover {
+  box-shadow: 0 6px 16px rgba(63, 81, 181, 0.22);
+  transform: translateY(-2px);
+}
+.item-tile:active {
+  transform: scale(0.97);
+}
+.tile-photo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(135deg, #e8ecff, #fdf1e3);
+}
+.tile-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.tile-emoji {
+  font-size: 40px;
+  line-height: 1;
+}
+.tile-um {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+.tile-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 8px 10px 10px;
+  flex: 1;
+}
+.tile-name {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+  min-height: 2.5em;   /* always 2 lines: every tile has the same height so a page fits exactly */
+}
+.tile-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #3F51B5;
+}
+.item-tile.data-selected {
+  border-color: #3F51B5;
+  box-shadow: 0 0 0 2px #3F51B5, 0 6px 16px rgba(63, 81, 181, 0.25);
+}
+.item-tile.data-out {
+  border-color: #e57373;
+}
+.item-tile.data-out .tile-body {
+  background: #fdecea;
+}
+.item-tile.data-alert {
+  border-color: #ffb74d;
+}
+.item-tile.data-alert .tile-body {
+  background: #fff8e1;
+}
+.no-items {
+  grid-column: 1 / -1;
+  padding: 16px;
+  text-align: center;
+  color: #6c757d;
+}
+
+/* ===== touch targets (all sizes) ===== */
+.upgrade-row button { min-height: 44px; }
+.split-cell .mat-checkbox { transform: scale(1.35); }
+.main-transaction-container, .left-panel, .right-panel { min-width: 0; }   /* panels may shrink instead of overflowing */
+.total-header { flex-wrap: wrap; row-gap: 2px; }
+.table-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+
+/* ===== BIG LAPTOP / DESKTOP SCREENS (1600px and wider): slightly bigger tiles ===== */
+@media (min-width: 1600px) {
+  .itemListTransaction { --tile-w: 190px; }
+}
+
+/* ===== TABLETS and laptops up to 1599px: the order grid in fixed column widths (percentages cut Qty, Price and
+   the discount box on narrow panels); the item name takes the rest and wraps instead of being cut ===== */
+@media (max-width: 1599.98px) and (min-width: 768px) {
+  ::ng-deep .itemListTransaction2 .mat-table { min-width: 470px; }
+  ::ng-deep .itemListTransaction2 .mat-column-Qty { flex: 0 0 52px !important; }
+  ::ng-deep .itemListTransaction2 .mat-column-UM { flex: 0 0 50px !important; }
+  ::ng-deep .itemListTransaction2 .mat-column-ItemName { flex: 1 1 0 !important; min-width: 0; }
+  ::ng-deep .itemListTransaction2 .mat-column-Price { flex: 0 0 62px !important; }
+  ::ng-deep .itemListTransaction2 .mat-column-Discount { flex: 0 0 56px !important; }
+  ::ng-deep .itemListTransaction2 .mat-column-DiscountValue { flex: 0 0 96px !important; padding-right: 6px !important; }
+  ::ng-deep .itemListTransaction2 .mat-column-Amount { flex: 0 0 78px !important; }
+  ::ng-deep .itemListTransaction2 .mat-column-DiscountValue .discount-cell input { width: 38px; }
+  ::ng-deep .itemListTransaction2 .discount-select-wrap .discount-icon { width: 36px; }
+  ::ng-deep .itemListTransaction2 .mat-header-cell { white-space: normal !important; line-height: 1.15 !important; }
+}
+
+/* ===== TABLETS (both orientations): one screen, nothing under the footer; smaller tiles and buttons ===== */
+@media (max-width: 1280px) and (min-width: 768px) {
+  .itemListTransaction { --tile-w: 132px; --tile-h: 96px; }
+  .tile-grid, .item-grid { gap: 8px; padding: 8px; }
+  .big-tile { font-size: 14px; padding: 6px; }
+  .table-tile .table-name { font-size: 16px; }
+  .item-grid.no-photo .tile-name { font-size: 14px; }
+  .tile-price { font-size: 15px; }
+  .tile-emoji { font-size: 32px; }
+
+  .pos-toolbar { padding: 4px 8px 0; }
+  .customer-row, .strip-row { gap: 6px; }
+  .pos-small-btn { min-height: 44px; }
+  .strip-btn { min-height: 42px; min-width: 0; padding: 0 10px; font-size: 13px; }
+  .strip-search { flex: 1 1 140px; }
+  .pos-tab { padding: 10px 4px; font-size: 12px; letter-spacing: .2px; }
+  .pager-row { padding: 4px 8px; }
+  .pager-btn { min-width: 100px; height: 48px; font-size: 15px; }
+
+  .total-header { padding: 6px 12px; }
+  .total-value { font-size: 24px; }
+  .total-label { font-size: 14px; }
+  .table-label { font-size: 16px; }
+  .amount-row { padding: 6px 8px; gap: 8px; }
+  .amount-label { font-size: 14px; }
+  .amount-row input.form-control { height: 48px; font-size: 22px; }
+}
+
+/* ===== TABLET LANDSCAPE: side by side in two equal halves =====
+   SEND .. MERGE three per row (two rows), BILL OUT .. COMPLETE all five in one row: the order grid keeps most of the height */
+@media (max-width: 1280px) and (min-width: 901px) and (orientation: landscape) {
+  .main-transaction-container { gap: 6px; margin: 6px;
+    height: calc(100vh - var(--app-top-h, 100px) - var(--app-footer-h, 45px) - 12px);
+    height: calc(100dvh - var(--app-top-h, 100px) - var(--app-footer-h, 45px) - 12px); }
+  .left-panel { flex-basis: 50%; }
+  .right-panel { flex-basis: 50%; padding-bottom: 6px; }
+  .action-row { flex-wrap: wrap; gap: 5px; padding: 3px 6px; }
+  .action-row .action-btn { flex: 1 1 calc(33.33% - 5px); height: 46px; font-size: 14px; }
+  .action-row.big { flex-wrap: nowrap; }
+  .action-row.big .action-btn { flex: 1 1 0; height: 56px; font-size: 13px; padding: 0 4px; }
+}
+
+/* ===== TABLET PORTRAIT: tiles on top, the order under them, all on one screen (no page scrolling) =====
+   The eleven order buttons in two rows (SEND .. MERGE, BILL OUT .. COMPLETE). Short windows keep the scrolling layout. */
+@media (max-width: 1280px) and (min-width: 768px) and (orientation: portrait) and (min-height: 860px) {
+  .main-transaction-container {
+    flex-direction: column;
+    gap: 6px;
+    margin: 6px;
+    height: calc(100vh - var(--app-top-h, 100px) - var(--app-footer-h, 45px) - 12px);
+    height: calc(100dvh - var(--app-top-h, 100px) - var(--app-footer-h, 45px) - 12px);
+    overflow: hidden;
+  }
+  .left-panel { flex: 1 1 54%; }
+  .right-panel { flex: 1 1 46%; padding-bottom: 6px; }
+  .itemListTransaction, .itemListTransaction2 { min-height: 0; max-height: none; }
+  .action-row { flex-wrap: nowrap; gap: 6px; padding: 3px 6px; }
+  .action-row .action-btn, .action-row.big .action-btn { flex: 1 1 0; height: 54px; font-size: 14px; }
+  .action-row.big .action-btn { height: 58px; font-size: 15px; }
+  ::ng-deep .itemListTransaction2 .mat-table { min-width: 0; }
+}
+
+/* ===== NARROW (900px or less) OR SHORT WINDOWS: stack the panels, the page scrolls ===== */
+@media (max-width: 900px) and (orientation: landscape), (max-width: 1280px) and (orientation: portrait) and (max-height: 859.98px) {
+  .main-transaction-container {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+    /* the page scrolls: its end stays above the fixed footer */
+    margin-bottom: calc(var(--app-footer-h, 45px) + 8px);
+  }
+  .left-panel, .right-panel { flex: none; }
+  .itemListTransaction { min-height: 320px; max-height: 50vh; }
+  .itemListTransaction2 { min-height: 200px; max-height: 40vh; }
+  .action-row { flex-wrap: wrap; }
+  .action-row .action-btn, .action-row.big .action-btn { flex: 1 1 calc(33.33% - 6px); height: 60px; font-size: 15px; }
+}
+
+/* ===== PHONE ===== */
+@media (max-width: 600px) {
+  .main-transaction-container { margin: 4px; gap: 6px; }
+  .pos-toolbar { padding: 6px 8px 0; }
+  .customer-row .pos-label { display: none; }
+  .customer-select { flex: 1 1 100%; min-width: 0; }
+  .pos-small-btn { flex: 1 1 auto; min-width: 0; }
+  .strip-btn { flex: 1 1 auto; min-width: 0; font-size: 13px; }
+  .strip-search { flex: 1 1 100%; }
+  .strip-right { flex: 1 1 100%; margin-left: 0; }
+  .pos-tab { font-size: 11px; padding: 12px 2px; letter-spacing: 0; }
+  .itemListTransaction { min-height: 280px; max-height: 55vh; }
+  .item-grid { grid-template-columns: repeat(2, 1fr); }
+  .tile-grid { grid-template-columns: repeat(2, 1fr); }
+  .big-tile { font-size: 14px; }
+  .pager-row { padding: 6px; }
+  .pager-btn { min-width: 84px; height: 52px; font-size: 14px; }
+  .total-header { padding: 8px 10px; }
+  .table-label { flex: 1 1 100%; font-size: 15px; }
+  .total-label { margin-left: 0; font-size: 14px; }
+  .total-value { margin-left: auto; font-size: 24px; }
+  /* AMOUNT PAID / CHANGE: label above its box */
+  .amount-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 8px; padding: 8px; }
+  .amount-row .amount-label { font-size: 13px; grid-row: 1; }
+  .amount-row input.form-control { width: 100%; height: 52px; font-size: 22px; grid-row: 2; }
+  .keypad { gap: 5px; padding: 6px; }
+  .keypad .key { height: 52px; }
+  .action-row { gap: 5px; padding: 4px; }
+  .action-row .action-btn, .action-row.big .action-btn { flex: 1 1 calc(50% - 5px); height: 54px; font-size: 14px; }
+  .upgrade-panel { max-height: 220px; }
+}
+
+/* ================= PHONE LAYOUT ================= */
+/* sheets cover the fixed footer (z-index 1000); their actions close them before opening a dialog */
+.ph { display: flex; flex-direction: column; min-height: calc(100vh - var(--app-top-h, 100px) - var(--app-footer-h, 0px)); min-height: calc(100dvh - var(--app-top-h, 100px) - var(--app-footer-h, 0px)); background: #f5f6fa;
+  /* the bottom bar is fixed over the page: its measured height (--ph-bottom-h) stays free under the last tiles */
+  padding-bottom: calc(var(--ph-bottom-h, 150px) + 12px); overflow-x: hidden; }
+.ph-top {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 8px 10px 6px; background: #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+.ph-top-row { display: flex; align-items: center; gap: 6px; }
+.ph-customer { flex: 1; min-width: 0; }
+.ph-icon-btn { flex: 0 0 auto; }
+.ph-search {
+  display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 10px;
+  border: 1px solid #d5d9e6; border-radius: 22px; background: #f8f9fc;
+}
+.ph-search mat-icon { color: #6b7280; }
+.ph-search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; font-size: 16px; }
+.ph-clear { border: 0; background: transparent; color: #6b7280; display: flex; padding: 4px; }
+.ph-order { display: flex; align-items: center; gap: 6px; font-weight: 700; color: #3F51B5; }
+.ph-chips { display: flex; align-items: center; gap: 8px; }
+.ph-category { flex: 1 1 auto; min-width: 0; font-size: 15px; }
+.ph-category ::ng-deep .mat-form-field-wrapper { padding-bottom: 0; margin: 0; }
+.ph-category ::ng-deep .mat-form-field-infix { padding: 10px 0 12px; border-top-width: 6px; }
+.ph-chip {
+  flex: 0 0 auto; display: inline-flex; align-items: center; gap: 4px;
+  min-height: 44px; padding: 0 14px; border: 1px solid #c5cae9; border-radius: 18px;
+  background: #fff; font: inherit; font-weight: 600; color: #3F51B5; white-space: nowrap;
+}
+.ph-chip mat-icon { font-size: 18px; width: 18px; height: 18px; }
+.ph-chip.active { background: #3F51B5; border-color: #3F51B5; color: #fff; }
+
+/* phone tiles follow the screen width: 3 per row on most phones, 2 on the narrowest, more in landscape */
+.ph-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; padding: 8px; }
+.ph-item {
+  display: flex; flex-direction: column; text-align: left; padding: 0; overflow: hidden;
+  border: 1px solid #e3e6ef; border-radius: 12px; background: #fff; font: inherit; cursor: pointer;
+}
+.ph-item:active { transform: scale(0.98); }
+.ph-item.data-out { opacity: .55; }
+.ph-item-photo { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; background: #eef0fb; }
+.ph-item-name { padding: 6px 8px 0; font-size: 13px; font-weight: 600; line-height: 1.25; min-height: 2.5em;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+.ph-item-price { padding: 2px 8px 8px; font-size: 13px; font-weight: 700; color: #3F51B5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ph-item-price small { color: #6b7280; font-weight: 500; }
+.ph-item-photo ::ng-deep .ph-initials { font-size: 24px; }
+.ph-item-photo ::ng-deep .ph-icon { font-size: 18px; width: 18px; height: 18px; left: 6px; bottom: 4px; }
+.ph-more { grid-column: 1 / -1; min-height: 44px; }
+.ph-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; padding: 8px; }
+.ph-table { min-height: 76px; padding: 6px; border-radius: 12px; font: inherit; font-size: 14px; font-weight: 700; }
+.ph-table.table-tile .table-name { font-size: 15px; }
+.ph-table.table-tile .table-status { font-size: 10px; }
+.ph-table.table-tile .table-amount { font-size: 12px; }
+.ph .no-items { grid-column: 1 / -1; text-align: center; padding: 32px 8px; color: #6b7280; }
+
+/* fixed to the screen bottom: it never scrolls with the page or slides sideways */
+.ph-bottom {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 5;
+  display: flex; flex-direction: column; gap: 8px; overflow: hidden; touch-action: manipulation;
+  padding: 8px 10px calc(10px + env(safe-area-inset-bottom));
+  background: #fff; border-top: 1px solid #e3e6ef; box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
+}
+.ph-bottom-row { display: flex; gap: 8px; }
+.ph-summary {
+  flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 6px 12px;
+  border: 1px solid #c5cae9; border-radius: 12px; background: #eef0fb; color: #1f2937; font: inherit; text-align: left;
+}
+.ph-summary > mat-icon { color: #3F51B5; }
+.ph-summary-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.ph-summary-label { font-size: 13px; color: #5f6b7a; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ph-summary-total { font-size: 20px; font-weight: 800; color: #3F51B5; }
+.ph-summary-open { color: #6b7280; }
+.ph-paynow {
+  flex: 0 0 auto; min-width: 110px; display: flex; align-items: center; justify-content: center; gap: 6px;
+  border: 0; border-radius: 12px; background: #2e7d32; color: #fff; font: inherit; font-size: 17px; font-weight: 800;
+}
+.ph-paynow:disabled { background: #a5d6a7; }
+.ph-hint { display: flex; align-items: center; gap: 6px; padding: 4px 2px; color: #5f6b7a; font-weight: 600; }
+/* restaurant: SEND / BILL OUT / PAY / MORE in one row of equal buttons */
+.ph-act-main { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.ph-act {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 58px; min-width: 0;
+  border: 0; border-radius: 12px; color: #fff; font: inherit; font-size: 13px; font-weight: 800; letter-spacing: .3px;
+  background: #3F51B5; overflow: hidden; white-space: nowrap;
+}
+.ph-act.act-pay { background: #2e7d32; }
+.ph-act.act-bill-out { background: #ef6c00; }
+.ph-act.act-more { background: #fff; color: #3F51B5; border: 1px solid #c5cae9; }
+.ph-act:disabled { background: #c5cae9; color: #f5f6fc; }
+/* MORE sheet: every action in a grid */
+.ph-more-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 12px; overflow-y: auto; }
+.ph-more-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 76px; min-width: 0;
+  border: 1px solid #c5cae9; border-radius: 12px; background: #fff; color: #3F51B5; font: inherit; font-size: 13px; font-weight: 800;
+}
+.ph-more-btn.act-pay { background: #2e7d32; border-color: #2e7d32; color: #fff; }
+.ph-more-btn.act-complete { background: #6a1b9a; border-color: #6a1b9a; color: #fff; }
+.ph-more-btn.on { background: #ff9800; border-color: #ff9800; color: #fff; }
+.ph-more-btn:disabled { color: #9fa8da; border-color: #e3e6ef; background: #fafbfe; }
+/* cart: whole-order actions and the row icons */
+.ph-cart-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 8px; padding: 8px 12px 0; }
+.ph-cart-btn { min-height: 48px; font-weight: 700; }
+.ph-line-icons { display: flex; flex: 0 0 auto; }
+.ph-line-icons button { width: 44px; height: 44px; }
+
+.ph-backdrop { position: fixed; inset: 0; z-index: 1001; background: rgba(0, 0, 0, 0.35); }
+.ph-sheet {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 1002; max-height: 85vh;
+  display: flex; flex-direction: column; background: #fff; border-radius: 16px 16px 0 0;
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.2); animation: ph-up .18s ease-out;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+@keyframes ph-up { from { transform: translateY(100%); } to { transform: none; } }
+.ph-sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 8px 6px 16px; border-bottom: 1px solid #eef0f4; }
+.ph-sheet-head h3 { margin: 0; font-size: 17px; font-weight: 700; }
+.ph-lines { flex: 1; overflow-y: auto; padding: 4px 12px; }
+.ph-line { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 4px; border-bottom: 1px solid #f0f2f6; }
+.ph-line.selected { background: #f5f6fc; }
+.ph-line-info { flex: 1; min-width: 0; }
+.ph-line-name { font-weight: 600; }
+.ph-line-sub { font-size: 13px; color: #6b7280; }
+.ph-line-amount { font-weight: 700; }
+.ph-sheet-total { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 16px; font-weight: 700; border-top: 1px solid #eef0f4; }
+.ph-sheet-total b { font-size: 22px; color: #3F51B5; }
+.ph-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 0 12px 8px; }
+.ph-actions.big { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); }
+.ph-action { min-height: 48px; font-weight: 700; padding: 0 4px; }
+
+.ph-pay { position: fixed; inset: 0; z-index: 1002; display: flex; flex-direction: column; background: #fff; padding-bottom: env(safe-area-inset-bottom); }
+.ph-pay-head { display: flex; align-items: center; gap: 4px; padding: 8px; border-bottom: 1px solid #eef0f4; }
+.ph-pay-head h3 { margin: 0; font-size: 18px; font-weight: 700; }
+.ph-pay-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: 16px; }
+.ph-pay-due { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 16px; border-radius: 12px; background: #3F51B5; color: #fff; }
+.ph-pay-due b { font-size: 28px; }
+.ph-pay-label { font-weight: 600; color: #374151; }
+.ph-pay-input { height: 60px; padding: 0 16px; border: 2px solid #3F51B5; border-radius: 12px; font: inherit; font-size: 28px; font-weight: 700; text-align: right; }
+.ph-quick { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.ph-quick-btn { min-height: 52px; border: 1px solid #c5cae9; border-radius: 10px; background: #f5f6fc; font: inherit; font-size: 17px; font-weight: 700; color: #3F51B5; }
+.ph-pay-change { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 16px; border-radius: 12px; background: #edf7ee; color: #2e7d32; }
+.ph-pay-change b { font-size: 24px; }
+.ph-pay-change.short { background: #ffebee; color: #c62828; }
+.ph-pay-btn { margin: 0 16px 16px; min-height: 56px; font-size: 18px; font-weight: 700; }
+.ph-action.pay-btn, .ph-pay-btn.pay-btn { background: #2e7d32; color: #fff; }
+.ph-action.complete-btn { background: #6a1b9a; color: #fff; }
+.ph-action.active-mode { background: #ff9800; color: #fff; }
+.ph-action.pay-btn:disabled, .ph-pay-btn.pay-btn:disabled { background: #a5d6a7; }

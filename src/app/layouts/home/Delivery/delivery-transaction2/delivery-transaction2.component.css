@@ -1,0 +1,196 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.align-elements ng-select{
+    width: 100% !important;
+}
+.align-elements{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap:nowrap;
+}
+
+.mat-table .mat-cell, 
+.mat-table .mat-header-cell {
+    max-width: 100% !important;
+}
+
+.main-transaction-container {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 130px); 
+  overflow: hidden;
+  margin: 10px;
+}
+
+
+.left-panel, .right-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+}
+
+.itemListTransaction{
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  min-height: 0;
+  max-height: 600px;
+}
+.itemListTransaction2 {
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  min-height: 0;
+  max-height: 630px;
+}
+.fixed-bottom-button-group {
+  position: fixed;
+  bottom: 45px;
+  left: 0;
+  width: 100%;
+  z-index: 1001;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  padding: 5px 10px;
+}
+
+.sticky-top-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1001;
+  padding-bottom: 8px;
+}
+
+.sticky-top-toolbar2 {
+  position: sticky;
+  top: 0;
+  z-index: 1001;
+}
+
+.subtitle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.totalAmount {
+  font-weight: bold;
+}
+
+.mat-button-toggle {
+  background-color: #3F51B5;
+  color: #e9eaea;
+  border: 0;
+}
+
+.main-transaction-container {
+  display: flex;
+  flex-direction: column; 
+  height: auto; 
+  margin: 10px;
+}
+
+mat-table:focus {
+  outline: none !important;
+}
+
+::ng-deep .mat-column-DiscountValue,.mat-column-Amount{
+    text-align: right !important;
+    justify-content: end !important;
+    padding-right: 10px !important;
+    flex: 0 0 10% !important;
+}
+::ng-deep .mat-column-Qty ,.mat-column-QtyDelivered ,.mat-column-TobeDelivered ,.mat-column-Price ,.mat-column-Discount{
+    text-align: right !important;
+    justify-content: end !important;
+    padding-right: 10px !important;
+    flex: 0 0 10% !important;
+}
+::ng-deep .mat-column-UM {
+    flex: 0 0 7% !important;
+}
+::ng-deep .mat-column-ItemName {
+    flex: 0 0 30% !important;
+}
+::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+}
+@media (max-width: 767px) {
+  .itemListTransaction {
+    max-height: 200px; 
+    min-height: 200px; 
+  }
+  .itemListTransaction2 {
+    max-height: 200px; 
+    min-height: 200px; 
+    margin-bottom: 25%;
+  }
+}
+@media (min-width: 768px) {
+  .main-transaction-container {
+    flex-direction: row; 
+    height: calc(100vh - 130px);
+    overflow: hidden;
+  }
+  .left-panel {
+    flex: 1 1 35%;
+  }
+
+  .right-panel {
+    flex: 1 1 65%;
+  }
+}
+.auto-adjust-cell {
+  white-space: normal !important;  
+  word-wrap: break-word !important;             
+  line-height: 1.4em !important;               
+  padding: 4px 8px !important;                  
+}
+
+.mat-row, .mat-cell {
+  height: auto !important;         
+}
+
+
+/* 110% scale and above */
+@media (-webkit-min-device-pixel-ratio: 1.1),
+       (min-resolution: 1.1dppx) {
+  .itemListTransaction {
+    max-height: 520px;
+  }
+  .itemListTransaction2 {
+    max-height: 530px;
+  }
+}
+
+/* 125% scale and above */
+@media (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 1.25dppx) {
+  .itemListTransaction {
+    max-height: 420px;
+  }
+  .itemListTransaction2 {
+    max-height: 430px;
+  }
+}
+
+/* 125% scale and above */
+@media (-webkit-min-device-pixel-ratio: 1.50),
+       (min-resolution: 1.50dppx) {
+    .itemListTransaction {
+    max-height: 290px;
+  }
+  .itemListTransaction2 {
+    max-height: 300px;
+  }
+}

@@ -1,0 +1,152 @@
+<div class="ug-page" [class.in-dialog]="!!dialogRef">
+
+  <header class="ug-header">
+    <mat-icon class="ug-header-icon">menu_book</mat-icon>
+    <div>
+      <h1 class="ug-title">User Guide</h1>
+      <p class="ug-subtitle" *ngIf="!singleEdition">Pick your edition, then browse the contents or search for a topic.</p>
+      <p class="ug-subtitle" *ngIf="singleEdition">Guide for the {{ editions[0]?.label }} edition. Browse the contents or search for a topic.</p>
+    </div>
+    <span class="ug-spacer"></span>
+    <button mat-icon-button type="button" *ngIf="dialogRef" aria-label="Close user guide" (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <!-- one guide only: the logged-in edition -->
+  <ng-container *ngIf="singleEdition && editions[0] as only">
+    <ng-container *ngTemplateOutlet="panel; context: { $implicit: only }"></ng-container>
+  </ng-container>
+
+  <!-- NA / Default: every edition, one tab each -->
+  <mat-tab-group class="ug-tabs" *ngIf="!singleEdition" [(selectedIndex)]="tabIndex" animationDuration="150ms">
+    <mat-tab *ngFor="let ed of editions">
+      <ng-template mat-tab-label>
+        <mat-icon class="ug-tab-icon">{{ ed.icon }}</mat-icon>
+        <span>{{ ed.label }}</span>
+      </ng-template>
+
+      <ng-template matTabContent>
+        <ng-container *ngTemplateOutlet="panel; context: { $implicit: ed }"></ng-container>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+
+</div>
+
+<!-- One panel, reused by every edition tab -->
+<ng-template #panel let-ed>
+  <div class="ug-edition-note">
+    <span><strong>{{ ed.label }}</strong> &ndash; {{ ed.blurb }}</span>
+    <span class="ug-count">{{ ed.topicCount }} topics</span>
+  </div>
+
+  <!-- phone / small tablet: show or hide the contents -->
+  <button mat-stroked-button class="ug-nav-toggle" (click)="navOpen = !navOpen">
+    <mat-icon>{{ navOpen ? 'close' : 'list' }}</mat-icon>
+    {{ navOpen ? 'Hide contents' : 'Show contents' }}
+  </button>
+
+  <div class="ug-layout">
+
+    <!-- ============ LEFT: search + contents ============ -->
+    <mat-card class="ug-nav" [class.open]="navOpen">
+
+      <mat-form-field appearance="outline" class="ug-search">
+        <mat-label>Search this guide</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput type="text" autocomplete="off"
+               placeholder="e.g. sales, kitchen queue, items"
+               [value]="ed.query"
+               (input)="onSearch(ed, $any($event.target).value)">
+        <button mat-icon-button matSuffix type="button" *ngIf="ed.query" aria-label="Clear search" (click)="clearSearch(ed)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <!-- search results -->
+      <ng-container *ngIf="ed.hits as hits; else tree">
+        <div class="ug-nav-tools">
+          <span>{{ hits.length }} result{{ hits.length === 1 ? '' : 's' }}</span>
+        </div>
+        <div class="ug-list">
+          <button class="ug-hit" type="button" *ngFor="let h of hits; trackBy: trackHit" (click)="select(ed, h.node)">
+            <span class="ug-hit-title">{{ h.node.t }}</span>
+            <span class="ug-hit-path">{{ h.path }}</span>
+          </button>
+          <p class="ug-empty" *ngIf="!hits.length">No topics match &ldquo;{{ ed.query }}&rdquo;.</p>
+        </div>
+      </ng-container>
+
+      <!-- contents tree -->
+      <ng-template #tree>
+        <div class="ug-nav-tools">
+          <button mat-button type="button" (click)="expandAll(ed)"><mat-icon>unfold_more</mat-icon> Expand all</button>
+          <button mat-button type="button" (click)="collapseAll(ed)"><mat-icon>unfold_less</mat-icon> Collapse all</button>
+        </div>
+
+        <div class="ug-list">
+          <div class="ug-row"
+               *ngFor="let r of ed.rows; trackBy: trackRow"
+               [class.active]="ed.selected?.id === r.node.id"
+               [class.group]="r.hasChildren"
+               [style.padding-left.px]="8 + r.depth * 16">
+
+            <button mat-icon-button type="button" class="ug-chevron" *ngIf="r.hasChildren"
+                    [attr.aria-label]="(r.expanded ? 'Collapse ' : 'Expand ') + r.node.t"
+                    (click)="toggle(ed, r.node, $event)">
+              <mat-icon>{{ r.expanded ? 'expand_more' : 'chevron_right' }}</mat-icon>
+            </button>
+            <span class="ug-chevron-gap" *ngIf="!r.hasChildren"></span>
+
+            <button type="button" class="ug-label" (click)="onRowClick(ed, r)">{{ r.node.t }}</button>
+          </div>
+        </div>
+      </ng-template>
+    </mat-card>
+
+    <!-- ============ RIGHT: content ============ -->
+    <mat-card class="ug-content-card" [attr.id]="'ug-content-' + ed.key">
+      <ng-container *ngIf="ed.selected as node">
+
+        <div class="ug-crumbs" *ngIf="breadcrumb(ed, node).length">
+          <ng-container *ngFor="let b of breadcrumb(ed, node); let last = last">
+            <span>{{ b }}</span><mat-icon *ngIf="!last" class="ug-crumb-sep">chevron_right</mat-icon>
+          </ng-container>
+        </div>
+
+        <h2 class="ug-page-title">{{ node.t }}</h2>
+        <mat-divider></mat-divider>
+
+        <!-- topic with content -->
+        <div class="guide-content" *ngIf="node.p" [innerHTML]="html(node)" (click)="openFromContent(ed, $event)"></div>
+
+        <!-- group heading without its own page: list its topics -->
+        <div class="ug-children" *ngIf="!node.p && node.c">
+          <p>Choose a topic:</p>
+          <button mat-stroked-button type="button" class="ug-child-btn"
+                  *ngFor="let c of node.c; trackBy: trackNode" (click)="select(ed, c)">
+            {{ c.t }}
+          </button>
+        </div>
+
+        <!-- previous / next -->
+        <div class="ug-pager" *ngIf="node.p">
+          <button mat-stroked-button type="button" [disabled]="!prev(ed)" (click)="select(ed, prev(ed)!)">
+            <mat-icon>arrow_back</mat-icon>
+            <span class="ug-pager-text">{{ prev(ed)?.t || 'Previous' }}</span>
+          </button>
+          <button mat-flat-button color="primary" type="button" [disabled]="!next(ed)" (click)="select(ed, next(ed)!)">
+            <span class="ug-pager-text">{{ next(ed)?.t || 'Next' }}</span>
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+
+        <div class="ug-footer">Copyright &copy; 2024 Mariosoft Solutions. All Rights Reserved.</div>
+      </ng-container>
+
+      <p class="ug-empty" *ngIf="!ed.selected">Select a topic from the contents.</p>
+    </mat-card>
+
+  </div>
+</ng-template>

@@ -1,0 +1,19 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.mat-column-TransNo ,.mat-column-TotalDue,.mat-column-ReadingNo,.mat-column-InvNo,.mat-column-PaidStatus  {
+    flex: 0 0 5%;
+}
+.mat-column-PaymentType,.mat-column-RecordStatus  {
+    flex: 0 0 7%;
+}
+.mat-column-SupplierName {
+    flex: 0 0 20%;
+}

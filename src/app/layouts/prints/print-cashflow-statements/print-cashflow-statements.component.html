@@ -1,0 +1,45 @@
+
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+<div class="p text-center">
+    <app-aprint-header></app-aprint-header>
+</div>
+<div class="title">
+        {{Title}}
+</div>
+
+<div class="mb-5">
+    <table class="w-100 table table-bordered" #tableToExport>
+        <thead class="thead-background">
+          <tr>
+            <th scope="col">ACCOUNT TITLE</th>
+            <th scope="col">PREVIOUS AMOUNT</th>
+            <th scope="col">AMOUNT</th>
+            <th scope="col">ENDING AMOUNT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of Data">
+              <ng-container *ngIf="row.Type == 'Header'">
+              <td class="category-header">{{ row.AccountTitle }}</td>
+              <td class="numeric category-header">{{ row.PreviousAmount }}</td>
+              <td class="numeric category-header">{{ row.Amount }}</td>
+              <td class="numeric category-header">{{ row.EndingAmount }}</td>
+              </ng-container>
+
+              <ng-container *ngIf="!row.Type ">
+                  <td class="detail">{{ row.AccountTitle }}</td>
+                  <td class="numeric">{{ row.PreviousAmount }}</td>
+                  <td class="numeric">{{ row.Amount }}</td>
+                  <td class="numeric">{{ row.EndingAmount }}</td>
+                </ng-container>
+
+              <ng-container *ngIf="row.Type == 'Empty'">
+                 <td  colspan="4" class="empty-row"></td>
+              </ng-container>
+
+            </tr>
+        </tbody>
+      </table>
+</div>

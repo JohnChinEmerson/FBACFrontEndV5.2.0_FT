@@ -1,0 +1,22 @@
+     <app-background-logo-ui></app-background-logo-ui>
+
+<div class="content">
+    <mat-card>
+        <button mat-icon-button class="close-button" (click)="onClose()">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+        <h2 mat-dialog-title>SuggestionBoxUI</h2>
+        <mat-divider></mat-divider>
+            <form [formGroup]="suggestionBoxForm" (ngSubmit)="onSubmit()" class="table-cont-pop-up">
+                <div mat-dialog-content>
+                        <mat-form-field class="w-100" appearance="standard">
+                            <mat-label>Suggestions</mat-label>
+                            <textarea  matInput placeholder="Input Suggestions" rows="18" autocomplete="off" required formControlName="Suggestion" ></textarea>
+                        </mat-form-field>
+                </div>
+                <div mat-dialog-actions [align]="'end'" class="mb-3">
+                <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="suggestionBoxForm.invalid || loading == true">{{btnText}}</button>
+                </div>
+            </form>
+    </mat-card>
+</div>

@@ -1,0 +1,11 @@
+<div class="bl" [class.bl-welcome-mode]="welcome">
+    <div class="bl-card">
+        <img class="landing-background" src="/assets/SquareProductLogo.png" alt="" *ngIf="!hasPhoto">
+        <img class="landing-background" [src]="backgroundLogo"  alt="" *ngIf="hasPhoto">
+        <!-- phones, Cash Drawer: a welcome under the logo (tablets and laptops keep the logo alone) -->
+        <div class="bl-welcome" *ngIf="welcome && businessInfo?.BusinessName">
+            <div class="bl-title">Welcome to {{businessInfo.BusinessName}}</div>
+            <div class="bl-hint">Choose a menu to get started.</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+<div class="koc-grid">
+    <div class="koc-card" *ngFor="let card of cards; trackBy: trackByKey" [class.expanded]="isExpanded(card)">
+        <!-- header: always visible (sticky while scrolling through an expanded card) -->
+        <div class="koc-head">
+            <div class="koc-head-main">
+                <div class="koc-table">{{card.TableName}}</div>
+                <div class="koc-sub">{{card.OrderType}} · {{card.TransCodes.join(', ')}}</div>
+            </div>
+            <div class="koc-time" [class.late]="isLate(card)">
+                <div>{{minutesSince(card.SentDateTime)}} min</div>
+                <div class="koc-sub">{{card.ItemCount}} item(s)</div>
+            </div>
+            <div class="koc-summary" *ngIf="card.Summary">{{card.Summary}}</div>
+        </div>
+
+        <div class="koc-body">
+            <ng-container *ngFor="let line of card.Pinned; trackBy: trackById">
+                <ng-container *ngTemplateOutlet="lineTpl; context: { $implicit: line }"></ng-container>
+            </ng-container>
+            <ng-container *ngFor="let line of shownOthers(card); trackBy: trackById">
+                <ng-container *ngTemplateOutlet="lineTpl; context: { $implicit: line }"></ng-container>
+            </ng-container>
+            <div class="koc-fade" *ngIf="hiddenCount(card) > 0"></div>
+        </div>
+        <button type="button" class="koc-more" *ngIf="canCollapse(card)" (click)="toggleExpanded(card)">
+            <mat-icon>{{ isExpanded(card) ? 'expand_less' : 'expand_more' }}</mat-icon>
+            {{ isExpanded(card) ? 'See less' : 'See more (+' + hiddenCount(card) + (hiddenCount(card) == 1 ? ' item)' : ' items)') }}
+        </button>
+
+        <!-- card actions: never behind See more -->
+        <div class="koc-foot" *ngIf="view == 'active'">
+            <button mat-stroked-button color="warn" class="koc-btn" *ngIf="idsOf(card, ['cancelled']).length > 0" [disabled]="isSaving" (click)="onAcknowledge(idsOf(card, ['cancelled']))">Acknowledge Cancelled</button>
+            <button mat-stroked-button color="primary" class="koc-btn" *ngIf="canPrepare && idsOf(card, ['pending']).length > 1" [disabled]="isSaving" (click)="onStatus(idsOf(card, ['pending']), 'preparing')">All Preparing</button>
+            <button mat-raised-button color="accent" class="koc-btn" *ngIf="canReady && idsOf(card, ['pending', 'preparing']).length > 1" [disabled]="isSaving" (click)="onStatus(idsOf(card, ['pending', 'preparing']), 'ready')">All Ready to Serve</button>
+        </div>
+        <div class="koc-foot" *ngIf="view == 'ready' && canServe && idsOf(card, ['ready']).length > 0">
+            <button mat-raised-button color="primary" class="koc-btn" [disabled]="isSaving" (click)="onStatus(idsOf(card, ['ready']), 'served')">Serve All</button>
+        </div>
+    </div>
+    <div class="koc-empty" *ngIf="cards.length == 0 && emptyText">{{emptyText}}</div>
+</div>
+
+<ng-template #lineTpl let-line>
+    <div class="koc-line" [class.component]="isComponent(line)" [class.cancelled]="line.IsCancelledPin" [class.new]="line.IsNewPin">
+        <div class="koc-line-info">
+            <span class="koc-qty">{{line.Qty | number:'1.0-2'}}</span>
+            <div class="koc-item">
+                <div class="koc-name">
+                    <span class="koc-badge cancelled" *ngIf="line.IsCancelledPin">CANCELLED</span>
+                    <span class="koc-badge new" *ngIf="line.IsNewPin">NEW</span>
+                    <span class="koc-badge upgrade" *ngIf="isUpgrade(line)">UPGRADE</span>
+                    <span class="koc-item-name">{{line.ItemName}}</span> <span class="koc-sub">{{line.UM}}</span>
+                </div>
+                <div class="koc-sub" *ngIf="(isComponent(line) || isUpgrade(line)) && line.SetName">{{ isUpgrade(line) ? 'Upgrade of Set' : 'Set' }}: {{line.SetName}}</div>
+                <div class="koc-remarks" *ngIf="line.Remarks">{{line.Remarks}}</div>
+                <div class="koc-sub">{{line.Area}} · {{line.SentDateTime | date:'h:mm a'}}<span *ngIf="line.IsCancelledPin && line.CancelledDateTime"> · cancelled {{line.CancelledDateTime | date:'h:mm a'}}</span></div>
+            </div>
+            <span class="koc-status" [ngClass]="'st-' + line.KitchenStatus">{{statusLabels[line.KitchenStatus]}}</span>
+        </div>
+        <div class="koc-actions">
+            <button mat-stroked-button color="warn" class="koc-btn" *ngIf="line.KitchenStatus == 'cancelled'" [disabled]="isSaving" (click)="onAcknowledge([line.id])">OK</button>
+            <button mat-stroked-button color="primary" class="koc-btn" *ngIf="view == 'active' && canPrepare && line.KitchenStatus == 'pending'" [disabled]="isSaving" (click)="onStatus([line.id], 'preparing')">Preparing</button>
+            <button mat-raised-button color="primary" class="koc-btn" *ngIf="view == 'active' && canReady && (line.KitchenStatus == 'pending' || line.KitchenStatus == 'preparing')" [disabled]="isSaving" (click)="onStatus([line.id], 'ready')">Ready to Serve</button>
+            <button mat-stroked-button class="koc-btn" *ngIf="view == 'ready' && canPrepare && line.KitchenStatus == 'ready'" [disabled]="isSaving" (click)="onStatus([line.id], 'preparing')">Back to Preparing</button>
+            <button mat-raised-button color="primary" class="koc-btn" *ngIf="view == 'ready' && canServe && line.KitchenStatus == 'ready'" [disabled]="isSaving" (click)="onStatus([line.id], 'served')">Served</button>
+        </div>
+    </div>
+</ng-template>

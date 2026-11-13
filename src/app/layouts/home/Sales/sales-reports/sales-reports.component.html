@@ -1,0 +1,47 @@
+<mat-tab-group>
+    <mat-tab label="Yearly">
+        <div class="tab-content">
+            <app-sales-yearly-report [branchId]="branchId"></app-sales-yearly-report>
+        </div>
+    </mat-tab>
+    <mat-tab label="Monthly">
+        <div class="tab-content">
+            <app-sales-monthly-report [branchId]="branchId"></app-sales-monthly-report>
+        </div>
+    </mat-tab>
+    <mat-tab label="Daily">
+        <div class="tab-content">
+            <app-sales-daily-report [branchId]="branchId"></app-sales-daily-report>
+        </div>
+    </mat-tab>
+    <mat-tab label="Void Sales">
+        <div class="tab-content">
+            <app-sales-void-sales-report [branchId]="branchId"></app-sales-void-sales-report>
+        </div>
+    </mat-tab>
+    <mat-tab label="Discount Sales">
+        <div class="tab-content">
+            <app-sales-discount-sales-report [branchId]="branchId"></app-sales-discount-sales-report>
+        </div>
+    </mat-tab>
+    <mat-tab label="Customer Sales">
+        <div class="tab-content">
+            <app-sales-customer-sales-report [branchId]="branchId"></app-sales-customer-sales-report>
+        </div>
+    </mat-tab>
+    <mat-tab label="WHTax Sales">
+        <div class="tab-content">
+            <app-sales-whtax-sales-report [branchId]="branchId"></app-sales-whtax-sales-report>
+        </div>
+    </mat-tab>
+    <mat-tab label="VAT Sales">
+        <div class="tab-content">
+            <app-sales-vatsales-report [branchId]="branchId"></app-sales-vatsales-report>
+        </div>
+    </mat-tab>
+    <mat-tab label="Sales Rebate Paid">
+        <div class="tab-content">
+            <app-sales-rebate-paid-report [branchId]="branchId"></app-sales-rebate-paid-report>
+        </div>
+    </mat-tab>
+</mat-tab-group>

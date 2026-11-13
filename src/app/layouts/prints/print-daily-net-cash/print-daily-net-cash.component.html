@@ -1,0 +1,66 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+    <table class="table table-bordered" #tableToExport>
+        <thead class="thead-background">
+            <tr>
+                <th scope="col" colspan=""></th>
+                <th scope="col" colspan="4" class="cashin">CASHIN</th>
+                <th scope="col" colspan="5" class="cashout">CASHOUT</th>
+                <th scope="col" class="net">NET</th>
+            </tr>
+        </thead>
+        <thead class="thead-background">
+            <tr>
+            <th scope="col">DATE</th>
+            <th  class="numeric" scope="col"> SALES ORDER PAYMENT</th>
+            <th  class="numeric" scope="col"> RECEIVABLE PAYMENTS</th>
+            <th  class="numeric" scope="col"> ITEM SALES PAYMENTS</th>
+            <th  class="numeric" scope="col"> TOTAL IN</th>
+            <th  class="numeric" scope="col"> PO DOWNPAYMENTS</th>
+            <th  class="numeric" scope="col"> ITEM RECEIVED PAYMENTS</th>
+            <th  class="numeric" scope="col"> PAYABLE PAYMENTS</th>
+            <th  class="numeric" scope="col"> EXPENSE PAYMENTS</th>
+            <th  class="numeric" scope="col"> TOTAL OUT</th>
+            <th  class="numeric" scope="col"> TOTAL NET CASH</th>
+            </tr>
+        </thead>
+      <tbody>
+        <tr *ngFor="let data of Data">
+          <td>{{data.TransDate | date :'MM/dd/yyyy'}}</td>
+          <td  class="numeric">{{data.SalesDownPayments ?? 0 | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.ReceivablePayments ?? 0 | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.ItemSalesPayments ?? 0 | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.TotalAmountIn ?? 0 | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.PODownPayments ?? 0 | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.ItemReceivedPayments ?? 0 | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.PayablePayments ?? 0 | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.ExpensePayments ?? 0 | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.TotalAmountOut ?? 0 | number:'1.2-2'}}</td>
+          <td  class="numeric">{{data.NetIncome ?? 0 | number:'1.2-2'}}</td>
+        </tr>
+        <tr class="footer">
+            <td class="no-border"></td>
+            <td  class="numeric">{{ getTotal('SalesDownPayments')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('ReceivablePayments')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('ItemSalesPayments')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('TotalAmountIn')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('PODownPayments')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('ItemReceivedPayments')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('PayablePayments')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('ExpensePayments')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('TotalAmountOut')| number:'1.2-2'}}</td>
+            <td  class="numeric">{{ getTotal('NetIncome')| number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  
+
+   

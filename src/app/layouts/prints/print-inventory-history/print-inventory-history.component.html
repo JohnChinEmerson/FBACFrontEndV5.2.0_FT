@@ -1,0 +1,45 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+  <table class="table table-bordered" #tableToExport >
+      <thead class="thead-background">
+        <tr>
+          <th scope="col">BatchId</th>
+          <th scope="col">BatchDate</th>
+          <th scope="col">TotalPhysicalCount</th>
+          <th scope="col">TotalSystemCount</th>
+          <th scope="col">TotalVarianceQty</th>
+          <th scope="col">TotalVarianceCost</th>
+          <th scope="col">TotalVariancePrice</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of inventoryHistory">
+          <td>{{data.InventoryBatchId}}</td>
+          <td>{{data.InventoryBatchDate | date:'MM/dd/yyyy'}}</td>
+          <td class="numeric">{{data.TotalPhysicalCount | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.TotalSystemCount | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.TotalVarianceQty | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.TotalVarianceCost | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.TotalVariancePrice | number:'1.2-2'}}</td>
+        </tr>
+        <tr class="footer">
+            <td></td>
+            <td></td>
+            <td class="numeric">{{getTotal('TotalPhysicalCount') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('TotalSystemCount') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('TotalVarianceQty') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('TotalVarianceCost') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('TotalVariancePrice') | number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <app-aprint-footer [totalRecords]="inventoryHistory.length"></app-aprint-footer>  

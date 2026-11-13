@@ -1,0 +1,10 @@
+/* Order Transaction uses the Sales Transaction layout and styles (sales-transaction2.component.css).
+   Order-only styles go here. */
+
+/* cart: item picture (or placeholder) beside the name */
+.cart-item { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.cart-item-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+/* phone: the category chips scroll sideways in their row (they were cut off at the screen edge) */
+.ph-chips { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; min-width: 0; }
+.ph-chips::-webkit-scrollbar { display: none; }

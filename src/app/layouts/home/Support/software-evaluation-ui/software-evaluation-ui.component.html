@@ -1,0 +1,106 @@
+     <app-background-logo-ui></app-background-logo-ui>
+
+<div class="content">
+    <mat-card>
+        <button mat-icon-button class="close-button" (click)="onClose()">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+        <h2 mat-dialog-title>SoftwareEvaluationUI</h2>
+        <mat-divider></mat-divider>
+            <form [formGroup]="softwareEvaluationForm" (ngSubmit)="onSubmit()" class="table-cont-pop-up">
+                <div mat-dialog-content>
+                    <h5 class="mb-0 t">Please rate from 1-5 where 5 is the highest and 1 is the lowest.</h5>
+                    <div class="row col-md-12">
+                        <mat-form-field class="w-100" appearance="standard">
+                            <mat-label>Software</mat-label>
+                            <input matInput placeholder="Input Software" autocomplete="off" required formControlName="SoftwareType" readonly>
+                        </mat-form-field>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <mat-form-field class="w-50" appearance="standard">
+                                    <mat-label>EasyToUse</mat-label>
+                                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="EasyToUse" required >
+                                        <mat-option  value="ordinary" *ngFor="let x of scores" [value]="x"> {{x}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="w-50" appearance="standard">
+                                    <mat-label>Reliability</mat-label>
+                                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="Reliability" required >
+                                        <mat-option  value="ordinary" *ngFor="let x of scores" [value]="x"> {{x}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="w-50" appearance="standard">
+                                    <mat-label>Completenes</mat-label>
+                                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="Completenes" required >
+                                        <mat-option  value="ordinary" *ngFor="let x of scores" [value]="x"> {{x}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="w-50" appearance="standard">
+                                    <mat-label>FlexibleToUse</mat-label>
+                                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="FlexibleToUse" required >
+                                        <mat-option  value="ordinary" *ngFor="let x of scores" [value]="x"> {{x}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="w-50" appearance="standard">
+                                    <mat-label>SpeedPerformance</mat-label>
+                                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="SpeedPerformance" required >
+                                        <mat-option  value="ordinary" *ngFor="let x of scores" [value]="x"> {{x}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="w-50" appearance="standard">
+                                    <mat-label>CostEffective</mat-label>
+                                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="CostEffective" required >
+                                        <mat-option  value="ordinary" *ngFor="let x of scores" [value]="x"> {{x}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="w-50" appearance="standard">
+                                    <mat-label>EasyToAdapt</mat-label>
+                                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="EasyToAdapt" required >
+                                        <mat-option  value="ordinary" *ngFor="let x of scores" [value]="x"> {{x}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="w-50" appearance="standard">
+                                    <mat-label>ReportingFeatures</mat-label>
+                                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="ReportingFeatures" required >
+                                        <mat-option  value="ordinary" *ngFor="let x of scores" [value]="x"> {{x}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="w-50" appearance="standard">
+                                    <mat-label>SecurityFeatures</mat-label>
+                                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="SecurityFeatures" required >
+                                        <mat-option  value="ordinary" *ngFor="let x of scores" [value]="x"> {{x}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="w-50" appearance="standard">
+                                    <mat-label>DesignFeatures</mat-label>
+                                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="DesignFeatures" required >
+                                        <mat-option  value="ordinary" *ngFor="let x of scores" [value]="x"> {{x}} </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row mt-3">
+                                <mat-form-field class="w-100" appearance="standard">
+                                    <mat-label>We value your feedback or suggestions.</mat-label>
+                                    <textarea  matInput placeholder="Input Suggestions" rows="18" autocomplete="off" required formControlName="Comment" ></textarea>
+                                </mat-form-field>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div mat-dialog-actions [align]="'end'" class="mb-3">
+                <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="softwareEvaluationForm.invalid || loading == true">{{btnText}}</button>
+                </div>
+            </form>
+    </mat-card>
+</div>

@@ -1,0 +1,32 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>SignatureUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="signatureForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <mat-form-field class="" appearance="standard">
+            <mat-label>SignLabel</mat-label>
+            <input matInput placeholder="Input SignLabel" autocomplete="off"  formControlName="SignLabel">
+        </mat-form-field>
+        <mat-form-field class="" appearance="standard">
+            <mat-label>SignName</mat-label>
+            <input matInput placeholder="Input SignName" autocomplete="off"  formControlName="SignName">
+        </mat-form-field>
+        <mat-form-field class="" appearance="standard">
+            <mat-label>SignPosition</mat-label>
+            <input matInput placeholder="Input SignPosition" autocomplete="off"  formControlName="SignPosition">
+        </mat-form-field>
+        <mat-form-field class="" appearance="standard">
+            <mat-label>SignLine</mat-label>
+            <input matInput placeholder="Input SignLine" autocomplete="off"  formControlName="SignLine">
+        </mat-form-field>
+        <mat-form-field class="" appearance="standard">
+            <mat-label>Sequence</mat-label>
+            <input matInput placeholder="Input Sequence" autocomplete="off" required type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true"  formControlName="Sequence">
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+        <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="signatureForm.invalid || loading == true">{{btnText}}</button>
+    </div>
+  </form>

@@ -1,0 +1,86 @@
+<div style="text-align: center; line-height: 1.2; margin-bottom: 10px;">
+    <div *ngIf="WithLogo">
+        <img src="/assets/logo.jpg" alt="Logo" width="30%" >
+    </div>
+    <div>{{businessInfo.BusinessName}}</div>
+    <div>{{businessInfo.Address}}</div>
+    <div>{{businessInfo.TIN}}</div>
+    <div>{{businessInfo.ContactNo}}</div>
+</div>
+
+<div style="line-height: 1.2; margin-bottom: 10px;">
+    <div>ReadingNo: {{cashDrawer.ReadingNo}}</div>
+    <div>Start: {{cashDrawer.StartDateTime | date:'MM/dd/yyyy H:m a'}}</div>
+    <div>End: {{cashDrawer.EndDateTime | date:'MM/dd/yyyy H:m a'}}</div>
+</div>
+
+<div class="key-value-row">
+    <div class="key">STARTUP CASH:</div>
+    <div class="value">{{ cashDrawer.StartUpCash | number: '1.2-2' }}</div>
+</div>
+
+<div style="text-align: center;  margin-bottom: 5px;">
+    ---CASH-INS---
+</div>
+<div class="key-value-row">
+    <div class="key">RECEIVABLE PAYMENTS:</div>
+    <div class="value">{{ cashIns.CustomerPayments | number: '1.2-2' }}</div>
+</div>
+<div class="key-value-row">
+    <div class="key">ITEM SALES PAYMENTS:</div>
+    <div class="value">{{ cashIns.ItemSalesPayments | number: '1.2-2' }}</div>
+</div>
+<div class="key-value-row">
+    <div class="key">TOTAL CASH-INS:</div>
+    <div class="value">{{ cashIns.TotalAmount | number: '1.2-2' }}</div>
+</div>
+<div style="text-align: center;  margin-bottom: 5px;">
+    ---CASH-OUTS---
+</div>
+<div class="key-value-row">
+    <div class="key">PURCHASING:</div>
+    <div class="value">{{ cashOuts.Purchasing | number: '1.2-2' }}</div>
+</div>
+<div class="key-value-row">
+    <div class="key">RECEIVING:</div>
+    <div class="value">{{ cashOuts.Receiving | number: '1.2-2' }}</div>
+</div>
+<div class="key-value-row">
+    <div class="key">SUPPLIER PAYMENTS:</div>
+    <div class="value">{{ cashOuts.SupplierPayments | number: '1.2-2' }}</div>
+</div>
+<div class="key-value-row">
+    <div class="key">OPERATION EXPENSES:</div>
+    <div class="value">{{ cashOuts.Expenses | number: '1.2-2' }}</div>
+</div>
+<div class="key-value-row">
+    <div class="key">WITHDRAWALS:</div>
+    <div class="value">{{ cashOuts.Withdrawals | number: '1.2-2' }}</div>
+</div>
+<div class="key-value-row">
+    <div class="key">TOTAL CASH-OUTS:</div>
+    <div class="value">{{ cashOuts.TotalAmount | number: '1.2-2' }}</div>
+</div>
+<br>
+<div class="key-value-row">
+    <div class="key">CASH REMAINING:</div>
+    <div class="value">{{ cashDrawer.TotalCash | number: '1.2-2' }}</div>
+</div>
+<div style="text-align: center;  margin-bottom: 5px;">
+    ---CASH DENOMINATIONS---
+</div>
+<div class="key-value-row" *ngFor="let data of denominations">
+    <div class="key">{{data.Denomination}} {{'@'}} {{data.Qty}}</div>
+    <div class="value">{{ data.Amount | number: '1.2-2' }}</div>
+</div>
+<div class="key-value-row">
+    <div class="key">PHYSICAL CASH:</div>
+    <div class="value">{{ cashDrawer.PhysicalCash | number: '1.2-2' }}</div>
+</div>
+<div class="key-value-row">
+    <div class="key">VARIANCE:</div>
+    <div class="value">{{ cashDrawer.Variance | number: '1.2-2' }}</div>
+</div>
+<div style="text-align: center;  margin-bottom: 5px;">
+    {{cashDrawer.UserFullName}} {{'@'}} {{cashDrawer.MachineName}}
+</div>

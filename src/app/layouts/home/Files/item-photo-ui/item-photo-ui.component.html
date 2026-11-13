@@ -1,0 +1,16 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>ItemPhotoUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="photoForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <div [align]="'center'" *ngIf="hasPhoto">
+            <img matPrefix [src]="photo" width="50%" height="50%">
+        </div>
+        <input type="file"  accept="image/*" placeholder="Input ItemPhoto"  class="form-control" name="ItemPhoto"  autocomplete="off" (change)="patchPhoto($event)" required> 
+        <div mat-dialog-actions [align]="'end'" class="mb-3">
+            <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="photoForm.invalid || loading == true || !isFileSelected">{{btnSave}}</button>
+        </div>
+    </div>
+</form>

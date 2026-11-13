@@ -1,0 +1,36 @@
+<button mat-icon-button class="close-button"  (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>CheckBookletUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="checkBookletForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>Prefix</mat-label>
+                    <input matInput placeholder="Input Prefix" autocomplete="off" required formControlName="Prefix">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>StartNo</mat-label>
+                    <input matInput type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" placeholder="Input StartNo" autocomplete="off" required formControlName="StartNo">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>EndNo</mat-label>
+                    <input matInput type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" placeholder="Input EndNo" autocomplete="off" required formControlName="EndNo">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>Issued</mat-label>
+                    <input matInput  type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" placeholder="Input Issued" autocomplete="off" required formControlName="Issued">
+                </mat-form-field>
+            </div>
+        </div>
+        <div mat-dialog-actions [align]="'end'" class="mb-3">
+            <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="checkBookletForm.invalid || loading == true">{{btnText}}</button>
+        </div>
+  </form>

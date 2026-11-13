@@ -1,0 +1,61 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+
+  <div >
+    <table class="table table-bordered" #tableToExport>
+        <thead class="thead-background">
+          <tr>
+            <th scope="col">TRANSDATE</th>
+            <th scope="col">TRANSNO</th>
+            <th scope="col">CUSTOMER</th>
+            <th  class="numeric" scope="col">TOTAL SALES</th>
+            <th  class="numeric" scope="col">VAT EXEMPT</th>
+            <th  class="numeric" scope="col">ZERO RATED</th>
+            <th  class="numeric" scope="col">NON VAT</th>
+            <th  class="numeric" scope="col">VAT SALES</th>
+            <th  class="numeric" scope="col">VATABLE AMT</th>
+            <th  class="numeric" scope="col">VAT AMT</th>
+            <th  class="numeric" scope="col">LESS VAT</th>
+            <th scope="col">INVOICE NO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of Data">
+            <td>{{data.TransDate | date:'MM/dd/yyyy'}}</td>
+            <td>{{data.TransNo}}</td>
+            <td>{{data.CustomerName}}</td>
+            <td  class="numeric">{{data.TotalSales | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.VATExemptSales | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.ZeroRatedSales | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.NonVATSales | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.VATSales | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.VATableAmount | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.VATAmount | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.LessVAT | number:'1.2-2'}}</td>
+            <td>{{data.InvoiceNo}}</td>
+          </tr>
+          <tr class="footer">
+              <td class="no-border" colspan="3"></td>
+              <td  class="numeric">{{ getTotal('TotalSales')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('VATExemptSales')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('ZeroRatedSales')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('NonVATSales')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('VATSales')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('VATableAmount')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('VATAmount')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('LessVAT')| number:'1.2-2'}}</td>
+              <td class="no-border"></td>
+          </tr>
+        </tbody>
+      </table>
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  
+  </div>
+   

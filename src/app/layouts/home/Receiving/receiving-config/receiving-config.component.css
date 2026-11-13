@@ -1,0 +1,90 @@
+.content {
+    width: 100%;
+    position: fixed;
+}
+
+mat-card {
+    width: 900px;
+    max-width: 95vw;
+    margin: auto;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+mat-form-field {
+    width: 100%;
+    line-height: normal;
+}
+
+.dense-field {
+    margin-bottom: -1.25em;
+}
+
+.landing-background {
+    position: fixed;
+    top: -5%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width: 60%;
+}
+
+.config-grid {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-row {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    align-items: center;
+    gap: 10px;
+
+   
+}
+ .field-row.align-top {
+    align-items: start;
+    margin-left: 50%;
+}
+
+.field-row mat-checkbox {
+    white-space: nowrap;
+}
+
+.field-row label {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 12px;
+    white-space: nowrap;
+}
+
+.field-row2 {
+    display: grid;
+    grid-template-columns: 120px 1fr  120px 1fr;
+    align-items: center;
+    gap: 10px;
+
+    
+}
+.field-row2.align-top {
+        align-items: start;
+        margin-left: 30%;
+    }
+
+.field-row2 mat-checkbox {
+    white-space: nowrap;
+}
+
+.field-row2 label {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 12px;
+    white-space: nowrap;
+}
+::ng-deep .ng-select .ng-select-container .ng-value-container {
+    padding: 15px 0 0 0 !important;
+}

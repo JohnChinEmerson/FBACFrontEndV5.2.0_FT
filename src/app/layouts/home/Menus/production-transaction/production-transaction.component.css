@@ -1,0 +1,11 @@
+/* layout comes from Receiving Transaction (receiving-transaction2.component.css) */
+.notice{
+    margin: 10px;
+    padding: 16px;
+    background: #fff8e1;
+}
+
+/* Category takes the place of Receiving's Cost column */
+::ng-deep .itemListTransaction .mat-column-Category {
+    flex: 0 0 17% !important;
+}

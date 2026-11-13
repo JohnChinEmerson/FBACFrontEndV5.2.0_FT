@@ -1,0 +1,72 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>ComponentsUI - {{ product?.ItemName | uppercase }}</h2>
+<mat-divider></mat-divider>
+<div mat-dialog-content>
+    <div class="product-bar">
+        <mat-form-field appearance="standard" class="qty-made">
+            <mat-label>QtyMade (Enter to apply)</mat-label>
+            <input matInput type="number" min="0" [(ngModel)]="qtyMade" (keyup.enter)="onEnterQtyMade()" autocomplete="off">
+        </mat-form-field>
+        <span>Selling Price: <b>{{ product?.Price | number:'1.2-2' }}</b></span>
+        <span class="summary">Total Cost : {{ totalCost | number:'1.2-2' }}</span>
+    </div>
+    <div class="two-panel">
+        <div class="grid-panel mat-elevation-z2">
+            <div class="grid-toolbar">
+                <ng-select class="w-type" [items]="itemTypes" appendTo="body" [(ngModel)]="itemType" [clearable]="false" placeholder="ItemType" (change)="loadItems()"></ng-select>
+                <mat-form-field floatLabel="never" appearance="standard" class="search">
+                    <input matInput placeholder="Search" [(ngModel)]="searchKey" autocomplete="off">
+                </mat-form-field>
+                <button mat-raised-button color="primary" (click)="addChecked()">Add ({{ checkedIds.size }})</button>
+            </div>
+            <mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"></mat-progress-bar>
+            <div class="grid-list">
+                <table>
+                    <thead><tr><th></th><th>ItemName</th><th>ItemType</th><th>UM</th><th class="numeric">AveCost</th></tr></thead>
+                    <tbody>
+                        <tr class="clickable" *ngFor="let item of filteredItems" (click)="toggleItem(item.ItemId)" (dblclick)="addItems([item.ItemId])" title="Double-click to add">
+                            <td><mat-checkbox [checked]="checkedIds.has(item.ItemId)" (click)="$event.preventDefault()"></mat-checkbox></td>
+                            <td>{{ item.ItemName }}</td>
+                            <td>{{ item.ItemType }}</td>
+                            <td>{{ item.UM }}</td>
+                            <td class="numeric">{{ item.AveCost | number:'1.2-2' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="grid-empty" *ngIf="!isLoading && filteredItems.length == 0">No data.</div>
+            </div>
+        </div>
+        <div class="grid-panel mat-elevation-z2">
+            <div class="grid-toolbar">
+                <b>COMPONENTS</b>
+                <button mat-stroked-button (click)="toggleReturnable()">{{ selectedComponent?.Returnable?.toLowerCase() == 'yes' ? 'Set to UnReturnable' : 'Set to Returnable' }}</button>
+                <button mat-raised-button color="warn" (click)="onClickRemove()">Remove</button>
+                <button mat-stroked-button color="warn" (click)="onClickRemoveAll()">Remove All</button>
+                <span class="total-count">Total Count : {{ components.length }}</span>
+            </div>
+            <div class="grid-list">
+                <table>
+                    <thead><tr><th>Component</th><th>UM</th><th class="numeric">Cost</th><th class="numeric">QtyUsed</th><th class="numeric">QtyPerPC</th><th class="numeric">TotalCost</th><th>Returnable</th></tr></thead>
+                    <tbody>
+                        <tr class="clickable" *ngFor="let c of components" (click)="selectedComponent = c" [class.data-selected]="selectedComponent?.id == c.id">
+                            <td>{{ c.ComponentName }}</td>
+                            <!-- Desktop ComponentsUI.dtg2_CellDoubleClick on UM: UMConvertionUI -->
+                            <td class="um-cell" (dblclick)="onDoubleClickUM(c)" title="Double-click to change the UM / edit conversions">
+                                {{ c.UM }} <span class="um-changed" *ngIf="c.IsUMChanged?.toLowerCase() == 'yes'">converted</span>
+                            </td>
+                            <td class="numeric">{{ c.Cost | number:'1.2-4' }}</td>
+                            <td class="numeric"><input class="inputtable numeric" [value]="c.QtyUsed | number:'1.0-4'" (click)="$event.stopPropagation()" (keyup.enter)="updateQtyUsed($event, c)" title="QtyUsed for QtyMade pieces (Enter to save)" autocomplete="off"></td>
+                            <td class="numeric">{{ c.QtyPerPC | number:'1.2-6' }}</td>
+                            <td class="numeric">{{ c.TotalCost | number:'1.2-4' }}</td>
+                            <td>{{ c.Returnable }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot *ngIf="components.length"><tr><td colspan="5">TOTAL COST</td><td class="numeric">{{ totalCost | number:'1.2-4' }}</td><td></td></tr></tfoot>
+                </table>
+                <div class="grid-empty" *ngIf="components.length == 0">No components yet. Double-click an item on the left to add it.</div>
+            </div>
+        </div>
+    </div>
+</div>

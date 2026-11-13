@@ -1,0 +1,44 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+  <div class="p text-center">
+    <app-aprint-header></app-aprint-header>
+  </div>
+  <div class="title">
+    <h3>{{Title}}</h3>
+  </div>
+  <div >
+      <table class="table table-bordered" #tableToExport>
+          <thead class="thead-background">
+            <tr>
+              <th scope="col">PermitNo</th>
+              <th scope="col">RDOCode</th>
+              <th scope="col">DateIssued</th>
+              <th scope="col">ExpiryDate</th>
+              <th scope="col">ComputerName</th>
+              <th scope="col">SerialNo</th>
+              <th scope="col">MachineNo</th>
+              <th scope="col">PTransNo</th>
+              <th scope="col">TransNoEnd</th>
+              <th scope="col">PSRNo</th>
+              <th scope="col">SRNoEnd</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of Data">
+              <td>{{data.PermitNo}}</td>
+              <td>{{data.RDOCode}}</td>
+              <td>{{data.DateIssued | date: 'MM/dd/yyyy'}}</td>
+              <td>{{data.ExpiryDate | date: 'MM/dd/yyyy'}}</td>
+              <td>{{data.ComputerName}}</td>
+              <td>{{data.SerialNo }}</td>
+              <td>{{data.MachineNo }}</td>
+              <td>{{data.PTransNo }}</td>
+              <td>{{data.TransNoEnd }}</td>
+              <td>{{data.PSRNo }}</td>
+              <td>{{data.SRNoEnd }}</td>
+            </tr>
+          </tbody>
+      </table>
+  </div>
+  <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  

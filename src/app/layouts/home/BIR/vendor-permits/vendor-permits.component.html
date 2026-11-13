@@ -1,0 +1,68 @@
+     <app-background-logo-ui></app-background-logo-ui>
+
+
+<div class="content ">
+    <mat-card class="mat-elevation-z10">
+        <button mat-icon-button class="close-button" (click)="onClose()">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+        <h1 mat-dialog-title>Vendor Permit</h1>
+        <div mat-dialog-content>
+            <mat-divider></mat-divider>
+            <form [formGroup]="vendorPermitForm" (ngSubmit)="onSubmit()">
+                <mat-form-field appearance="standard">
+                    <mat-label>VendorName</mat-label>
+                    <input  matInput placeholder="Input VendorName"  autocomplete="off" formControlName="VendorName" required>
+                </mat-form-field>
+                <div class="row">
+                    <mat-form-field class="w-100" appearance="standard">
+                        <mat-label>Address</mat-label>
+                        <input matInput placeholder="Input Address"formControlName="Address" required autocomplete="off" >
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="w-100"appearance="standard">
+                        <mat-label>TIN</mat-label>
+                        <input matInput placeholder="Input TIN"formControlName="TIN" required autocomplete="off" >
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100" appearance="standard">
+                            <mat-label>SoftwareVersion</mat-label>
+                            <input matInput placeholder="Input SoftwareVersion"formControlName="SoftwareVersion" required autocomplete="off" >
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100" appearance="standard">
+                            <mat-label>AccreditationNo</mat-label>
+                            <input matInput placeholder="Input AccreditationNo"formControlName="AccreditationNo" required autocomplete="off" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field appearance="standard" class="w-100">
+                            <mat-label>AccreditationDate</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="AccreditationDate"  autocomplete="off" required>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="standard" class="w-100">
+                            <mat-label>ExpiryDate</mat-label>
+                            <input matInput [matDatepicker]="picker2" formControlName="ExpiryDate"  autocomplete="off" required>
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+              
+                <div mat-dialog-actions [align]="'end'" class="mb-3">
+                    <button type="submit" mat-raised-button color="primary" [disabled]="vendorPermitForm.invalid || loading == true">Save</button>
+                </div>
+            </form>
+        </div>
+    </mat-card>
+</div>

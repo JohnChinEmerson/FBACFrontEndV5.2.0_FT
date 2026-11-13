@@ -1,0 +1,54 @@
+<section class="content">
+    <div class="search-div">
+        <mat-form-field appearance="standard">
+            <mat-label>Date From</mat-label>
+            <input matInput [matDatepicker]="picker1" [(ngModel)]="dateFrom" autocomplete="off" required>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Date To</mat-label>
+            <input matInput [matDatepicker]="picker2" [(ngModel)]="dateTo" autocomplete="off" required>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="onClickGo()">Go</button>
+    </div>
+    <mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"></mat-progress-bar>
+    <div class="two-panel" *ngIf="produced">
+        <div class="grid-panel mat-elevation-z2">
+            <div class="grid-toolbar">
+                <b>PRODUCED</b>
+                <button mat-stroked-button color="primary" (click)="onClickPrint('produced')">Print</button>
+                <span class="total-count">Total Count : {{ produced.length }}</span>
+            </div>
+            <div class="grid-list">
+                <table>
+                    <thead><tr><th>ItemName</th><th>UM</th><th class="numeric">Batches</th><th class="numeric">Qty</th><th class="numeric">Amount</th></tr></thead>
+                    <tbody>
+                        <tr *ngFor="let r of produced"><td>{{ r.ItemName }}</td><td>{{ r.UM }}</td><td class="numeric">{{ r.Batches }}</td><td class="numeric">{{ r.Qty | number:'1.2-4' }}</td><td class="numeric">{{ r.Amount | number:'1.2-2' }}</td></tr>
+                    </tbody>
+                    <tfoot *ngIf="produced.length"><tr><td colspan="4">TOTAL</td><td class="numeric">{{ sum(produced,'Amount') | number:'1.2-2' }}</td></tr></tfoot>
+                </table>
+                <div class="grid-empty" *ngIf="produced.length == 0">No data.</div>
+            </div>
+        </div>
+        <div class="grid-panel mat-elevation-z2">
+            <div class="grid-toolbar">
+                <b>COMPONENTS USED</b>
+                <button mat-stroked-button color="primary" (click)="onClickPrint('consumed')">Print</button>
+                <span class="total-count">Total Count : {{ consumed.length }}</span>
+            </div>
+            <div class="grid-list">
+                <table>
+                    <thead><tr><th>ItemName</th><th>UM</th><th class="numeric">Qty</th><th class="numeric">Amount</th></tr></thead>
+                    <tbody>
+                        <tr *ngFor="let r of consumed"><td>{{ r.ItemName }}</td><td>{{ r.UM }}</td><td class="numeric">{{ r.Qty | number:'1.2-4' }}</td><td class="numeric">{{ r.Amount | number:'1.2-2' }}</td></tr>
+                    </tbody>
+                    <tfoot *ngIf="consumed.length"><tr><td colspan="3">TOTAL</td><td class="numeric">{{ sum(consumed,'Amount') | number:'1.2-2' }}</td></tr></tfoot>
+                </table>
+                <div class="grid-empty" *ngIf="consumed.length == 0">No data.</div>
+            </div>
+        </div>
+    </div>
+</section>

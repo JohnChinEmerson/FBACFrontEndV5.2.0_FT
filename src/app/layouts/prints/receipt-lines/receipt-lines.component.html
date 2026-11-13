@@ -1,0 +1,15 @@
+<div class="receipt" [style.max-width]="widthIn ? widthIn + 'in' : null" [style.font-size.pt]="fontPt">
+    <div class="watermark" *ngIf="watermark">{{watermark}}</div>
+    <div class="logo" *ngIf="logo"><img [src]="logo" alt="Logo"></div>
+    <ng-container *ngFor="let l of lines">
+        <div class="line center" *ngIf="l.middle != null && l.left == null && l.right == null; else sides"
+             [class.bold]="l.bold" [class.big]="l.big" [style.min-height.px]="l.height || null">{{ l.middle }}</div>
+        <ng-template #sides>
+            <div class="line sides" [class.bold]="l.bold">
+                <span class="left">{{ l.left }}</span>
+                <span class="mid" *ngIf="l.middle">{{ l.middle }}</span>
+                <span class="right">{{ l.right }}</span>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>

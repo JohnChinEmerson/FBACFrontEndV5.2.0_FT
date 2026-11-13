@@ -1,0 +1,80 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+
+<h2 mat-dialog-title>{{column}}</h2>
+
+<mat-divider></mat-divider>
+
+<div mat-dialog-content>
+    <form [formGroup]="photoForm" (ngSubmit)="onSubmit()">
+
+        <div align="center" *ngIf="hasPhoto">
+           <img
+                [src]="photo"
+                [width]="previewWidth"
+                [height]="previewHeight"
+                style="border:1px solid #ccc;">
+        </div>
+
+        <div class="row mt-5">
+            <div class="row">
+                  <input type="file"
+                        accept="image/*"
+                        class="form-control"
+                        name="ItemPhoto"
+                        autocomplete="off"
+                        (change)="patchPhoto($event)"
+                        required>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                     <mat-form-field appearance="outline" >
+                        <mat-label>Width</mat-label>
+                        <input
+                            matInput
+                            type="number"
+                            [(ngModel)]="previewWidth"
+                            [ngModelOptions]="{standalone: true}"
+                            name="previewWidth"
+                            (change)="resizeImage()">
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                        <mat-form-field appearance="outline" >
+                            <mat-label>Height</mat-label>
+                        <input
+                                matInput
+                                type="number"
+                                [(ngModel)]="previewHeight"
+                                [ngModelOptions]="{standalone: true}"
+                                name="previewHeight"
+                                (change)="resizeImage()">
+                        </mat-form-field>
+                </div>
+            </div>
+        </div>
+       
+        <div mat-dialog-actions align="end" class="mb-3">
+
+            <button type="button"
+                    mat-button
+                    color="primary"
+                    class="me-3"
+                    (click)="onClickResetToDefault()">
+
+                Reset To Default
+            </button>
+
+            <button type="submit"
+                    class="mt-4 me-2"
+                    mat-raised-button
+                    color="primary"
+                    [disabled]="photoForm.invalid || loading || !isFileSelected">
+
+                {{btnSave}}
+            </button>
+
+        </div>
+    </form>
+</div>

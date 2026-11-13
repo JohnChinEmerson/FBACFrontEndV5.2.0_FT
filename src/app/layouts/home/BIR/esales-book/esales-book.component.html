@@ -1,0 +1,116 @@
+<section class="content">
+    <div class="search-div">
+        <ng-select 
+            [items]="terminals" 
+            [virtualScroll]="true" 
+            appendTo="body" 
+            bindLabel="ComputerName"
+            bindValue="ComputerName"
+            [(ngModel)]="terminal" 
+            [searchable]="true" 
+            [clearable] = "false" 
+            placeholder="Machine"
+            class="w-10"
+            >
+        </ng-select>
+            <ng-select 
+                [items]="months" 
+                [virtualScroll]="true" 
+                bindLabel="Label"
+                bindValue="Value"
+                appendTo="body" 
+                [(ngModel)]="month" 
+                [searchable]="true" 
+                [clearable] = "false" 
+                placeholder="Month"
+                class="w-10"
+                >
+            </ng-select>
+            <ng-select 
+                [items]="years" 
+                [virtualScroll]="true" 
+                appendTo="body" 
+                [(ngModel)]="year" 
+                [searchable]="true" 
+                [clearable] = "false" 
+                placeholder="Year"
+                class="w-10"
+                >
+            </ng-select>
+            <button mat-raised-button color="primary" *ngFor="let tB of toolButtons" [disabled]="!tB.Disabled" (click)="tB.Function()" >{{tB.Label}}</button> 
+    </div>
+    <div class="mat-elevation-z2 ">
+        <div class="w-50" *ngIf="loaded" id="toprint"> 
+            <div class="p text-center">
+                <app-aprint-header></app-aprint-header>
+            </div>
+            <div class="title">
+                    {{reportLabel}}
+            </div>
+            <div class="mb-5">
+                <table class="w-100 table table-bordered">
+                <thead class="thead-background">  
+                    <tr>
+                    <th scope="col">TERMINAL</th>
+                    <th scope="col">SERIAL NO</th>
+                    <th scope="col">MIN NO</th>
+                    <th scope="col">PTU</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td >{{machinePermit.ComputerName }}</td>
+                    <td >{{machinePermit.SerialNo }}</td>
+                    <td >{{machinePermit.MachineNo }}</td>
+                    <td >{{machinePermit.PermitNo }}</td>
+                </tbody>  
+                </table>
+
+                <table class="w-100 table table-bordered">
+                    <thead class="thead-background">  
+                    <tr>
+                        <th scope="col">DATE</th>
+                        <th scope="col">ZRD NO</th>
+                        <th scope="col">STARTING SI</th>
+                        <th scope="col">ENDING SI</th>
+                        <th scope="col">PREV SALES</th>
+                        <th scope="col">ENDING SALES</th>
+                        <th scope="col">DATE SALES</th>
+                        <th scope="col">VAT AMOUNT</th>
+                        <th scope="col">SNR DISC</th>
+                        <th scope="col">PWD DISC</th>
+                        <th scope="col">RGLR DISC</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let x of readings">
+                            <td >{{x.TransDate | date:'MM/dd/yyyy' }}</td>
+                            <td >{{x.ZReadingNo }}</td>
+                            <td >{{x.StartingSI }}</td>
+                            <td >{{x.EndingSI }}</td>
+                            <td >{{x.PreviousSales | number:'1.2-2' }}</td>
+                            <td >{{x.EndingSales | number:'1.2-2' }}</td>
+                            <td >{{x.NetSales | number:'1.2-2' }}</td>
+                            <td >{{x.VATAmount | number:'1.2-2' }}</td>
+                            <td >{{x.SeniorDiscount | number:'1.2-2' }}</td>
+                            <td >{{x.PWDDiscount | number:'1.2-2' }}</td>
+                            <td >{{x.RegularDiscount | number:'1.2-2' }}</td>
+                        </tr>
+                        <tr class="font-weight-bold">
+                        <td colspan="4" class="text-right"></td>
+                        <td>{{getTotal('PreviousSales') | number:'1.2-2' }}</td>
+                        <td>{{getTotal('EndingSales') | number:'1.2-2' }}</td>
+                        <td>{{getTotal('NetSales') | number:'1.2-2' }}</td>
+                        <td>{{getTotal('VATAmount') | number:'1.2-2' }}</td>
+                        <td>{{getTotal('SeniorDiscount') | number:'1.2-2' }}</td>
+                        <td>{{getTotal('PWDDiscount') | number:'1.2-2' }}</td>
+                        <td>{{getTotal('RegularDiscount') | number:'1.2-2' }}</td>
+                      </tr>
+                    </tbody>  
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+</section>

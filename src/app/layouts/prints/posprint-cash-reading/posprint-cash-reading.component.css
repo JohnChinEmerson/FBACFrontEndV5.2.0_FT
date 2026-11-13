@@ -1,0 +1,54 @@
+@page {
+    margin: 1mm 4mm 2mm 0mm !important;
+}
+
+* {
+    font-family: Verdana;
+    font-size: 9px !important;
+    color: black;
+}
+
+.item-name {
+    margin-bottom: 2px;
+    display: block;
+}
+
+.key-value-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px !important;
+    margin-bottom: 4px !important; 
+    line-height: 1.2 !important;
+}
+
+.key-value-row .key {
+    text-align: left;
+    width: 70%;
+}
+
+.key-value-row .value {
+    text-align: right;
+    width: 30%;
+}
+.key-value-row .totalItems1 {
+  text-align: right;
+    width: 50%;
+}
+.key-value-row .totalItems2 {
+    text-align: right;
+    width: 50%;
+}
+hr{
+    margin-top: 2px !important; 
+    margin-bottom: 5px !important; 
+}
+
+@media print {
+    .key-value-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 9px !important;
+        margin-bottom: 4px !important;
+        line-height: 1.2 !important;
+    }
+}

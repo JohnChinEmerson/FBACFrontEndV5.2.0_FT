@@ -1,0 +1,35 @@
+<button mat-icon-button class="close-button"  (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>AccountTitleUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="accountTitleForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col align-elements">
+                    <ng-select  
+                    class="w-15" 
+                    [items]="accountTypes" 
+                    [virtualScroll]="true" 
+                    appendTo="body" 
+                    formControlName="AccountType" 
+                    bindLabel="AccountType" 
+                    bindValue="AccountType"  
+                    [searchable]="true" 
+                    [clearable] = "false" 
+                    placeholder="AccountType" 
+                    required>
+                </ng-select>
+            </div>  
+        </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>AccountTitle</mat-label>
+                    <input matInput placeholder="Input AccountTitle" autocomplete="off" required formControlName="AccountTitle">
+                </mat-form-field>
+            </div>
+        </div>
+        <div mat-dialog-actions [align]="'end'" class="mb-3">
+            <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="accountTitleForm.invalid || loading == true">{{btnText}}</button>
+        </div>
+  </form>

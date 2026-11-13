@@ -1,0 +1,26 @@
+<button mat-icon-button class="close-button"  (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>CashAccountUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="cashAccountForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+            <div class="row">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>CashAccountType</mat-label>
+                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="CashAccountType" required>
+                        <mat-option  *ngFor="let cA of cashAccountTypes" [value]="cA">  {{cA}} </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>CashAccount</mat-label>
+                    <input matInput placeholder="Input CashAccount" autocomplete="off" required formControlName="CashAccount">
+                </mat-form-field>
+            </div>
+        </div>
+        <div mat-dialog-actions [align]="'end'" class="mb-3">
+            <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="cashAccountForm.invalid || loading == true">{{btnText}}</button>
+        </div>
+  </form>

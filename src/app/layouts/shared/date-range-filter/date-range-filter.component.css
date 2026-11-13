@@ -1,0 +1,26 @@
+:host { display: block; min-width: 0; }
+.drf { display: flex; align-items: center; gap: 4px 12px; flex-wrap: wrap; }
+
+/* same segmented buttons as the Dashboard / Command Center had */
+.drf-presets { display: inline-flex; border: 1px solid #c5cae9; border-radius: 22px; overflow: hidden; background: #fff; }
+.drf-preset {
+  min-height: 40px; padding: 0 14px; border: 0; background: transparent;
+  font: inherit; font-weight: 600; color: #3F51B5; cursor: pointer; white-space: nowrap;
+}
+.drf-preset + .drf-preset { border-left: 1px solid #c5cae9; }
+.drf-preset.active { background: #3F51B5; color: #fff; }
+.drf-preset:disabled { cursor: default; opacity: .6; }
+
+.drf-dates { display: flex; gap: 12px; min-width: 0; }
+.drf-field { flex: 0 1 160px; min-width: 0; }
+
+@media (pointer: coarse) {
+  .drf-preset { min-height: 44px; }
+}
+/* phones: the presets share the width, the dates side by side under them */
+@media (max-width: 767.98px) {
+  .drf, .drf-presets, .drf-dates { width: 100%; }
+  .drf-presets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-radius: 12px; }
+  .drf-preset { min-height: 44px; padding: 4px 2px; font-size: 12px; line-height: 1.2; white-space: normal; }
+  .drf-field { flex: 1 1 0; }
+}

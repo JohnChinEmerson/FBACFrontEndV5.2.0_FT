@@ -1,0 +1,20 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.search-form-field
+{
+    width: 20%;
+}
+.forward-icon{
+    font-size: 23px;
+}
+.tab-content{
+    padding: 5px;
+}

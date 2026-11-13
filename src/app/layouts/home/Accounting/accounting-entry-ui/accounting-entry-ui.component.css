@@ -1,0 +1,21 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.search-form-field
+{
+    width: 20%;
+}
+
+.mat-column-Description {
+    flex: 0 0 40%;
+}
+.mat-column-AccountTitle {
+    flex: 0 0 30%;
+}

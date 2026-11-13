@@ -1,0 +1,61 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>AdjustPriceUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="adjustPriceForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+            <div class="row ">
+                <div class="col align-elements">
+                    <ng-select  
+                        class="w-15" 
+                        [items]="categorys" 
+                        [virtualScroll]="true" 
+                        appendTo="body" 
+                        formControlName="Category" 
+                        bindLabel="Category" 
+                        bindValue="Category"  
+                        [searchable]="true" 
+                        [clearable] = "false" 
+                        placeholder="Category"
+                        (change)="onChangeCategory($event)" 
+                        required>
+                    </ng-select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field class="" appearance="standard">
+                        <mat-label>MarkUp</mat-label>
+                        <input matInput placeholder="Input MarkUp" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" min="0"  autocomplete="off" required formControlName="MarkUp">
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="" appearance="standard">
+                        <mat-label>MarkUpType</mat-label>
+                        <mat-select role="combobox" [disableOptionCentering]="true" formControlName="MarkUpType"  autocomplete="off" required>
+                            <mat-option value="percent">
+                                Percent
+                            </mat-option>
+                            <mat-option value="amount">
+                                Amount
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 mb-3" mat-dialog-actions [align]="'start'">
+                    <button type="button" mat-button color="primary" class="" >
+                        <mat-checkbox (change)="onCheck($event.checked)" [checked]="true" >
+                            <mat-label> Round Price To a Whole Number</mat-label>
+                        </mat-checkbox>
+                    </button>
+            </div>
+            <div class="col-6 mb-3" mat-dialog-actions [align]="'end'">
+                <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="adjustPriceForm.invalid || loading == true">{{btnText}}</button>
+            </div>
+        </div>
+  </form>

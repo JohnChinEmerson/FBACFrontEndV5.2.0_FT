@@ -1,0 +1,29 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>INGREDIENTS USED FOR : {{ inputDate | date:'MMMM dd, yyyy' | uppercase }}</h2>
+<mat-divider></mat-divider>
+<mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"></mat-progress-bar>
+<div mat-dialog-content>
+    <div class="grid-list">
+        <table>
+            <thead><tr><th>ItemName</th><th>UM</th><th class="numeric">Available</th><th class="numeric">QtyUsed</th><th class="numeric">SystemCount</th><th class="numeric">PhysicalCount</th><th class="numeric">Variance</th><th class="numeric">TotalCost</th></tr></thead>
+            <tbody>
+                <tr *ngFor="let r of rows">
+                    <td>{{ r.ItemName }}</td><td>{{ r.UM }}</td>
+                    <td class="numeric">{{ r.Available | number:'1.2-4' }}</td>
+                    <td class="numeric">{{ r.QtyUsed | number:'1.2-4' }}</td>
+                    <td class="numeric">{{ r.SystemCount | number:'1.2-4' }}</td>
+                    <td class="numeric"><input class="inputtable numeric" type="text" [value]="r.PhysicalCount" (change)="updatePhysicalCount($event, r)" (keyup.enter)="updatePhysicalCount($event, r)" autocomplete="off"></td>
+                    <td class="numeric" [class.negative]="r.Variance < 0">{{ r.Variance | number:'1.2-4' }}</td>
+                    <td class="numeric">{{ r.TotalCost | number:'1.2-2' }}</td>
+                </tr>
+            </tbody>
+            <tfoot *ngIf="rows.length"><tr><td colspan="7">TOTAL COST</td><td class="numeric">{{ totalCost | number:'1.2-2' }}</td></tr></tfoot>
+        </table>
+        <div class="grid-empty" *ngIf="!isLoading && rows.length == 0">No unprocessed sales with recipe ingredients for this date.</div>
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="onClickSave()" [disabled]="isSaving || rows.length == 0">Save</button>
+</div>

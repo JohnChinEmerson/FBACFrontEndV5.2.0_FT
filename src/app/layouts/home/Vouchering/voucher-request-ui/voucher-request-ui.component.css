@@ -1,0 +1,92 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.mat-column-TransDate, .mat-column-TransName, .mat-column-VoucherNo.mat-column-TransNo,.mat-column-Amount ,.mat-column-Qty,.mat-column-UM,.mat-column-Cost,.mat-column-Discount,.mat-column-RecordStatus{
+  flex: 0 0 10%;
+}
+.mat-column-InputBy{
+  flex: 0 0 12%;
+}
+.mat-column-InputByDateTime{
+  flex: 0 0 18%;
+}
+.mat-column-PayToName{
+  flex: 0 0 20%;
+}
+.mat-column-ItemName{
+  flex: 0 0 35%;
+}
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+}
+mat-table {
+  display: block;
+  min-width: 1000px; /* Adjust as needed */
+}
+.auto-adjust-cell {
+  white-space: normal !important;  
+  word-wrap: break-word !important;             
+  line-height: 1.4em !important;               
+  padding: 4px 8px !important;                  
+}
+
+.mat-row, .mat-cell {
+  height: auto !important;         
+}
+
+
+.itemListTransaction{
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  min-height: 0;
+  max-height: 730px;
+}
+.itemListTransaction2 {
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  min-height: 0;
+  max-height: 730px;
+}
+/* 110% scale and above */
+@media (-webkit-min-device-pixel-ratio: 1.1),
+       (min-resolution: 1.1dppx) {
+  .itemListTransaction {
+    max-height: 630px;
+  }
+  .itemListTransaction2 {
+    max-height: 630px;
+  }
+}
+
+/* 125% scale and above */
+@media (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 1.25dppx) {
+  .itemListTransaction {
+    max-height: 530px;
+  }
+  .itemListTransaction2 {
+    max-height: 530px;
+  }
+}
+
+/* 125% scale and above */
+@media (-webkit-min-device-pixel-ratio: 1.50),
+       (min-resolution: 1.50dppx) {
+    .itemListTransaction {
+    max-height: 430px;
+  }
+  .itemListTransaction2 {
+    max-height: 430px;
+  }
+}

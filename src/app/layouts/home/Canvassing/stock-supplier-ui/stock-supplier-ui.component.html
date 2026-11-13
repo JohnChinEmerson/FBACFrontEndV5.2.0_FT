@@ -1,0 +1,95 @@
+<button mat-icon-button class="close-button"  (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>StockSupplierUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="stockSupplierForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>ItemName</mat-label>
+                    <input matInput placeholder="Input ItemName" autocomplete="off" required formControlName="ItemName">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <mat-form-field class="" appearance="standard">
+                        <mat-label>ItemType</mat-label>
+                        <input matInput placeholder="Input ItemType" autocomplete="off" required formControlName="ItemType">
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field class="" appearance="standard">
+                        <mat-label>UM</mat-label>
+                        <input matInput placeholder="Input UM" autocomplete="off" required formControlName="UM">
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field class="" appearance="standard">
+                        <mat-label>Category</mat-label>
+                        <input matInput placeholder="Input Category" autocomplete="off" required formControlName="Category">
+                    </mat-form-field>
+                </div>
+            </div>
+           
+            <div class="row ">
+                <div class="col align-elements">
+                    <ng-select  
+                        [items]="suppliers" 
+                        [virtualScroll]="true" 
+                        appendTo="body" 
+                        formControlName="SupplierName" 
+                        bindLabel="SupplierName" 
+                        bindValue="SupplierName"  
+                        [searchable]="true" 
+                        [clearable] = "false" 
+                        placeholder="SupplierName" 
+                        (change)="onChangeSupplier($event)"
+                        required>
+                    </ng-select>
+                    <button type="button"  (click)="onClickNewSupplier()"mat-icon-button color="primary" title="New" [disabled]="btnDisableSupplierName"> <mat-icon>add_circle</mat-icon></button>
+                </div>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Input Address" autocomplete="off" required formControlName="Address" readonly>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>ContactNo</mat-label>
+                    <input matInput placeholder="Input ContactNo" autocomplete="off" required formControlName="ContactNo" readonly>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>Cost</mat-label>
+                    <input matInput placeholder="Input Cost" type="text" mask="separator.4" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="Cost" >
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <mat-form-field class="" appearance="standard">
+                        <mat-label>TermDays</mat-label>
+                        <input matInput placeholder="Input TermDays" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="TermDays" [readonly]="btnDisableTermDays">
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field class="" appearance="standard">
+                        <mat-label>DiscountPercent</mat-label>
+                        <input matInput placeholder="Input DiscountPercent" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="DiscountPercent" [readonly]="btnDisableDiscountPercent">
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field class="" appearance="standard">
+                        <mat-label>MinimumQty</mat-label>
+                        <input matInput placeholder="Input MinimumQty" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="MinimumQty" [readonly]="btnDisableMinimumQty">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div mat-dialog-actions [align]="'end'" class="mb-3">
+            <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="stockSupplierForm.invalid || loading == true">{{btnText}}</button>
+        </div>
+  </form>

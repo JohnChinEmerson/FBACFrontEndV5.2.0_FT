@@ -1,0 +1,124 @@
+
+<div class="content" *ngIf="!isPhone; else phoneLogin">
+    <mat-card>
+        <div class="search-div">
+            <div class="header-content">
+                <h2 mat-dialog-title>LoginUI</h2>
+                <button mat-icon-button class="close-button" (click)="onClose()">
+                    <mat-icon class="close-icon" color="warn">close</mat-icon>
+                </button>
+            </div>
+            <mat-divider></mat-divider>
+        </div>
+        <div mat-dialog-content>
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+                <ng-select  
+                        [items]="Branches" 
+                        bindLabel="BranchName" 
+                        bindValue="BranchId"  
+                        [searchable]="true" 
+                        [clearable] = "false" 
+                        placeholder="BranchName" 
+                        formControlName="BranchId"
+                        required
+                        >
+                </ng-select>
+                <ng-select  *ngIf="hostName && hostName == 'mariosoftacctng.com'"
+                    [items]="editions" 
+                    [searchable]="true" 
+                    [clearable] = "false" 
+                    placeholder="Edition" 
+                    formControlName="Edition"
+                    required
+                    >
+                </ng-select>
+                <mat-form-field class="chkForm" appearance="standard">
+                    <mat-label>Username</mat-label>
+                    <input  matInput placeholder="Input Username"  autocomplete="off" formControlName="Username" required>
+                    <mat-icon color="primary" matSuffix>person</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>Password</mat-label>
+                    <input matInput placeholder="Input Password" autocomplete="off" formControlName="Password" required type="password" [autocomplete]="false">
+                    <mat-icon color="primary" matSuffix>lock</mat-icon>
+                </mat-form-field>
+                <mat-checkbox class="login-remember" color="primary" [checked]="rememberMe" (change)="rememberMe = $event.checked">Remember me</mat-checkbox>
+                <mat-error *ngIf="errorMessage">{{errorMessage}}</mat-error>
+                <div mat-dialog-actions [align]="'end'" class="login-actions">
+                    <button class="w-100" type="submit" mat-raised-button color="primary" [disabled]="loginForm.invalid || loading == true">Login</button>
+                </div>
+            </form>
+        </div>
+    </mat-card>
+</div>
+
+<!-- ================= PHONE LOGIN (same form and login(); layout only) ================= -->
+<ng-template #phoneLogin>
+<div class="pl">
+    <header class="pl-brand">
+        <img class="pl-logo" src="/assets/CircleProductLogo.png" alt="">
+        <h1 class="pl-title">Food and Beverage</h1>
+        <p class="pl-subtitle">Web Accounting V5.2.0</p>
+    </header>
+
+    <form class="pl-sheet" [formGroup]="loginForm" (ngSubmit)="onPhoneLogin()" novalidate>
+        <h2 class="pl-heading">Sign in</h2>
+        <p class="pl-hint">Choose your branch and enter your account.</p>
+
+        <div class="pl-alert" role="alert" *ngIf="errorMessage"><mat-icon>error_outline</mat-icon><span>{{errorMessage}}</span></div>
+
+        <label class="pl-label" for="plBranch">Branch</label>
+        <ng-select class="pl-select" labelForId="plBranch"
+                [items]="Branches"
+                bindLabel="BranchName"
+                bindValue="BranchId"
+                [searchable]="false"
+                [clearable]="false"
+                placeholder="Select branch"
+                formControlName="BranchId"
+                [class.invalid]="fieldMissing('BranchId')">
+        </ng-select>
+        <div class="pl-error" *ngIf="fieldMissing('BranchId')">Select your branch.</div>
+
+        <ng-container *ngIf="hostName && hostName == 'mariosoftacctng.com'">
+            <label class="pl-label" for="plEdition">Edition</label>
+            <ng-select class="pl-select" labelForId="plEdition"
+                    [items]="editions"
+                    [searchable]="false"
+                    [clearable]="false"
+                    placeholder="Select edition"
+                    formControlName="Edition"
+                    [class.invalid]="fieldMissing('Edition')">
+            </ng-select>
+            <div class="pl-error" *ngIf="fieldMissing('Edition')">Select the edition.</div>
+        </ng-container>
+
+        <label class="pl-label" for="plUsername">Username</label>
+        <div class="pl-input" [class.invalid]="fieldMissing('Username')">
+            <mat-icon>person</mat-icon>
+            <input id="plUsername" type="text" formControlName="Username" autocomplete="username"
+                   autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="next" placeholder="Username">
+        </div>
+        <div class="pl-error" *ngIf="fieldMissing('Username')">Enter your username.</div>
+
+        <label class="pl-label" for="plPassword">Password</label>
+        <div class="pl-input" [class.invalid]="fieldMissing('Password')">
+            <mat-icon>lock</mat-icon>
+            <input id="plPassword" [type]="showPassword ? 'text' : 'password'" formControlName="Password"
+                   autocomplete="current-password" enterkeyhint="go" placeholder="Password">
+            <button type="button" class="pl-eye" (click)="showPassword = !showPassword"
+                    [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'" [attr.aria-pressed]="showPassword">
+                <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+        </div>
+        <div class="pl-error" *ngIf="fieldMissing('Password')">Enter your password.</div>
+
+        <mat-checkbox class="pl-remember" color="primary" [checked]="rememberMe" (change)="rememberMe = $event.checked">Remember me</mat-checkbox>
+
+        <button type="submit" class="pl-login" mat-raised-button color="primary" [disabled]="loading">
+            <mat-spinner *ngIf="loading" diameter="22" class="pl-spinner"></mat-spinner>
+            <span>{{ loading ? 'Signing in...' : 'Login' }}</span>
+        </button>
+    </form>
+</div>
+</ng-template>

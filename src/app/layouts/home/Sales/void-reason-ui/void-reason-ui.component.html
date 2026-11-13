@@ -1,0 +1,19 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>VoidReasonUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="saleHeaderForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <div class="row">
+            <mat-form-field class="" appearance="standard">
+                <mat-label>VoidReason</mat-label>
+                <textarea  matInput placeholder="Input VoidReason" autocomplete="off" required formControlName="VoidReason"></textarea>
+            </mat-form-field>
+        </div>
+       
+    </div>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+        <button type="button"  (click)="onSubmit()" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="saleHeaderForm.invalid || loading == true">{{btnText}}</button>
+    </div>
+  </form>

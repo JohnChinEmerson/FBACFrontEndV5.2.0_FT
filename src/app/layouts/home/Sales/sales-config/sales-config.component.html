@@ -1,0 +1,179 @@
+<app-background-logo-ui></app-background-logo-ui>
+
+<div class="content">
+    <mat-card>
+        <button mat-icon-button class="close-button" (click)="onClose()">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+        <h2 mat-dialog-title>SaleConfigUI</h2>
+        <mat-divider></mat-divider>
+
+        <form [formGroup]="saleConfigForm" (ngSubmit)="onSubmit()">
+            <div mat-dialog-content>
+                <div class="fields-container pt-3">
+                    <div class="row-pair">
+                        <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.ValidatePrice == 'yes'" (change)="onCheck('ValidatePrice', $event.checked, saleConfig.ValidatePrice, 'Boolean')">Validate Price:</mat-checkbox>
+                            </label>
+                            <input class="ValidatePrice" matInput placeholder="Input ValidatePrice" autocomplete="off" formControlName="ValidatePrice">
+                        </div>
+                        <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.ReceiptLabel != null" (change)="onCheck('ReceiptLabel', $event.checked, saleConfig.ReceiptLabel, 'String')">Receipt Label:</mat-checkbox>
+                            </label>
+                            <input class="ReceiptLabel" matInput placeholder="Input ReceiptLabel" autocomplete="off" formControlName="ReceiptLabel">
+                        </div>
+                    </div>
+
+                    <div class="row-pair">
+                        <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.ValidateQty == 'yes'" (change)="onCheck('ValidateQty', $event.checked, saleConfig.ValidateQty, 'Boolean')">Validate Qty:</mat-checkbox>
+                            </label>
+                            <input class="ValidateQty" matInput placeholder="Input ValidateQty" autocomplete="off" formControlName="ValidateQty">
+                        </div>
+                        <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.LoyaltyPoints > 0" (change)="onCheck('LoyaltyPoints', $event.checked, saleConfig.LoyaltyPoints, 'Number')">Loyalty Points:</mat-checkbox>
+                            </label>
+                            <input class="LoyaltyPoints" matInput placeholder="Input LoyaltyPoints" autocomplete="off" formControlName="LoyaltyPoints">
+                        </div>
+                    </div>
+
+                    <div class="row-pair">
+                        <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.PopupQty == 'yes'" (change)="onCheck('PopupQty', $event.checked, saleConfig.PopupQty, 'Boolean')">Popup Qty:</mat-checkbox>
+                            </label>
+                            <input class="PopupQty" matInput placeholder="Input PopupQty" autocomplete="off" formControlName="PopupQty">
+                        </div>
+                        <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.CloseDrawerNextDay == 'yes'" (change)="onCheck('CloseDrawerNextDay', $event.checked, saleConfig.CloseDrawerNextDay, 'Boolean')">Close Drawer NextDay:</mat-checkbox>
+                            </label>
+                            <input class="CloseDrawerNextDay" matInput placeholder="Input CloseDrawerNextDay" autocomplete="off" formControlName="CloseDrawerNextDay">
+                        </div>
+                    </div>
+
+                    <div class="row-pair">
+                        <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.HasTable == 'yes'" (change)="onCheck('HasTable', $event.checked, saleConfig.HasTable, 'Boolean')">Has Table (Restaurant):</mat-checkbox>
+                            </label>
+                            <input class="HasTable" matInput placeholder="Tables, SEND/SERVE, SPLIT/MERGE, BILL OUT in Sales Transaction" autocomplete="off" formControlName="HasTable">
+                        </div>
+                        <!-- where SEND puts the order: kitchen order slip, Kitchen Queue screen, or both -->
+                        <div class="field-row">
+                            <label>Send Kitchen:</label>
+                            <mat-select class="SendKitchen" formControlName="SendKitchen" aria-label="Send Kitchen" panelClass="send-kitchen-panel">
+                                <mat-select-trigger>{{saleConfigForm.controls['SendKitchen'].value}}</mat-select-trigger>
+                                <mat-option *ngFor="let o of sendKitchenOptions" [value]="o.Value">{{o.Label}}</mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+
+                    <div class="row-pair">
+                        <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.HideZeroItemQty == 'yes'" (change)="onCheck('HideZeroItemQty', $event.checked, saleConfig.HideZeroItemQty, 'Boolean')">Hide ZeroItemQty:</mat-checkbox>
+                            </label>
+                            <input class="HideZeroItemQty" matInput placeholder="Input HideZeroItemQty" autocomplete="off" formControlName="HideZeroItemQty">
+                        </div>
+                        <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.ItemsPrintByCategory == 'yes'" (change)="onCheck('ItemsPrintByCategory', $event.checked, saleConfig.ItemsPrintByCategory, 'Boolean')">Items PrintByCategory:</mat-checkbox>
+                            </label>
+                            <input class="ItemsPrintByCategory" matInput placeholder="Input ItemsPrintByCategory" autocomplete="off" formControlName="ItemsPrintByCategory">
+                        </div>
+                        <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.POSFontSize" (change)="onCheck('POSFontSize', $event.checked, saleConfig.POSFontSize, 'Number')">POS Print FontSize:</mat-checkbox>
+                            </label>
+                            <input class="POSFontSize" matInput placeholder="Input POSFontSize" autocomplete="off" formControlName="POSFontSize">
+                        </div>
+                         <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.POSMargin" (change)="onCheck('POSMargin', $event.checked, saleConfig.POSMargin, 'Number')">POS Print Margin:</mat-checkbox>
+                            </label>
+                            <input class="POSMargin" matInput placeholder="Input POSMargin" autocomplete="off" formControlName="POSMargin">
+                        </div>
+                    </div>
+
+                    <div class="row-pair">
+                        <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.ItemsPrintByName == 'yes'" (change)="onCheck('ItemsPrintByName', $event.checked, saleConfig.ItemsPrintByName, 'Boolean')">Items PrintByName:</mat-checkbox>
+                            </label>
+                            <input class="ItemsPrintByName" matInput placeholder="Input ItemsPrintByName" autocomplete="off" formControlName="ItemsPrintByName">
+                        </div>
+                        <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.POSReceiptNotesHeight > 0" (change)="onCheck('POSReceiptNotesHeight', $event.checked, saleConfig.POSReceiptNotesHeight, 'Number')">POS ReceiptNotes Height:</mat-checkbox>
+                            </label>
+                            <input class="POSReceiptNotesHeight" matInput type="number" min="0" placeholder="Input POSReceiptNotesHeight" autocomplete="off" formControlName="POSReceiptNotesHeight">
+                        </div>
+                    </div>
+
+                    <!-- Desktop SaleConfigUI: Item Photo, On Screen Keyboard, button size and service fee -->
+                    <div class="row-pair">
+                        <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.HasPhoto == 'yes'" (change)="onCheck('HasPhoto', $event.checked, saleConfig.HasPhoto, 'Boolean')">Item Photo:</mat-checkbox>
+                            </label>
+                            <input class="HasPhoto" matInput placeholder="Product buttons show the item photo" autocomplete="off" formControlName="HasPhoto">
+                        </div>
+                        <div class="field-row">
+                            <label>
+                                <mat-checkbox [checked]="saleConfig.OnScreenKeyboard == 'yes'" (change)="onCheck('OnScreenKeyboard', $event.checked, saleConfig.OnScreenKeyboard, 'Boolean')">On Screen Keyboard:</mat-checkbox>
+                            </label>
+                            <input class="OnScreenKeyboard" matInput placeholder="Keypad for AMOUNT PAID" autocomplete="off" formControlName="OnScreenKeyboard">
+                        </div>
+                    </div>
+
+                    <div class="row-pair">
+                        <div class="field-row">
+                            <label>Button Width:</label>
+                            <input class="ButtonWidth" matInput type="number" min="40" max="600" placeholder="Input ButtonWidth" autocomplete="off" formControlName="ButtonWidth">
+                        </div>
+                        <div class="field-row">
+                            <label>Button Height:</label>
+                            <input class="ButtonHeight" matInput type="number" min="40" max="600" placeholder="Input ButtonHeight" autocomplete="off" formControlName="ButtonHeight">
+                        </div>
+                    </div>
+
+                    <div class="row-pair">
+                        <div class="field-row">
+                            <label>Service Fee:</label>
+                            <input class="ServiceFee" matInput type="number" min="0" placeholder="Input ServiceFee" autocomplete="off" formControlName="ServiceFee">
+                        </div>
+                        <div class="field-row">
+                            <label>Service Fee Type:</label>
+                            <select class="ServiceFeeType" formControlName="ServiceFeeType">
+                                <option value="percent">PERCENT</option>
+                                <option value="amount">AMOUNT</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="notes-row">
+                        <label>
+                            <mat-checkbox [checked]="saleConfig.ReceiptNotes != null" (change)="onCheck('ReceiptNotes', $event.checked, saleConfig.ReceiptNotes, 'String')">Receipt Notes:</mat-checkbox>
+                        </label>
+                        <textarea matInput placeholder="Input ReceiptNotes" rows="2" autocomplete="off" formControlName="ReceiptNotes"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div mat-dialog-actions [align]="'end'" class="mb-3">
+                <button type="button" mat-button color="primary" class="me-3" (click)="onClickSaleConfigPerMachine()">
+                    <mat-label>Config Per Machine</mat-label>
+                </button>
+                <button type="button" mat-button color="primary" class="me-3" (click)="onClickSaleConfigAccessRights()">
+                    <mat-label>Config AccessRights</mat-label>
+                </button>
+                <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="saleConfigForm.invalid || loading == true">{{btnText}}</button>
+            </div>
+        </form>
+    </mat-card>
+</div>

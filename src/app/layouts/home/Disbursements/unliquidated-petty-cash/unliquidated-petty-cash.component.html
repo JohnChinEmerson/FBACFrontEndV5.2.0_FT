@@ -1,0 +1,131 @@
+    <section class="content">
+        <div class="search-div"  *ngIf="liquidated">
+            <mat-form-field appearance="standard" >
+                <mat-label>Date From</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="dateFrom"  autocomplete="off" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+                <mat-label>Date To</mat-label>
+                <input matInput [matDatepicker]="picker2" [(ngModel)]="dateTo"  autocomplete="off"  required>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+            <button mat-raised-button color="primary" *ngFor="let tB of toolButtons" [disabled]="!tB.Disabled" (click)="tB.Function()">{{tB.Label}}</button> 
+            <mat-icon>more_vert</mat-icon>
+            <mat-form-field class="w-20" floatLabel="never"  appearance="standard">
+                <input matInput [(ngModel)]="searchKey" placeholder="Search" (keyup)="applyFilter()" autocomplete="false">
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <button mat-raised-button color="primary" *ngFor="let tB of toolButtons2" [disabled]="!tB.Disabled" (click)="tB.Function()" >{{tB.Label}}</button> 
+        </div>
+        <div class="search-div"  *ngIf="!liquidated">
+            <mat-form-field class="w-20" floatLabel="never"  appearance="standard">
+                <input matInput [(ngModel)]="searchKey" placeholder="Search" (keyup)="applyFilter()" autocomplete="false">
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <button mat-raised-button color="primary" *ngFor="let tB of toolButtons2" [disabled]="!tB.Disabled" (click)="tB.Function()" >{{tB.Label}}</button> 
+        </div>
+        <div class="mat-elevation-z2 ">
+            <div class="row g-1 ">
+                <div class="col-12 col-md-6 mat-elevation-z2 table-container table-cont">
+                    <mat-table [dataSource]="listData" matSort>
+                        <ng-container *ngFor="let dc of defaultColumns">
+                            <ng-container  [matColumnDef]="dc">
+                            <mat-header-cell *matHeaderCellDef sticky>{{ dc }}</mat-header-cell>
+                                <mat-cell  *matCellDef="let element"  class="auto-adjust-cell" [ngClass]="element | rowClasses:dc:columnTypeMap[dc]" [title]="element[dc]">
+                                <span>{{ element | rowDisplay:dc:columnTypeMap[dc] }}</span>
+                                </mat-cell>
+                                <mat-footer-cell *matFooterCellDef class="footer" [ngClass]="columnTypeMap[dc]">
+                                    <ng-container [ngSwitch]="columnTypeMap[dc]">
+                                        <span *ngSwitchCase="'decimal'">{{ listData | columnTotal:dc | number:'1.2-2' }}</span>
+                                        <span *ngSwitchCase="'int'">{{ listData | columnTotal:dc | number:'1.0-0' }}</span>
+                                        <span *ngSwitchDefault></span>
+                                    </ng-container>
+                                </mat-footer-cell>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container matColumnDef="loading">
+                            <mat-footer-cell *matFooterCellDef colspan="6">
+                                <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+                            </mat-footer-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="noData">
+                            <mat-footer-cell *matFooterCellDef colspan="6">
+                                No data.
+                            </mat-footer-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="defaultColumns; sticky:true"></mat-header-row>
+                       <mat-row  (click)="getRecord(row)"  *matRowDef="let row; columns: defaultColumns;" [ngClass]="{'data-selected': selectedId == row.DisburseNo, 'data-void': (row.RecordStatus == 'void' && selectedId != row.TransNo)}" ></mat-row>
+                        <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+                        <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
+                        <mat-footer-row [ngClass]="{'hide':(listData!=null && listData.data.length==0)}" *matFooterRowDef="defaultColumns;"></mat-footer-row>
+                    
+                    </mat-table>
+                <mat-paginator class="mat-paginator-sticky" [pageSize]="20" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons> </mat-paginator>
+                </div>
+                <div class="col-12 col-md-6 mat-elevation-z2 table-container table-cont">
+                    <mat-table [dataSource]="listData2" matSort>
+                        <ng-container *ngFor="let dc of defaultColumns2">
+                            <ng-container  [matColumnDef]="dc">
+                            <mat-header-cell *matHeaderCellDef sticky>{{ dc }}</mat-header-cell>
+                                <mat-cell  *matCellDef="let element"  class="auto-adjust-cell" [ngClass]="element | rowClasses:dc:columnTypeMap2[dc]" [title]="element[dc]">
+                                <span>{{ element | rowDisplay:dc:columnTypeMap2[dc] }}</span>
+                                </mat-cell>
+                                <mat-footer-cell *matFooterCellDef class="footer" [ngClass]="columnTypeMap2[dc]">
+                                <ng-container [ngSwitch]="columnTypeMap2[dc]">
+                                    <span *ngSwitchCase="'decimal'">{{ listData | columnTotal:dc | number:'1.2-2' }}</span>
+                                    <span *ngSwitchCase="'int'">{{ listData | columnTotal:dc | number:'1.0-0' }}</span>
+                                    <span *ngSwitchDefault></span>
+                                </ng-container>
+                            </mat-footer-cell>
+                            </ng-container>
+                        </ng-container>
+
+                        <ng-container matColumnDef="loading">
+                            <mat-footer-cell *matFooterCellDef colspan="6">
+                                <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+                            </mat-footer-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="noData">
+                            <mat-footer-cell *matFooterCellDef colspan="6">
+                                No data.
+                            </mat-footer-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="defaultColumns2; sticky:true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: defaultColumns2;" (click)="selectPaidTransaction(row)" [ngClass]="{'data-selected': selectedData2?.TransNo === row.TransNo}" (contextmenu)="onContextMenu2($event, row)"></mat-row>
+                    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading2}"></mat-footer-row>
+                    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData2!=null && listData2.data.length==0)}"></mat-footer-row>   
+           </mat-table>
+                <mat-paginator class="mat-paginator-sticky" [pageSize]="20" [pageSizeOptions]="pageSizeOptions2" showFirstLastButtons> </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+<div style="visibility: hidden; position: fixed"
+    [style.left]="contextMenuPosition2.x"
+    [style.top]="contextMenuPosition2.y"
+    [matMenuTriggerFor]="contextMenu2"
+    #contextMenuTrigger2="matMenuTrigger">
+</div>
+
+
+<mat-menu #contextMenu2="matMenu">
+    <ng-template matMenuContent let-data="data">
+        <button
+            mat-menu-item
+            *ngFor="let tB of contextButtons2"
+            [disabled]="tB.Disabled"
+            (click)="tB.Function()">
+            <mat-icon>delete</mat-icon>
+            <span>{{ tB.Label }}</span>
+        </button>
+    </ng-template>
+</mat-menu>

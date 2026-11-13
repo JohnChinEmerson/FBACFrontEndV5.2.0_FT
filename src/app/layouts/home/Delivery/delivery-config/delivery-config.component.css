@@ -1,0 +1,55 @@
+.content {
+    width: 100%;
+    position: fixed;
+}
+
+mat-card {
+    width: 600px;
+    max-width: 95vw;
+    margin: auto;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+mat-form-field {
+    width: 100%;
+    line-height: normal;
+}
+
+.dense-field {
+    margin-bottom: -1.25em;
+}
+
+.landing-background {
+    position: fixed;
+    top: -5%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width: 60%;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.field-row.align-top {
+  align-items: start;
+  padding-top: 8px;
+}
+
+.field-row mat-checkbox {
+  white-space: nowrap;
+}
+
+::ng-deep .ng-select .ng-select-container .ng-value-container {
+    padding: 15px 0 0 0 !important;
+}

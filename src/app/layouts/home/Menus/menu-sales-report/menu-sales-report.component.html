@@ -1,0 +1,108 @@
+<section class="content">
+    <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Menu Sales Report">
+            <div class="search-div">
+                <mat-form-field appearance="standard">
+                    <mat-label>Date From</mat-label>
+                    <input matInput [matDatepicker]="picker1" [(ngModel)]="menuDateFrom" autocomplete="off" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                    <mat-label>Date To</mat-label>
+                    <input matInput [matDatepicker]="picker2" [(ngModel)]="menuDateTo" autocomplete="off" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="w-20" floatLabel="never" appearance="standard">
+                    <input matInput [(ngModel)]="menuSearchKey" placeholder="Search" (keyup)="applyFilter(menuData, menuSearchKey)" autocomplete="off">
+                    <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="menuSearchKey = clearSearch(menuData)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+                <button mat-raised-button color="primary" (click)="onClickGoMenu()">Go</button>
+                <button mat-raised-button color="primary" (click)="onClickPrintMenu()" [disabled]="!menuData?.data?.length">Print</button>
+                <span class="total-count">Total Count : {{ (menuData?.filteredData?.length || 0) | number:'1.0-0' }}</span>
+            </div>
+            <div class="mat-elevation-z2 w-100">
+                <mat-table [dataSource]="menuData" matSort>
+                    <ng-container *ngFor="let dc of menuColumns">
+                        <ng-container [matColumnDef]="dc">
+                            <mat-header-cell *matHeaderCellDef sticky>{{ labels[dc] || dc }}</mat-header-cell>
+                            <mat-cell *matCellDef="let element" class="auto-adjust-cell" [ngClass]="element | rowClasses:dc:columnTypeMap[dc]" [class.negative]="dc == 'Profit' && element.Profit < 0" [title]="element[dc]">
+                                <span>{{ element | rowDisplay:dc:columnTypeMap[dc] }}</span>
+                            </mat-cell>
+                            <mat-footer-cell *matFooterCellDef class="footer" [ngClass]="columnTypeMap[dc]">
+                                <span *ngIf="columnTypeMap[dc] == 'decimal'">{{ menuData | columnTotal:dc | number:'1.2-2' }}</span>
+                            </mat-footer-cell>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container matColumnDef="loading">
+                        <mat-footer-cell *matFooterCellDef colspan="6"><mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar></mat-footer-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="noData">
+                        <mat-footer-cell *matFooterCellDef colspan="6">No data.</mat-footer-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="menuColumns; sticky:true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: menuColumns;"></mat-row>
+                    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoadingMenu}"></mat-footer-row>
+                    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(menuData!=null && menuData.data.length==0)}"></mat-footer-row>
+                    <mat-footer-row [ngClass]="{'hide':(menuData!=null && menuData.data.length==0)}" *matFooterRowDef="menuColumns;"></mat-footer-row>
+                </mat-table>
+                <mat-paginator #menuPaginator class="mat-paginator-sticky" [pageSize]="25" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
+            </div>
+        </mat-tab>
+        <mat-tab label="Ingredient Sales Report">
+            <div class="search-div">
+                <mat-form-field appearance="standard">
+                    <mat-label>Date From</mat-label>
+                    <input matInput [matDatepicker]="picker3" [(ngModel)]="ingredientDateFrom" autocomplete="off" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                    <mat-label>Date To</mat-label>
+                    <input matInput [matDatepicker]="picker4" [(ngModel)]="ingredientDateTo" autocomplete="off" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                    <mat-datepicker #picker4></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="w-20" floatLabel="never" appearance="standard">
+                    <input matInput [(ngModel)]="ingredientSearchKey" placeholder="Search" (keyup)="applyFilter(ingredientData, ingredientSearchKey)" autocomplete="off">
+                    <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="ingredientSearchKey = clearSearch(ingredientData)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+                <button mat-raised-button color="primary" (click)="onClickGoIngredient()">Go</button>
+                <button mat-raised-button color="primary" (click)="onClickPrintIngredient()" [disabled]="!ingredientData?.data?.length">Print</button>
+                <small>Ingredients are counted once End-of-Day Inventory is saved for the day.</small>
+            </div>
+            <div class="mat-elevation-z2 w-100">
+                <mat-table [dataSource]="ingredientData" matSort>
+                    <ng-container *ngFor="let dc of ingredientColumns">
+                        <ng-container [matColumnDef]="dc">
+                            <mat-header-cell *matHeaderCellDef sticky>{{ labels[dc] || dc }}</mat-header-cell>
+                            <mat-cell *matCellDef="let element" class="auto-adjust-cell" [ngClass]="element | rowClasses:dc:columnTypeMap[dc]" [title]="element[dc]">
+                                <span>{{ element | rowDisplay:dc:columnTypeMap[dc] }}</span>
+                            </mat-cell>
+                            <mat-footer-cell *matFooterCellDef class="footer" [ngClass]="columnTypeMap[dc]">
+                                <span *ngIf="dc == 'TotalCost'">{{ ingredientData | columnTotal:dc | number:'1.2-2' }}</span>
+                            </mat-footer-cell>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container matColumnDef="loading">
+                        <mat-footer-cell *matFooterCellDef colspan="6"><mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar></mat-footer-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="noData">
+                        <mat-footer-cell *matFooterCellDef colspan="6">No data.</mat-footer-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="ingredientColumns; sticky:true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: ingredientColumns;"></mat-row>
+                    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoadingIngredient}"></mat-footer-row>
+                    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(ingredientData!=null && ingredientData.data.length==0)}"></mat-footer-row>
+                    <mat-footer-row [ngClass]="{'hide':(ingredientData!=null && ingredientData.data.length==0)}" *matFooterRowDef="ingredientColumns;"></mat-footer-row>
+                </mat-table>
+                <mat-paginator #ingredientPaginator class="mat-paginator-sticky" [pageSize]="25" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</section>

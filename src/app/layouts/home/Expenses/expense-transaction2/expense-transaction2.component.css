@@ -1,0 +1,349 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.align-elements ng-select{
+    width: 100% !important;
+}
+.align-elements{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap:nowrap;
+}
+
+.mat-table .mat-cell, 
+.mat-table .mat-header-cell {
+    max-width: 100% !important;
+}
+
+.main-transaction-container {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 130px); 
+  overflow: hidden;
+  margin: 10px;
+}
+
+
+.left-panel, .right-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+}
+
+.itemListTransaction{
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  min-height: 0;
+  max-height: 600px;
+}
+.itemListTransaction2 {
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  min-height: 0;
+  max-height: 630px;
+}
+.fixed-bottom-button-group {
+  position: fixed;
+  bottom: 45px;
+  left: 0;
+  width: 100%;
+  z-index: 1001;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  padding: 5px 10px;
+}
+.fixed-bottom-amounts {
+  position: fixed;
+  bottom: 100px;
+  left: 0;
+  width: 100%;
+  z-index: 1001;
+  padding: 5px 10px;
+}
+.sticky-top-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1001;
+  padding-bottom: 8px;
+}
+
+.sticky-top-toolbar2 {
+  position: sticky;
+  top: 0;
+  z-index: 1001;
+}
+
+.subtitle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.totalAmount {
+  font-weight: bold;
+}
+
+.mat-button-toggle {
+  background-color: #3F51B5;
+  color: #e9eaea;
+  border: 0;
+}
+
+.main-transaction-container {
+  display: flex;
+  flex-direction: column; 
+  height: auto; 
+  margin: 10px;
+}
+
+
+mat-table:focus {
+  outline: none !important;
+}
+
+/* ===== LEFT TABLE (Item picker) ===== */
+::ng-deep .itemListTransaction .mat-column-ItemId {
+    flex: 0 0 18% !important;
+}
+::ng-deep .itemListTransaction .mat-column-ItemName {
+    flex: 1 1 37% !important;
+}
+::ng-deep .itemListTransaction .mat-column-UM {
+    flex: 0 0 10% !important;
+}
+::ng-deep .itemListTransaction .mat-column-Price {
+    flex: 0 0 17% !important;
+    text-align: right !important;
+    justify-content: end !important;
+    padding-right: 10px !important;
+    /* font-weight: 600; */
+}
+::ng-deep .itemListTransaction .mat-column-Available {
+    flex: 0 0 18% !important;
+    text-align: right !important;
+    justify-content: end !important;
+    padding-right: 10px !important;
+}
+::ng-deep .itemListTransaction .mat-row {
+    align-items: flex-start !important;
+}
+
+/* ===== RIGHT TABLE (Order lines) ===== */
+::ng-deep .itemListTransaction2 .mat-column-DiscountValue,
+::ng-deep .itemListTransaction2 .mat-column-Amount {
+    text-align: right !important;
+    justify-content: end !important;
+    padding-right: 10px !important;
+    flex: 0 0 12% !important;
+}
+::ng-deep .itemListTransaction2 .mat-column-Qty,
+::ng-deep .itemListTransaction2 .mat-column-Price,
+::ng-deep .itemListTransaction2 .mat-column-Discount {
+    text-align: right !important;
+    justify-content: end !important;
+    padding-right: 10px !important;
+    flex: 0 0 8% !important;
+}
+::ng-deep .itemListTransaction2 .mat-column-UM {
+    flex: 0 0 7% !important;
+}
+::ng-deep .itemListTransaction2 .mat-column-ItemName {
+    flex: 0 0 40% !important;
+}
+
+/* ---- Right-align text INSIDE the editable inputs (right table) ---- */
+::ng-deep .itemListTransaction2 .mat-column-Qty input,
+::ng-deep .itemListTransaction2 .mat-column-Price input,
+::ng-deep .itemListTransaction2 .mat-column-DiscountValue input {
+    text-align: right !important;
+    width: 100%;
+}
+
+/* ---- DiscountValue: input + Percent checkbox aligned as one unit ---- */
+::ng-deep .itemListTransaction2 .mat-column-DiscountValue .discount-cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    width: 100%;
+}
+::ng-deep .itemListTransaction2 .mat-column-DiscountValue .discount-cell input {
+    text-align: right !important;
+    width: 60px;
+    flex: 0 0 auto;
+}
+::ng-deep .itemListTransaction2 .mat-column-DiscountValue .discount-cell .mat-checkbox {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+}
+@media (max-width: 767px) {
+  .itemListTransaction {
+    max-height: 200px; 
+    min-height: 200px; 
+  }
+  .itemListTransaction2 {
+    max-height: 200px; 
+    min-height: 200px; 
+    margin-bottom: 25%;
+  }
+  .fixed-bottom-amounts {
+    position: fixed;
+    bottom: 150px;
+    left: 0;
+    width: 100%;
+    z-index: 1001;
+    padding: 5px 10px;
+  }
+  .fixed-bottom-amounts input.form-control {
+    max-width: 150px !important;
+    min-width: 150px !important;
+    text-align: center !important;
+    font-size: 20px !important;
+    font-weight: 700  !important;
+
+    border: 1px solid #ced4da;   /* force visible border */
+    border-radius: 4px;
+    background-color: #fff;      /* ensure white like editable input */
+
+  }
+  .fixed-bottom-amounts .amount-paid {
+    color: rgb(31, 100, 31) !important;
+  }
+
+  .fixed-bottom-amounts .amount-label {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+  }
+}
+@media (min-width: 768px) {
+  .main-transaction-container {
+    flex-direction: row; 
+    height: calc(100vh - 130px);
+    overflow: hidden;
+  }
+  .left-panel {
+    flex: 1 1 35%;
+  }
+
+  .right-panel {
+    flex: 1 1 65%;
+  }
+}
+
+
+.fixed-bottom-amounts input.form-control {
+  max-width: 200px;
+  min-width: 200px;
+  text-align: center;
+  font-size: 20px;
+
+  border: 1px solid #ced4da;   /* force visible border */
+  border-radius: 4px;
+  background-color: #fff;      /* ensure white like editable input */
+}
+.fixed-bottom-amounts .amount-paid {
+  color: rgb(31, 100, 31) !important;
+}
+
+.fixed-bottom-amounts .amount-label {
+  font-size: 20px;
+}
+.fixed-bottom-amounts .right-panel {
+  background-color: #F5F5F5;
+}
+
+
+.auto-adjust-cell {
+  white-space: normal !important;  
+  word-wrap: break-word !important;             
+  line-height: 1.4em !important;               
+  padding: 4px 8px !important;                  
+}
+
+.mat-row, .mat-cell {
+  height: auto !important;         
+}
+
+
+
+/* 110% scale and above */
+@media (-webkit-min-device-pixel-ratio: 1.1),
+       (min-resolution: 1.1dppx) {
+  .itemListTransaction {
+    max-height: 420px;
+  }
+  .itemListTransaction2 {
+    max-height: 430px;
+  }
+}
+
+/* 125% scale and above */
+@media (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 1.25dppx) {
+  .itemListTransaction {
+    max-height: 320px;
+  }
+  .itemListTransaction2 {
+    max-height: 330px;
+  }
+}
+
+/* 150% scale and above */
+@media (-webkit-min-device-pixel-ratio: 1.50),
+       (min-resolution: 1.50dppx) {
+    .itemListTransaction {
+    max-height: 190px;
+  }
+  .itemListTransaction2 {
+    max-height: 200px;
+  }
+}
+
+::ng-deep .discount-select-wrap {
+    position: relative;
+    display: inline-block;
+}
+
+::ng-deep .discount-select-wrap.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+::ng-deep .discount-select-wrap .discount-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 22px;
+    border-radius: 5px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    pointer-events: none;
+}
+
+::ng-deep .discount-select-wrap .discount-select {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    border: none;
+}

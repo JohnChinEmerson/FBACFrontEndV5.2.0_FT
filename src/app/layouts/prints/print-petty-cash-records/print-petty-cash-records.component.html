@@ -1,0 +1,50 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+  <table class="table table-bordered" #tableToExport >
+      <thead class="thead-background">
+        <tr>
+          <th scope="col">DATE</th>
+          <th scope="col">DISBURSENO</th>
+          <th scope="col">VOUCHERNO</th>
+          <th scope="col">PAYMENT TYPE</th>
+          <th scope="col">CASH ACCOUNT</th>
+          <th scope="col">RELEASED</th>
+          <th scope="col">USED</th>
+          <th scope="col">LEFT</th>
+          <th scope="col">REMIT</th>
+          <th scope="col">VARIANCE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of Data">
+          <td>{{data.TransDate | date:'MM/dd/yyyy'}}</td>
+          <td>{{data.DisburseNo}}</td>
+          <td>{{data.VoucherNo}}</td>
+          <td >{{data.PaymentType }}</td>
+          <td >{{data.CashAccount }}</td>
+          <td class="numeric">{{data.AmountReleased | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.AmountUsed | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.AmountLeft | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.AmountCount | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.Variance | number:'1.2-2'}}</td>
+        </tr>
+        <tr class="footer">
+            <td class="no-border" colspan="5"></td>
+            <td class="numeric">{{getTotal('AmountReleased') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('AmountUsed') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('AmountLeft') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('AmountCount') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('Variance') | number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  

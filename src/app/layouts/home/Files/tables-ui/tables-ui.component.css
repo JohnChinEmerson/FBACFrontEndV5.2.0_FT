@@ -1,0 +1,27 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.total-count{
+    margin-left: auto;
+    font-weight: 500;
+}
+.mat-table .mat-cell,
+.mat-table .mat-header-cell {
+    max-width: 100% !important;
+}
+.auto-adjust-cell {
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  line-height: 1.4em !important;
+  padding: 4px 8px !important;
+}
+.mat-row, .mat-cell {
+  height: auto !important;
+}

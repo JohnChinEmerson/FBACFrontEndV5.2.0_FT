@@ -1,0 +1,41 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+  <table class="table table-bordered" #tableToExport >
+      <thead class="thead-background">
+        <tr>
+          <th scope="col">TRANSNO</th>
+          <th scope="col">TRANSDATE</th>
+          <th scope="col">SUPPLIER NAME</th>
+          <th scope="col">PAYMENT TYPE</th>
+          <th scope="col">TOTAL DUE</th>
+          <th scope="col">STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of Headers">
+          <td>{{data.TransNo}}</td>
+          <td>{{data.TransDate | date:'MM/dd/yyyy'}}</td>
+          <td >{{data.SupplierName }}</td>
+          <td >{{data.PaymentType }}</td>
+          <td class="numeric">{{data.TotalDue | number:'1.2-2'}}</td>
+          <td >{{data.RecordStatus }}</td>
+        </tr>
+        <tr class="footer">
+            <td class="no-border"></td>
+            <td class="no-border"></td>
+            <td class="numeric">Amount Void : {{getTotal('AmountVoid') | number:'1.2-2'}}</td>
+            <td class="no-border"></td>
+            <td class="numeric">{{getTotal('AmountOpen') | number:'1.2-2'}}</td>
+            <td class="no-border"></td>
+        </tr>
+      </tbody>
+    </table>
+    <app-aprint-footer [totalRecords]="Headers.length"></app-aprint-footer>  

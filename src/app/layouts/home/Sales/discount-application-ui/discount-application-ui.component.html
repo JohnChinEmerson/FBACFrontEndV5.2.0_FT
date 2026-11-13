@@ -1,0 +1,98 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>DiscountApplicationUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="discountForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>DiscountName</mat-label>
+                    <input matInput formControlName="DiscountName" readonly>
+                </mat-form-field>
+            </div>
+            <div class="col-6 col-sm-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>{{discountForm.controls['DiscountType'].value == 'amount' ? 'DiscountAmount' : 'DiscountPercent'}}</mat-label>
+                    <input matInput type="number" inputmode="decimal" min="0" autocomplete="off" formControlName="DiscountPercent" (input)="computeDiscount()">
+                </mat-form-field>
+            </div>
+            <div class="col-6 col-sm-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>DiscountType</mat-label>
+                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="DiscountType" (selectionChange)="computeDiscount()">
+                        <mat-option *ngFor="let x of discountTypes" [value]="x">{{x.toUpperCase()}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>DiscountPerson (Name)</mat-label>
+                    <input matInput autocomplete="off" formControlName="DiscountPerson">
+                </mat-form-field>
+            </div>
+            <div class="col-6 col-sm-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>DiscountId</mat-label>
+                    <input matInput autocomplete="off" formControlName="DiscountId">
+                </mat-form-field>
+            </div>
+            <div class="col-6 col-sm-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>DiscountTIN</mat-label>
+                    <input matInput autocomplete="off" formControlName="DiscountTIN">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row" *ngIf="isSoloParent">
+            <div class="col-12 col-sm-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>NameOfChild</mat-label>
+                    <input matInput autocomplete="off" formControlName="NameOfChild">
+                </mat-form-field>
+            </div>
+            <div class="col-6 col-sm-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>ChildAge</mat-label>
+                    <input matInput autocomplete="off" inputmode="numeric" formControlName="ChildAge">
+                </mat-form-field>
+            </div>
+            <div class="col-6 col-sm-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>ChildBirthDate</mat-label>
+                    <input matInput [matDatepicker]="childPicker" formControlName="ChildBirthDate" autocomplete="off">
+                    <mat-datepicker-toggle matSuffix [for]="childPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #childPicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-sm-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>PaxCount</mat-label>
+                    <input matInput [value]="paxCount" readonly>
+                </mat-form-field>
+            </div>
+            <div class="col-6 col-sm-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>DiscountedPax</mat-label>
+                    <input matInput type="number" inputmode="numeric" min="1" [max]="paxCount" autocomplete="off" formControlName="DiscountedPax" (input)="computeDiscount()">
+                    <mat-error>1 to {{paxCount}} only</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-sm-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>DiscountAmount</mat-label>
+                    <input matInput [value]="discountAmount | number:'1.2-2'" readonly class="discount-amount">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+        <button type="button" mat-button class="me-2" (click)="onClose()">Cancel</button>
+        <button type="submit" class="me-2" mat-raised-button color="primary" [disabled]="discountForm.invalid || loading == true">{{btnText}}</button>
+    </div>
+</form>

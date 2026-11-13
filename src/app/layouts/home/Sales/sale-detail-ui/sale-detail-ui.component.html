@@ -1,0 +1,98 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>SaleDetailUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="saleDetailForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <div class="row">
+            <mat-form-field class="" appearance="standard">
+                <mat-label>ItemName</mat-label>
+                <input matInput placeholder="Input ItemName" autocomplete="off" required formControlName="ItemName" readonly>
+            </mat-form-field>
+        </div>
+        <div class="row">
+              <ng-select  
+                [items]="unitMeasures" 
+                [virtualScroll]="true" 
+                appendTo="body" 
+                formControlName="UM" 
+                bindLabel="UM" 
+                bindValue="UM"  
+                [searchable]="true" 
+                [clearable] = "false" 
+                placeholder="UM" 
+                (change)="onChangeUM($event)"
+                required>
+            </ng-select>
+            <!-- <mat-form-field class="w-100"  appearance="standard">
+                <mat-label>UM</mat-label>
+                <input matInput placeholder="Input UM" autocomplete="off" required formControlName="UM" readonly>
+            </mat-form-field> -->
+        </div>
+        <div class="row">
+            <div class="col align-elements">
+                <mat-form-field class="w-40"  appearance="standard">
+                    <mat-label>Price</mat-label>
+                    <input matInput placeholder="Input Price" type="text" mask="separator.4" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="Price"  (keyup.enter)="computeSaleDetailAmount()">
+                </mat-form-field>
+                <mat-form-field class="w-40"  appearance="standard">
+                    <mat-label>PriceCategory</mat-label>
+                    <input matInput placeholder="Input PriceCategory" autocomplete="off" required formControlName="PriceCategory">
+                </mat-form-field>
+                <button type="button" (click)="onClickOtherPriceCategories()"  mat-icon-button color="primary" title="Other Price Categorys" [disabled]="disablePriceCategoryButton"><mat-icon>list</mat-icon></button>
+            </div>
+        </div>
+        <div class="row">
+        <mat-form-field class="w-100" appearance="standard">
+            <mat-label>Qty</mat-label>
+            <input #qtyInput matInput placeholder="Input Qty" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="Qty" (keyup.enter)="onEnterQty()">
+        </mat-form-field>
+        </div>
+        <div class="row">
+           <div class="col-3">
+            <mat-form-field class="" appearance="standard">
+                <mat-label>Discount</mat-label>
+                <input matInput placeholder="Input Discount" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true"  autocomplete="off" required formControlName="Discount" readonly>
+            </mat-form-field>
+           </div> 
+           <div class="col-3">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>DiscountValue</mat-label>
+                    <input matInput placeholder="Input DiscountValue" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true"  autocomplete="off" required formControlName="DiscountValue"  (keyup.enter)="computeSaleDetailAmount()">
+                </mat-form-field>
+           </div> 
+           <div class="col-6">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>DiscountType</mat-label>
+                <mat-select role="combobox" [disableOptionCentering]="true" formControlName="DiscountType" (selectionChange)="computeSaleDetailAmount()">
+                    <mat-option value="percent">Percent</mat-option>
+                    <mat-option value="amount">Amount</mat-option>
+                </mat-select>
+            </mat-form-field>
+           </div> 
+        </div>
+        <div class="row">
+            <mat-form-field class="w-100"  appearance="standard">
+                <mat-label>Amount</mat-label>
+                <input matInput placeholder="Input Amount" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="Amount" readonly>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <div class="col align-elements">
+                <mat-form-field appearance="standard">
+                    <mat-label>ExpiryDate</mat-label>
+                    <input matInput placeholder="Input ExpiryDate" autocomplete="off" required formControlName="ExpiryDate" readonly>
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                    <mat-label>BatchLotNo</mat-label>
+                    <input matInput placeholder="Input BatchLotNo" autocomplete="off" required formControlName="BatchLotNo" readonly>
+                </mat-form-field>
+                <button type="button" (click)="onClickExpiry()"  mat-icon-button color="primary" title="Expiry Dates"><mat-icon>list</mat-icon></button>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+        <button type="button"  (click)="onSubmit()" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="saleDetailForm.invalid || loading == true">{{btnText}}</button>
+    </div>
+  </form>

@@ -1,0 +1,323 @@
+<section class="content">
+    <div class="search-div">
+        <mat-form-field appearance="standard">
+            <mat-label>Date From</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="dateFrom"  autocomplete="off" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Date To</mat-label>
+            <input matInput [matDatepicker]="picker2" [(ngModel)]="dateTo"  autocomplete="off"  required>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        <ng-select 
+            [items]="branches" 
+            [virtualScroll]="true" 
+            appendTo="body" 
+            bindLabel="BranchName"
+            bindValue="BranchId"
+            [(ngModel)]="branchId" 
+            [searchable]="true" 
+            [clearable] = "false" 
+            placeholder="Branch"
+            class="w-10"
+            >
+        </ng-select>
+        <button mat-raised-button color="primary" *ngFor="let tB of toolButtons" [disabled]="!tB.Disabled" (click)="tB.Function()" >{{tB.Label}}</button> 
+    </div>
+    <div class="mat-elevation-z2 ">
+      <div class="w-50" *ngIf="loaded" id="toprint"> 
+        <div class="p text-center">
+            <app-aprint-header></app-aprint-header>
+        </div>
+        <div class="title">
+                {{title}}
+        </div>
+        <div class="mb-5">
+            <table class="w-100 table table-bordered">
+              <thead class="thead-background">  
+                <tr>
+                  <th colspan="4" class="text-center">CASH INS</th>
+                </tr>
+              </thead>
+              <thead class="thead-background">
+                  <tr>
+                      <th scope="col" class="text-center">S.O. DOWN PAYMENTS</th>
+                      <th scope="col" class="text-center">RECEIVABLE PAYMENTS</th>
+                      <th scope="col" class="text-center">ITEM SALES PAYMENTS</th>
+                      <th scope="col" class="text-center">TOTAL IN</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <td class="footer text-center">{{total.OrderDownPayments | number: '1.2-2'}}</td>
+                  <td class="footer text-center">{{total.ReceivablePayments | number: '1.2-2'}}</td>
+                  <td class="footer text-center">{{total.ItemSalesPayments | number: '1.2-2'}}</td>
+                  <td class="footer text-center">{{total.TotalAmountIn | number: '1.2-2'}}</td>
+              </tbody>
+          </table>
+
+          <table class="w-100 table table-bordered">
+            <thead class="thead-background">  
+              <tr>
+                <th colspan="5" class="text-center">CASH OUTS</th>
+              </tr>
+            </thead>
+            <thead class="thead-background">
+                <tr>
+                    <th scope="col" class="text-center">P.O. DOWNPAYMENTS</th>
+                    <th scope="col" class="text-center">ITEMS RCVD PAYMENTS</th>
+                    <th scope="col" class="text-center">PYBL PAYMENTS</th>
+                    <th scope="col" class="text-center">EXP PAYMENTS</th>
+                    <th scope="col" class="text-center">TOTAL OUT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <td class="footer text-center">{{total.PODownPayments | number: '1.2-2'}}</td>
+                <td class="footer text-center">{{total.ItemReceivedPayments | number: '1.2-2'}}</td>
+                <td class="footer text-center">{{total.SupplierPayments | number: '1.2-2'}}</td>
+                <td class="footer text-center">{{total.ExpensePayments | number: '1.2-2'}}</td>
+                <td class="footer text-center">{{total.TotalAmountOut | number: '1.2-2'}}</td>
+            </tbody>
+          </table>
+
+          <table class="w-100 table table-bordered">
+            <thead class="thead-background">
+                <tr>
+                    <th scope="col" class="text-center">NET CASH</th>
+                </tr>
+            </thead>
+            <tbody>
+                <td class="footer text-center">{{total.NetIncome | number: '1.2-2'}}</td>
+            </tbody>
+          </table>
+        </div>
+        <div class="mb-5">
+            <table class="w-100 table table-bordered">
+              <thead class="thead-background">  
+                <tr>
+                  <th colspan="4" class="text-center">ORDER DOWNPAYMENTS</th>
+                </tr>
+              </thead>
+              <thead class="thead-background">  
+                <tr>
+                  <th scope="col">TRANSDATE</th>
+                  <th scope="col">TRANSNO</th>
+                  <th scope="col">DESCRIPTION</th>
+                  <th scope="col">AMOUNT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of orderDownPayments">
+                  <td >{{data.TransDate | date:'MM/dd/yyyy' }}</td>
+                  <td >{{data.TransNo }}</td>
+                  <td >{{data.Description }}</td>
+                  <td class="numeric">{{data.TotalAmount | number:'1.2-2'}}</td>
+                </tr>
+                <tr class="footer">
+                    <td class="no-border"colspan="3"  ></td>
+                    <td class="numeric"> {{ getTotal('orderDownPayments', 'TotalAmount')| number:'1.2-2'}}</td>
+                </tr>
+              </tbody>  
+            </table>
+        </div>
+
+        <div class="mb-5">
+          <table class="w-100 table table-bordered">
+            <thead class="thead-background">  
+              <tr>
+                <th colspan="4" class="text-center">RECEIVABLE PAYMENTS</th>
+              </tr>
+            </thead>
+            <thead class="thead-background">  
+              <tr>
+                <th scope="col">TRANSDATE</th>
+                <th scope="col">TRANSNO</th>
+                <th scope="col">DESCRIPTION</th>
+                <th scope="col">AMOUNT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of receivingPayments">
+                <td >{{data.TransDate | date:'MM/dd/yyyy' }}</td>
+                <td >{{data.TransNo }}</td>
+                <td >{{data.Description }}</td>
+                <td class="numeric">{{data.TotalAmount | number:'1.2-2'}}</td>
+              </tr>
+              <tr class="footer">
+                  <td class="no-border"colspan="3"  ></td>
+                  <td class="numeric"> {{ getTotal('receivingPayments', 'TotalAmount')| number:'1.2-2'}}</td>
+              </tr>
+            </tbody>  
+          </table>
+        </div>
+
+        <div class="mb-5">
+          <table class="w-100 table table-bordered">
+            <thead class="thead-background">  
+              <tr>
+                <th colspan="4" class="text-center">ITEM SALES PAYMENTS</th>
+              </tr>
+            </thead>
+            <thead class="thead-background">  
+              <tr>
+                <th scope="col">TRANSDATE</th>
+                <th scope="col">TRANSNO</th>
+                <th scope="col">DESCRIPTION</th>
+                <th scope="col">AMOUNT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of itemSalesPayments">
+                <td >{{data.TransDate | date:'MM/dd/yyyy' }}</td>
+                <td >{{data.TransNo }}</td>
+                <td >{{data.Description }}</td>
+                <td class="numeric">{{data.TotalAmount | number:'1.2-2'}}</td>
+              </tr>
+              <tr class="footer">
+                  <td class="no-border"colspan="3"  ></td>
+                  <td class="numeric"> {{ getTotal('itemSalesPayments', 'TotalAmount')| number:'1.2-2'}}</td>
+              </tr>
+            </tbody>  
+          </table>
+        </div>
+
+        <div class="mb-5">
+          <table class="w-100 table table-bordered">
+            <thead class="thead-background">  
+              <tr>
+                <th colspan="4" class="text-center">P.O. DOWNPAYMENTS</th>
+              </tr>
+            </thead>
+            <thead class="thead-background">  
+              <tr>
+                <th scope="col">TRANSDATE</th>
+                <th scope="col">TRANSNO</th>
+                <th scope="col">DESCRIPTION</th>
+                <th scope="col">AMOUNT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of pODownPayments">
+                <td >{{data.TransDate | date:'MM/dd/yyyy' }}</td>
+                <td >{{data.TransNo }}</td>
+                <td >{{data.Description }}</td>
+                <td class="numeric">{{data.TotalAmount | number:'1.2-2'}}</td>
+              </tr>
+              <tr class="footer">
+                  <td class="no-border"colspan="3"  ></td>
+                  <td class="numeric"> {{ getTotal('pODownPayments', 'TotalAmount')| number:'1.2-2'}}</td>
+              </tr>
+            </tbody>  
+          </table>
+        </div>
+
+        <div class="mb-5">
+          <table class="w-100 table table-bordered">
+            <thead class="thead-background">  
+              <tr>
+                <th colspan="4" class="text-center">ITEM RECEIVING PAYMENTS</th>
+              </tr>
+            </thead>
+            <thead class="thead-background">  
+              <tr>
+                <th scope="col">TRANSDATE</th>
+                <th scope="col">TRANSNO</th>
+                <th scope="col">DESCRIPTION</th>
+                <th scope="col">AMOUNT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of receivingPayments">
+                <td >{{data.TransDate | date:'MM/dd/yyyy' }}</td>
+                <td >{{data.TransNo }}</td>
+                <td >{{data.Description }}</td>
+                <td class="numeric">{{data.TotalAmount | number:'1.2-2'}}</td>
+              </tr>
+              <tr class="footer">
+                  <td class="no-border"colspan="3"  ></td>
+                  <td class="numeric"> {{ getTotal('receivingPayments', 'TotalAmount')| number:'1.2-2'}}</td>
+              </tr>
+            </tbody>  
+          </table>
+        </div>
+
+        <div class="mb-5">
+          <table class="w-100 table table-bordered">
+            <thead class="thead-background">  
+              <tr>
+                <th colspan="4" class="text-center">PAYABLE PAYMENTS</th>
+              </tr>
+            </thead>
+            <thead class="thead-background">  
+              <tr>
+                <th scope="col">TRANSDATE</th>
+                <th scope="col">TRANSNO</th>
+                <th scope="col">DESCRIPTION</th>
+                <th scope="col">AMOUNT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of payablePayments">
+                <td >{{data.TransDate | date:'MM/dd/yyyy' }}</td>
+                <td >{{data.TransNo }}</td>
+                <td >{{data.Description }}</td>
+                <td class="numeric">{{data.TotalAmount | number:'1.2-2'}}</td>
+              </tr>
+              <tr class="footer">
+                  <td class="no-border"colspan="3"  ></td>
+                  <td class="numeric"> {{ getTotal('payablePayments', 'TotalAmount')| number:'1.2-2'}}</td>
+              </tr>
+            </tbody>  
+          </table>
+        </div>
+
+        <div class="mb-5">
+          <table class="w-100 table table-bordered">
+            <thead class="thead-background">  
+              <tr>
+                <th colspan="4" class="text-center">EXPENSE PAYMENTS</th>
+              </tr>
+            </thead>
+            <thead class="thead-background">  
+              <tr>
+                <th scope="col">TRANSDATE</th>
+                <th scope="col">TRANSNO</th>
+                <th scope="col">DESCRIPTION</th>
+                <th scope="col">AMOUNT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of expensePayments">
+                <td >{{data.TransDate | date:'MM/dd/yyyy' }}</td>
+                <td >{{data.TransNo }}</td>
+                <td >{{data.Description }}</td>
+                <td class="numeric">{{data.TotalAmount | number:'1.2-2'}}</td>
+              </tr>
+              <tr class="footer">
+                  <td class="no-border"colspan="3"  ></td>
+                  <td class="numeric"> {{ getTotal('expensePayments', 'TotalAmount')| number:'1.2-2'}}</td>
+              </tr>
+            </tbody>  
+          </table>
+        </div>
+        
+        
+    </div>
+    </div>
+    
+</section>
+
+<div style="visibility: hidden; position: fixed"
+    [style.left]="contextMenuPosition.x"
+    [style.top]="contextMenuPosition.y"
+    [matMenuTriggerFor]="contextMenu">
+</div>
+<mat-menu #contextMenu="matMenu">
+	<ng-template matMenuContent let-data="data">
+        <button mat-menu-item *ngFor="let cB of contextButtons" [disabled]="!cB.Disabled" (click)="cB.Function()" >
+            <mat-icon>read_more</mat-icon> {{cB.Label}}
+        </button>
+    </ng-template>
+</mat-menu>

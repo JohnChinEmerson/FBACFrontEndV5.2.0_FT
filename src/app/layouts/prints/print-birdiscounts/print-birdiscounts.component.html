@@ -1,0 +1,56 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+</div>
+<div class="p text-center">
+    <app-aprint-header></app-aprint-header>
+</div>
+<div class="title">
+    {{Title}}
+</div>
+<div class="mb-5">
+    <table class="w-100 table table-bordered">
+      <thead class="thead-background">  
+        <tr>
+          <th scope="col">TERMINAL</th>
+          <th scope="col">SERIAL NO</th>
+          <th scope="col">MIN NO</th>
+          <th scope="col">PTU</th>
+        </tr>
+      </thead>
+      <tbody>
+          <td >{{machinePermit.ComputerName }}</td>
+          <td >{{machinePermit.SerialNo }}</td>
+          <td >{{machinePermit.MachineNo }}</td>
+          <td >{{machinePermit.PermitNo }}</td>
+      </tbody>  
+    </table>
+
+    <table class="w-100 table table-bordered">
+      <thead class="thead-background">  
+        <tr>
+          <th scope="col">DATE</th>
+          <th scope="col">SINO</th>
+          <th scope="col">DISCOUNT TYPE</th>
+                        <th scope="col">NAME</th>
+          <th scope="col">CUSTOMER</th>
+          <th scope="col">DISCOUNT ID</th>
+                        <th scope="col">TIN</th>
+          <th scope="col">TOTAL AMOUNT</th>
+          <th scope="col">DISCOUNT</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let x of Data">
+              <td >{{x.TransDate | date:'MM/dd/yyyy' }}</td>
+              <td >{{x.SINo }}</td>
+              <td >{{x.DiscountPerson }}</td>
+                            <td >{{x.PersonName }}</td>
+              <td >{{x.CustomerName }}</td>
+              <td >{{x.DiscountId }}</td>
+                            <td >{{x.DiscountTIN }}</td>
+              <td >{{x.TotalAmount | number:'1.2-2' }}</td>
+              <td >{{x.DiscountAmount | number:'1.2-2' }}</td>
+          </tr>
+      </tbody>  
+    </table>
+    

@@ -1,0 +1,36 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+  <table class="table table-bordered" #tableToExport >
+      <thead class="thead-background">
+        <tr>
+          <th scope="col">DATETIME</th>
+          <th scope="col">TRANS NO</th>
+          <th scope="col">TRANS NAME</th>
+          <th scope="col">DESCRIPTION</th>
+          <th scope="col">TOTAL DUE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of Data">
+          <td>{{data.InputByDateTime | date:'MM/dd/yyyy h:mm a'}}</td>
+          <td>{{data.TransNo }}</td>
+          <td >{{data.TransName }}</td>
+          <td >{{data.Description }}</td>
+          <td class="numeric">{{data.Debit | number:'1.2-2'}}</td>
+        </tr>
+        <tr class="footer">
+            <td class="no-border" colspan="4"></td>
+            <td class="numeric">{{getTotal('Debit') | number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  

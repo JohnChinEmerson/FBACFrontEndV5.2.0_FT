@@ -1,0 +1,51 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+  <table class="table table-bordered" #tableToExport >
+      <thead class="thead-background">
+        <tr>
+          <th scope="col">READINGNO</th>
+          <th scope="col">START</th>
+          <th scope="col">END</th>
+          <th scope="col">CASHIER</th>
+          <th scope="col">STARTUP CASH</th>
+          <th scope="col">CASH IN</th>
+          <th scope="col">CASH OUT</th>
+          <th scope="col">TOTAL CASH</th>
+          <th scope="col">PHYSICAL CASH</th>
+          <th scope="col">VARIANCE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of Data">
+          <td>{{data.ReadingNo }}</td>
+          <td >{{data.StartDateTime | date:'MM/dd/yyyy h:mm a ' }}</td>
+          <td >{{data.EndDateTime | date:'MM/dd/yyyy h:mm a' }}</td>
+          <td>{{data.UserFullName }}</td>
+          <td class="numeric">{{data.StartUpCash | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.CashIn | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.CashOut | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.TotalCash | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.PhysicalCash | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.Variance | number:'1.2-2'}}</td>
+        </tr>
+        <tr class="footer">
+            <td class="no-border" colspan="4"></td>
+            <td class="numeric"> {{getTotal('StartUpCash') | number:'1.2-2'}}</td>
+            <td class="numeric"> {{getTotal('CashIn') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('CashOut') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('TotalCash') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('PhysicalCash') | number:'1.2-2'}}</td>
+            <td class="numeric">{{getTotal('Variance') | number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  

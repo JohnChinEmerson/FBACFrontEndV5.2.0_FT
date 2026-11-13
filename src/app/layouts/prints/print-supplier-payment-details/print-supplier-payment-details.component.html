@@ -1,0 +1,160 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+        <app-aprint-header></app-aprint-header>
+    </div>
+    <div *ngIf="TransNo == 'all'">
+        <div class="title">
+            <h3>{{Title}}</h3>
+        </div>
+        <table class="table table-bordered" #tableToExport  >
+          <thead class="thead-background">
+            <tr>
+              <th scope="col">TRANSNO</th>
+              <th scope="col">TRANSDATE</th>
+              <th scope="col">SOURCE NAME</th>
+              <th scope="col">SUPPLIER</th>
+              <th scope="col">SRCTRANSNO</th>
+              <th scope="col">AMOUNT</th>
+              <th scope="col">STATUS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of Details">
+              <td>{{data.TransNo}}</td>
+              <td>{{data.TransDate | date:'MM/dd/yyyy'}}</td>
+              <td>{{data.SourceName}}</td>
+              <td>{{data.SupplierName}}</td>
+              <td>{{data.SourceTransNo}}</td>
+              <td class="numeric">{{data.Amount | number:'1.2-2'}}</td>
+              <td>{{data.RecordStatus }}</td>
+            </tr>
+            <tr class="footer">
+                <td class="no-border" colspan="3"></td>
+                <td class="numeric">Amount Void : {{getTotal('AmountVoid') | number:'1.2-2'}}</td>
+                <td class="no-border"></td>
+                <td class="numeric">Amount Open : {{getTotal('AmountOpen') | number:'1.2-2'}}</td>
+                <td class="no-border" ></td>
+            </tr>
+          </tbody>
+        </table>
+        <app-aprint-footer [totalRecords]="Details.length"></app-aprint-footer>  
+    </div>
+    <div *ngIf="Voucher != null">
+        <table  class="w-100 table table-bordered">
+            <thead class="thead-background">
+              <tr>
+                <th class="w-18 title"  colspan="6">VOUCHER RECEIPT </th>
+              </tr>
+            </thead>
+            <tr>
+              <td class="w-18">PAY TO</td>
+              <td class="w-2"> : </td>
+              <td class="w-30" colspan="4">{{Voucher.PayToName}}</td>
+            </tr>
+            <tr>
+                <td class="w-18">VOUCHER NO</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Voucher.VoucherNo}}</td>
+                <td class="w-18">TRANSNO</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Voucher.TransNo }}</td>
+            </tr>
+            <tr>
+                <td class="w-18">VOUCHER DATE</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Voucher.VoucherDate | date:'MM/dd/yyyy h:mm a'}}</td>
+                <td class="w-18">TRANSNAME</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Voucher.TransName }}</td>
+            </tr>
+            <tr>
+                <td class="w-18">AMOUNT</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Voucher.Amount | number:'1.2-2'}}</td>
+                <td class="w-18">PAYMENT TYPE</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Voucher.PaymentType }}</td>
+            </tr>
+        </table>
+    </div>
+    <div *ngIf="TransNo != 'all'">
+        <table  class="w-100 table table-bordered">
+            <thead class="thead-background">
+              <tr>
+                <th class="w-18 title"  colspan="6">{{Title}} </th>
+              </tr>
+            </thead>
+            <tr>
+                <td class="w-18">SUPPLIER</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Header.SupplierName}}</td>
+                <td class="w-18">PAYMENT NO</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Header.TransNo }}</td>
+            </tr>
+            <tr>
+                <td class="w-18">PAYMENT TYPE</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Header.PaymentType }}</td>
+                <td class="w-18">TRANSDATE</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Header.TransDate| date:'MM/dd/yyyy' }}</td>
+            </tr>
+            <tr>
+              <td class="w-18">CONTACT NO</td>
+              <td class="w-2"> : </td>
+              <td class="w-30">{{Header.ContactNo }}</td>
+              <td class="w-18">INV/REFNO</td>
+              <td class="w-2"> : </td>
+              <td class="w-30">{{Header.InvNo}}</td>
+          </tr>
+        </table>
+
+        <table class="table table-bordered w-100">
+            <thead class="thead-background">
+            <tr>
+                <th scope="col" >SUPPLIER NAME</th>
+                <th scope="col" >TRANS NO</th>
+                <th class="numeric" scope="col">AMOUNT</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of Details">
+                <td class="ItemName">{{item.SupplierName}}</td>
+                <td class="ItemName">{{item.SourceTransNo}}</td>
+                <td class="numeric">{{item.Amount | number: '1.2-2'}}</td>
+            </tr>
+            <tr class="no-border footer">
+                <td class="no-border" colspan="2"></td>
+                <td class="numeric">{{Header.TotalAmount | number: '1.2-2'}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-bordered w-100">
+            <thead class="thead-background">
+                <tr>
+                    <th scope="col" class="text-center">VATABLE AMT</th>
+                    <th scope="col" class="text-center">VAT</th>
+                    <th scope="col" class="text-center">WHTAX</th>
+                    <th scope="col" class="text-center">DISCOUNT</th>
+                    <th scope="col" class="text-center">TOTAL DUE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <td class="footer text-center">{{Header.VATableAmount | number: '1.2-2'}}</td>
+                <td class="footer text-center">{{Header.VATAmount | number: '1.2-2'}}</td>
+                <td class="footer text-center">{{Header.WHTaxAmount | number: '1.2-2'}}</td>
+                <td class="footer text-center">{{Header.DiscountAmount | number: '1.2-2'}}</td>
+                <td class="footer text-center">{{Header.TotalDue | number: '1.2-2'}}</td>
+              
+            </tbody>
+        </table>
+        <p class="title">
+            {{Header.Remarks}}
+        </p>
+        <app-print-set-signatures [data]="Header.Signatures"></app-print-set-signatures>
+    </div>
+   

@@ -1,0 +1,15 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.table-cont {
+    min-height: 400px !important;           
+    max-height: 400px !important;           
+    overflow: auto !important;     
+}

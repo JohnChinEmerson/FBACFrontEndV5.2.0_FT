@@ -1,0 +1,62 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>CashTransferUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="cashTransferForm" (ngSubmit)="validateForm()">
+    <div mat-dialog-content>
+        <div class="row">
+            <mat-form-field appearance="standard" class="w-100">
+                <mat-label>TransDate</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="TransDate"  autocomplete="off" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>ReferenceNo</mat-label>
+                <input matInput placeholder="Input ReferenceNo" autocomplete="off" required formControlName="ReferenceNo" >
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <ng-select  
+                [items]="sources" 
+                [virtualScroll]="true" 
+                appendTo="body" 
+                formControlName="Source" 
+                bindLabel="CashAccount" 
+                bindValue="CashAccount"  
+                [searchable]="true" 
+                [clearable] = "false" 
+                placeholder="Source" 
+                (change)="getDestinations($event)"
+                required>
+            </ng-select>
+        </div>
+        <div class="row">
+            <ng-select  
+                [items]="destinations" 
+                [virtualScroll]="true" 
+                appendTo="body" 
+                formControlName="Destination" 
+                bindLabel="CashAccount" 
+                bindValue="CashAccount"  
+                [searchable]="true" 
+                [clearable] = "false" 
+                placeholder="Destination" 
+                (change)="onChangeDestinations($event)"
+                required>
+            </ng-select>
+        </div>
+        <div class="row">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>Amount</mat-label>
+                <input matInput placeholder="Input Amount" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="Amount" >
+            </mat-form-field>
+        </div>
+        <div mat-dialog-actions [align]="'end'" class="mb-3">
+            <button type="button" class="me-3" (click)="validateForm()" mat-raised-button color="primary" [disabled]="cashTransferForm.invalid || loading == true">{{btnText}}</button>
+          </div>
+    </div>
+  </form>

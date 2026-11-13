@@ -1,0 +1,43 @@
+.content{
+    margin-top: 3%;
+    width: 100%;
+    position: fixed;
+}
+
+mat-card{
+    width:  1000px;
+    margin: auto;
+}
+mat-form-field {
+    width: 100%;
+    line-height: -10%;
+}
+::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+  }
+
+  .align-elements ng-select{
+    width: 100% !important;
+}
+.align-elements{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap:nowrap;
+}
+.table-cont-pop-up {
+    min-height: 600px;
+    max-height: 600px;
+    overflow: auto;
+}
+.t{
+    opacity: .5;
+}
+.landing-background{
+    position: fixed;
+    top: -5%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width:60%;
+  }
+  

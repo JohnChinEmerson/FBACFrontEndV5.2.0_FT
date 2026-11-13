@@ -1,0 +1,18 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+  </button>
+<h2 mat-dialog-title>UploadCustomersUI</h2>
+  <mat-divider></mat-divider>
+  <div mat-dialog-content>
+        <h5> Download Excel File Template: 
+            <a href="/assets/files/customers_template.xlsx" download> CustomersFormat</a>
+        </h5>
+        <input type="file" #fileInput class="form-control w-100 mt-1" (change)="onFileChange($event)" placeholder="Select Excel File" autocomplete="off" required accept=".xlsx, .xls">
+        
+        <mat-progress-bar   class="loading-bar w-100" mode="determinate" [value]="progress" *ngIf="loading"></mat-progress-bar>
+        <h5 class="text-center mt-2" *ngIf="loading">{{ uploadedCount }} / {{ totalCustomers }} uploaded ({{ progress }}%)</h5>
+        
+        <div mat-dialog-actions [align]="'end'" class="mb-3">
+            <button type="button"  (click)="uploadCustomers()" class="mt-4 me-2" mat-raised-button color="primary" [disabled]=" loading == true">{{btnText}}</button>
+        </div>
+  </div>

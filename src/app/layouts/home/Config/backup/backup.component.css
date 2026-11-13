@@ -1,0 +1,13 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.mat-column-BackupName {
+    flex: 0 0 20%;
+}

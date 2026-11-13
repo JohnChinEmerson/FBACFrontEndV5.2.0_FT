@@ -1,0 +1,63 @@
+<section class="content">
+    <div class="search-div">
+        <ng-select
+            class="w-15"
+            [items]="itemTypes"
+            appendTo="body"
+            [(ngModel)]="itemType"
+            bindLabel="ItemType"
+            bindValue="ItemType"
+            [searchable]="true"
+            [clearable]="false"
+            placeholder="ItemType"
+            (change)="displayRecords()">
+        </ng-select>
+        <mat-form-field class="w-20" floatLabel="never"  appearance="standard">
+            <input matInput [(ngModel)]="searchKey" placeholder="Search" (keyup)="applyFilter()" autocomplete="false">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+            <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <button mat-raised-button color="primary" *ngFor="let tB of toolButtons" [disabled]="!tB.Disabled" (click)="tB.Function()" >{{tB.Label}}</button> 
+    </div>
+    <div class="mat-elevation-z2 table-cont">
+        <mat-table [dataSource]="listData" matSort>
+             <ng-container *ngFor="let dc of defaultColumns">
+                <ng-container  [matColumnDef]="dc">
+                <mat-header-cell *matHeaderCellDef sticky>{{ dc }}</mat-header-cell>
+                    <mat-cell  *matCellDef="let element"  class="auto-adjust-cell" [ngClass]="element | rowClasses:dc:columnTypeMap[dc]" [title]="element[dc]">
+                    <span>{{ element | rowDisplay:dc:columnTypeMap[dc] }}</span>
+                    </mat-cell>
+                </ng-container>
+            </ng-container>
+            <ng-container matColumnDef="loading">
+                <mat-footer-cell *matFooterCellDef colspan="6">
+                    <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+                </mat-footer-cell>
+            </ng-container>
+            <ng-container matColumnDef="noData">
+                <mat-footer-cell *matFooterCellDef colspan="6">
+                    No data.
+                </mat-footer-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="defaultColumns; sticky:true"></mat-header-row>
+            <mat-row  (click)="getRecord(row)"  *matRowDef="let row; columns: defaultColumns;" [ngClass]="{'data-selected': selectedId == row.ItemId, 'data-out': (row.Available <= 0 && selectedId != row.ItemId && isColorOutOfStock),'data-alert': (+row.Available > 0 &&+row.Available <= +row.AlertQty &&selectedId !== row.ItemId &&isColorOutOfStock)}"  appTouchContextMenu (contextmenu)="onContextMenu($event, row)"></mat-row>
+            <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+            <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
+        </mat-table>
+      <mat-paginator class="mat-paginator-sticky" [pageSize]="20" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons> </mat-paginator>
+    </div>
+</section>
+
+<div style="visibility: hidden; position: fixed"
+    [style.left]="contextMenuPosition.x"
+    [style.top]="contextMenuPosition.y"
+    [matMenuTriggerFor]="contextMenu">
+</div>
+<mat-menu #contextMenu="matMenu">
+	<ng-template matMenuContent let-data="data">
+        <button mat-menu-item *ngFor="let cB of contextButtons" [disabled]="!cB.Disabled" (click)="cB.Function()" >
+            <mat-icon>read_more</mat-icon> {{cB.Label}}
+        </button>
+    </ng-template>
+</mat-menu> 

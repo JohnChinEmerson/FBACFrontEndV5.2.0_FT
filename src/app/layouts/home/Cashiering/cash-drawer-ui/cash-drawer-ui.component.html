@@ -1,0 +1,57 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>CashDrawerUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="cashDrawerForm" >
+    <div mat-dialog-content>
+        <div class="row">
+           <div class="col-8">
+                <mat-form-field  appearance="standard">
+                    <mat-label>StartUpCash</mat-label>
+                    <input matInput placeholder="Input StartUpCash" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true"  autocomplete="off" required formControlName="StartUpCash" [readonly]="btnStartUpCashReadOnly">
+                </mat-form-field>
+           </div> 
+           <div class="col-4 align-elements">
+                <button type="button" class="w-100" mat-raised-button color="primary" (click)="onClickSaveEditStartUpCash()"> {{this.btnStartUpText}}  </button>
+           </div> 
+        </div>
+        <div class="row">
+                <div class="col-4">
+                    <mat-form-field  appearance="standard">
+                        <mat-label>CashIn</mat-label>
+                        <input matInput placeholder="Input CashIn" [type]="textType" step="0.01" autocomplete="off" required formControlName="CashIn" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field  appearance="standard">
+                        <mat-label>CashOut</mat-label>
+                        <input matInput placeholder="Input CashOut" [type]="textType" step="0.01" autocomplete="off" required formControlName="CashOut" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-4 align-elements">
+                        <button type="button" class="w-100" mat-raised-button color="primary" [disabled]="!btnCashLedgerEnabled" (click)="onClickLedger()"> Ledger </button>
+                </div>
+        </div>
+    
+        <div class="row">
+           <div class="col-8">
+                <mat-form-field appearance="standard">
+                    <mat-label>TotalCash</mat-label>
+                    <input matInput placeholder="Input TotalCash" [type]="textType" step="0.01"  autocomplete="off" required formControlName="TotalCash" readonly>
+                </mat-form-field>
+            </div>
+            <div class="col-4 align-elements">
+                <button type="button" mat-raised-button  class="w-100"  color="primary" [disabled]="!btnCashCountEnabled" (click)="onClickCashCount()"> Count </button>
+           </div>
+        </div>
+    </div>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+        <button type="button"  mat-button color="primary" class="me-4" *ngIf="printReceiptVisible">
+            <mat-checkbox  (change)="onCheckPrintReceipt($event.checked)" [checked]="printReceipt">
+                <mat-label>Print Receipt</mat-label>
+            </mat-checkbox>
+        </button>
+        <button type="button" class="mt-4 me-2" mat-raised-button color="primary" (click)="onClickOpenCloseSales()" [disabled]="cashDrawerForm.invalid || loading == true">{{btnText}}</button>
+    </div>
+  </form>

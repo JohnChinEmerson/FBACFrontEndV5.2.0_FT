@@ -1,0 +1,44 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+}
+.mat-column-ItemName {
+    flex: 0 0 65%;
+}
+.mat-column-actions{
+    flex: 0 0 5%;
+}
+
+.mat-column-UM {
+    flex: 0 0 5%;
+}
+
+.mat-column-Variance,.mat-column-SystemCount,.mat-column-PhysicalCount,.mat-column-Available{
+    flex: 0 0 10%;
+}
+.mat-column-PhysicalCount{
+    flex: 0 0 12%;
+}
+.mat-table .mat-cell, 
+.mat-table .mat-header-cell {
+    max-width: 1000px !important; 
+}
+.auto-adjust-cell {
+  white-space: normal !important;  
+  word-wrap: break-word !important;             
+  line-height: 1.4em !important;               
+  padding: 4px 8px !important;                  
+}
+
+.mat-row, .mat-cell {
+  height: auto !important;         
+}

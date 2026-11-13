@@ -1,0 +1,106 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+        <app-aprint-header></app-aprint-header>
+    </div>
+    <div *ngIf="TransNo == 'all'">
+        <div class="title">
+            <h3>{{Title}}</h3>
+        </div>
+        <table class="table table-bordered" #tableToExport  >
+          <thead class="thead-background">
+            <tr>
+              <th scope="col">REASON</th>
+              <th scope="col">TRANSNO</th>
+              <th scope="col">TRANSDATE</th>
+              <th scope="col">ITEM NAME</th>
+              <th scope="col">UM</th>
+              <th scope="col">PRICE</th>
+              <th scope="col">QTY</th>
+              <th scope="col">AMOUNT</th>
+              <th scope="col">STATUS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of Details">
+              <td>{{data.ReasonName}}</td>
+              <td>{{data.TransNo}}</td>
+              <td>{{data.TransDate | date:'MM/dd/yyyy'}}</td>
+              <td>{{data.ItemName}}</td>
+              <td>{{data.UM}}</td>
+              <td class="numeric">{{data.Cost | number:'1.2-2'}}</td>
+              <td class="numeric">{{data.Qty | number:'1.2-2'}}</td>
+              <td class="numeric">{{data.Amount | number:'1.2-2'}}</td>
+              <td >{{data.RecordStatus }}</td>
+            </tr>
+            <tr class="footer">
+                <td class="no-border" colspan="3"></td>
+                <td class="numeric">Amount Void : {{getTotal('AmountVoid') | number:'1.2-2'}}</td>
+                <td class="no-border" colspan="3"></td>
+                <td class="numeric">Amount Open : {{getTotal('AmountOpen') | number:'1.2-2'}}</td>
+                <td class="no-border" ></td>
+            </tr>
+          </tbody>
+        </table>
+        <app-aprint-footer [totalRecords]="Details.length"></app-aprint-footer>  
+    </div>
+    <div *ngIf="TransNo != 'all'">
+        <table  class="w-100 table table-bordered">
+            <thead class="thead-background">
+              <tr>
+                <th class="w-18 title"  colspan="6">{{Title}}</th>
+              </tr>
+            </thead>
+            <tr>
+                <td class="w-18">REASON</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Header.ReasonName}}</td>
+                <td class="w-18">TRANSNO</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Header.TransNo }}</td>
+            </tr>
+            <tr>
+                <td class="w-18">ADJUSTMENT TYPE</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Header.AdjustmentType}}</td>
+                <td class="w-18">TRANSDATE</td>
+                <td class="w-2"> : </td>
+                <td class="w-30">{{Header.TransDate | date:'MM/dd/yyyy'}}</td>
+            </tr>
+        </table>
+
+        <table class="table table-bordered w-100">
+            <thead class="thead-background">
+            <tr>
+                <th class="numeric" scope="col">QTY</th>
+                <th scope="col">UM</th>
+                <th scope="col" >ITEM NAME</th>
+                 <th  scope="col">EXPIRY DATE</th>
+                <th  scope="col">BATCHLOT NO</th>
+                <th class="numeric" scope="col">PRICE</th>
+                <th class="numeric" scope="col">AMOUNT</th>
+               
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of Details">
+                <td class="numeric">{{item.Qty  | number: '1.2-2'}}</td>
+                <td >{{item.UM}}</td>
+                <td class="ItemName">{{getItemName(item)}}</td>
+                <td >{{item.ExpiryDate}}</td>
+                <td >{{item.BatchLotNo}}</td>
+                <td class="numeric">{{item.Price| number: '1.2-2'}}</td>
+                <td class="numeric">{{item.Amount | number: '1.2-2'}}</td>
+              
+            </tr>
+            <tr class="no-border footer">
+                <td class="numeric">{{getTotal('Qty') | number: '1.2-2'}}</td>
+                <td class="no-border" colspan="5"></td>
+                <td class="numeric">{{Header.TotalAmount | number: '1.2-2'}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <app-print-set-signatures [data]="Header.Signatures"></app-print-set-signatures>
+    </div>
+   

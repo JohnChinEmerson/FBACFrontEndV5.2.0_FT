@@ -1,0 +1,579 @@
+@import 'ngx-toastr/toastr';
+@import "~@ng-select/ng-select/themes/material.theme.css";
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+/* ===== Dropdowns (ng-select, Material theme) the same box as the inputs (mat-form-field appearance="standard") in
+   the same row, on every screen and report: same height, text line, underline and bottom space. One shared rule:
+   it replaces the per-screen "::ng-deep .ng-select ... padding: 15px 0 0 0" copies (they leak to every screen
+   and put the dropdown's underline lower than the inputs'). "body" outranks those copies. The phone login's boxed
+   dropdowns (.pl-select) keep their own look. ===== */
+body .ng-select.ng-select-single:not(.pl-select) {
+  padding-bottom: 1.5em !important;
+}
+body .ng-select.ng-select-single:not(.pl-select) .ng-select-container {
+  min-height: 0 !important;
+  padding-top: .75em !important;
+  line-height: 1.125 !important;
+}
+body .ng-select.ng-select-single:not(.pl-select) .ng-select-container .ng-value-container {
+  padding: .4375em 0 !important;
+  border-top: .84375em solid transparent !important;
+}
+body .ng-select.ng-select-single:not(.pl-select) .ng-select-container .ng-value-container .ng-input {
+  bottom: .4375em !important;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: #F5F5F5;
+}
+
+body {
+  margin: 0;
+}
+* {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 12px;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family:Verdana, Geneva, Tahoma, sans-serif !important;
+}
+
+.hide {
+  display: none;
+}
+
+.close-button {
+  float: right;
+  top: -15px;
+  right: -15px;
+}
+
+.active-link {
+  color:#3F00FF !important;
+  font-weight: bold;
+}
+.active-submenu {
+  background-color: #1976d2 !important;
+  color: #fff !important;
+  font-weight: 500;
+}
+
+.active-submenu .mat-icon {
+  color: #fff !important;
+}
+
+.close-icon {
+  transition: 1s ease-in-out;
+}
+
+.ng-padding {
+  padding: 15px 0 0 0 !important;
+}
+.w-2{
+  width: 2%;
+}
+.w-5{
+  width: 5%;
+}
+.w-10{
+  width: 10%;
+}
+.w-15{
+  width: 15%;
+}
+.w-20{
+  width: 20%;
+}
+.w-25{
+  width: 25%;
+}
+.w-30{
+  width: 30%;
+}
+.w-35{
+  width: 35%;
+}
+.w-40{
+  width: 40%;
+}
+.w-45{
+  width: 45%;
+}
+.w-50{
+  width: 50%;
+}
+.w-70{
+  width: 70%;
+}
+.w-80{
+  width: 80%;
+}
+.w-90{
+  width: 90%;
+}
+.h-80{
+  height: 40%;
+}
+.save-button{
+  margin: 0;
+  position: relative;
+}
+.table-cont {
+  max-height: calc(100vh - 25%);
+  max-width: 100%;
+  overflow: auto;
+}
+.table-cont-pop-up {
+  min-height: 500px;
+  max-height: 500px;
+  overflow: auto;
+}
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
+}
+.footer{
+  font-weight: 500 !important;
+}
+.footer td {
+  font-weight: 500 !important;
+}
+
+.date-cont{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-left: 22px;
+}
+
+.landing-background{
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  width:60%;
+}
+.clickable{
+  cursor: pointer;
+}
+.inputtable{
+  font-weight: bold !important;
+}
+
+.no-border{
+  border:none !important;
+}
+
+/* .content {
+  height: calc(100vh - 40px); 
+  min-height: calc(70vh - 40px); 
+  max-height: calc(100vh - 40px); 
+  overflow: auto;
+} */
+
+.content {
+    display: flex;
+    flex-direction: column;
+    height: calc(98vh - 110px); /* account for both toolbars */
+    overflow: hidden; /* no outer scroll */
+}
+.mat-elevation-z2 {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;       /* take remaining height */
+    min-height: 0;        /* allow shrinking */
+    overflow: hidden;     /* clip, let table-cont scroll */
+}
+mat-table {
+    flex: 1 1 auto;
+    overflow: auto;       /* scroll only when rows exist */
+    min-height: 0;
+}
+
+mat-paginator {
+    flex-shrink: 0;
+}
+
+@media only screen and (max-width: 958px) {
+  .toggleButton {
+      display: inline;
+  }
+
+  .navMenus {
+      display: none !important;
+  }
+
+  button.mat-menu-item {
+      width: 350px !important;
+  }
+
+  .mat-table {
+    overflow-x: scroll;
+  }
+}
+
+@media print {
+  td{
+      white-space: normal!important;
+  }
+  th, td {
+      border: 1px solid #888!important;
+  }
+  .title{
+      text-align: center!important;
+      font-family: Verdana, Geneva, Tahoma, sans-serif!important;
+      font-size: larger!important;
+      padding: 2%!important;
+  }
+
+  table th, table td {
+    border: 1px solid #888!important;
+    padding: 2.5px !important;
+    line-height: 1!important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif!important
+  } 
+
+  table thead th {
+      font-weight: 1000 !important;
+      background-color: #D3D3D3!important; 
+  } 
+  .numeric{
+      text-align: right!important;
+  }
+  tfoot{
+      font-weight: 500!important;
+  }
+  .no-border{
+      border: none !important;
+  }
+  .p {
+      font-family: Verdana, Geneva, Tahoma, sans-serif!important;
+      line-height: .5!important
+  }
+
+  .hideOnPrint{
+    display: none !important;
+  }
+}
+
+.p{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  line-height: .5; 
+}
+
+.verdana{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.title{
+  text-align: center;
+}
+
+
+/* START MAT TABLE CSS */
+  .mat-table .mat-row, 
+  .mat-table .mat-header-row {
+      min-height: 32px !important;
+      height: 32px !important;
+      overflow: hidden;
+  }
+
+  .mat-table .mat-row,
+  .mat-table .mat-footer-row   {
+    min-height: 32px !important;
+    height: 32px !important;
+    overflow: hidden;
+  }
+
+  .mat-table .mat-cell, 
+  .mat-table .mat-header-cell {
+      padding: 4px 8px !important;
+      font-size: 12px !important;
+      border-left: 1px solid rgba(241, 241, 241, 0.9) !important;
+      border-right: 1px solid rgba(241, 241, 241, 0.9) !important;
+      white-space: nowrap !important; /* Prevent wrapping */
+      overflow: hidden !important;
+      text-overflow: ellipsis !important; /* Show "..." if content is too long */
+      max-width: 500px !important; /* Adjust as needed */
+  }
+
+
+  .mat-footer-cell {
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+    border-left: 1px solid rgba(241, 241, 241, 0.9) !important;
+    border-right: 1px solid rgba(241, 241, 241, 0.9) !important;
+    font-weight: bold !important;
+  }
+
+  .mat-footer-cell.footer {
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+  }
+  .mat-cell.mat-column-number {
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+  }
+
+  .mat-row.data-void, 
+  .mat-row.data-void .mat-cell {
+      color: #ff0606 !important;
+  }
+  .mat-row.data-out, 
+  .mat-row.data-out .mat-cell {
+      color: #ff0606 !important;
+  }
+  .mat-row.data-alert,
+  .mat-row.data-alert .mat-cell {
+    color: #d2c9c9 !important;   
+    font-weight: bold !important;   
+}
+  .mat-row.data-selected, 
+  .mat-row.data-selected .mat-cell {
+    background-color:  #acd8f7;
+    color: #0c0c0c !important;   
+  }
+
+
+
+  .mat-cell.data-green-text, 
+  .mat-cell.data-green-text .mat-cell {
+    color:  #34A853;
+    font-weight: bold;
+  }
+
+
+/* END MAT TABLE CSS */
+.mat-menu-item {
+  font-size: 12px !important; 
+  height: 30px !important; 
+  line-height: 30px !important; 
+  min-height: unset !important; 
+}
+
+.hidden-dialog {
+  display: none !important;
+}
+.hidden-input{
+  display: none !important;
+}
+
+.itemListTransaction mat-table,
+.itemListTransaction2 mat-table,.itemListTransaction3 mat-table {
+  overflow: visible !important;
+}
+
+/* On-screen keyboard (OnScreenKeyboardComponent): the page and the dialogs make room above it */
+body.osk-open .mat-sidenav-content { padding-bottom: var(--osk-height, 0px); }
+body.osk-open .cdk-global-overlay-wrapper {
+  bottom: var(--osk-height, 0px) !important;
+  height: auto !important;
+  align-items: center !important;
+}
+body.osk-open .cdk-overlay-pane { max-height: calc(100vh - var(--osk-height, 0px) - 16px) !important; }
+body.osk-open .mat-dialog-container { overflow: auto; }
+
+/* ===== Phones: shared rules for the list, report and form screens (the Sales screen has its own layout) ===== */
+@media (max-width: 767.98px) {
+  .content { margin: 6px !important; height: auto; min-height: calc(100vh - 120px); }
+
+  /* filters / search rows stack; the search box takes the full width */
+  .search-div, .date-cont { flex-wrap: wrap !important; align-items: stretch !important; gap: 6px !important; margin-left: 0 !important; }
+  .search-div > *, .date-cont > * { flex: 1 1 100%; width: 100% !important; max-width: 100% !important; }
+  /* action buttons two per row */
+  .search-div > button, .date-cont > button { flex: 1 1 calc(50% - 6px); width: auto !important; }
+
+  /* tables: scroll sideways with the first (key) column pinned */
+  .table-cont, .mat-elevation-z2 { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+  .table-cont .mat-table { min-width: 640px; overflow: visible; }
+  .table-cont .mat-header-cell:first-child,
+  .table-cont .mat-cell:first-child,
+  .table-cont .mat-footer-cell:first-child {
+    position: sticky; left: 0; z-index: 2; background: #fff; box-shadow: 1px 0 0 #e0e0e0;
+  }
+  .table-cont .mat-row.data-selected .mat-cell:first-child { background: inherit; }
+  .mat-paginator-range-label { margin: 0 8px !important; }
+  .mat-paginator-container { justify-content: center !important; flex-wrap: wrap; }
+
+  /* dialogs use the screen width; their forms stack in one column */
+  .cdk-overlay-pane { max-width: 96vw !important; }
+  .mat-dialog-container { padding: 14px !important; }
+  .mat-dialog-content { max-height: 70vh !important; }
+  .mat-dialog-actions { flex-wrap: wrap; gap: 6px; }
+  .mat-dialog-actions .mat-button-base { flex: 1 1 auto; }
+
+  /* finger-sized buttons, inputs without the iOS zoom */
+  .mat-raised-button, .mat-stroked-button, .mat-flat-button, .mat-button-toggle { min-height: 44px; }
+  input, select, textarea, .mat-input-element { font-size: 16px !important; }
+  button.mat-menu-item { width: auto !important; min-width: 220px; min-height: 48px; }
+}
+
+/* ===== Config screens: a card straight in the page box (Sales / Receiving / Expense / ... Config, Business Info,
+   Files Config, Cashiering, Support forms). Their page box is position: fixed with a fixed-width card (500-1500px),
+   so a card wider or taller than the screen was cut off with no way to scroll to its fields or its Save button.
+   The page box now stays in the page (it looks the same) and scrolls; the card never gets wider than the screen. ===== */
+app-home .content:has(> mat-card) {
+  position: relative !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+app-home .content:has(> mat-card) > mat-card {
+  max-width: calc(100% - 16px);
+  box-sizing: border-box;
+}
+@media (max-width: 767.98px) {
+  /* the same without :has() (older phone browsers), and the fields in one column */
+  .content { position: relative !important; width: auto !important; }
+  .content > mat-card { width: auto !important; max-width: 100% !important; margin: 0 !important; padding: 12px !important; box-sizing: border-box; }
+  .content > mat-card .mat-dialog-content { max-height: none !important; overflow: visible !important; margin: 0 !important; padding: 0 !important; }
+  .content > mat-card h2.mat-dialog-title { padding-right: 40px; font-size: 18px; }
+  /* pairs of fields one under the other; a label and its field share the row (label 55%), long labels wrap */
+  .content > mat-card .row-pair { grid-template-columns: minmax(0, 1fr) !important; gap: 10px !important; }
+  .content > mat-card .field-row,
+  .content > mat-card .field-row1 { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) !important; gap: 8px !important; }
+  .content > mat-card .field-row2 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; gap: 8px !important; }
+  .content > mat-card .field-row label,
+  .content > mat-card .field-row1 label,
+  .content > mat-card .field-row2 label,
+  .content > mat-card .mat-checkbox-layout { white-space: normal !important; }
+  .content > mat-card .mat-checkbox-label { line-height: 1.3; }
+  .content > mat-card .mat-dialog-actions { justify-content: stretch; }
+  .content > mat-card .mat-dialog-actions .mat-raised-button { flex: 1 1 auto; margin: 8px 0 0 !important; }
+}
+
+/* ===== Tablets in portrait: the same transaction screens (Receiving layout: .sticky-top-toolbar) stacked like on
+   phones — side by side the item list got a 260px column with cut-off columns and buttons. The Sales / Order
+   screens have their own tablet layout and are not touched (no .sticky-top-toolbar). The docked buttons sit
+   above the footer, which tablets still show. ===== */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .main-transaction-container:has(.sticky-top-toolbar) {
+    display: flex !important; flex-direction: column !important; gap: 10px !important;
+    height: auto !important; overflow: visible !important; margin: 8px 8px 150px !important;
+  }
+  .main-transaction-container:has(.sticky-top-toolbar) > .left-panel,
+  .main-transaction-container:has(.sticky-top-toolbar) > .right-panel {
+    flex: none !important; width: 100% !important; max-width: 100% !important; height: auto !important;
+    overflow: hidden !important; border-radius: 12px; background: #fff;
+  }
+  .main-transaction-container:has(.sticky-top-toolbar) .sticky-top-toolbar,
+  .main-transaction-container:has(.sticky-top-toolbar) .sticky-top-toolbar2 { position: static !important; }
+  .main-transaction-container:has(.sticky-top-toolbar) .itemListTransaction,
+  .main-transaction-container:has(.sticky-top-toolbar) .itemListTransaction2 {
+    flex: none !important; min-height: 200px !important; max-height: 38vh !important; margin-bottom: 0 !important;
+    overflow: auto !important; -webkit-overflow-scrolling: touch;
+  }
+  .main-transaction-container:has(.sticky-top-toolbar) .itemListTransaction .mat-table,
+  .main-transaction-container:has(.sticky-top-toolbar) .itemListTransaction2 .mat-table { min-width: 700px; overflow: visible !important; }
+  .fixed-bottom-button-group {
+    position: fixed !important; left: 0 !important; right: 0 !important; bottom: var(--app-footer-h, 0px) !important; width: 100% !important;
+    z-index: 1001 !important; background: #fff !important; padding: 6px 8px !important;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+  .fixed-bottom-button-group > .row { margin: 0 !important; --bs-gutter-x: 0; --bs-gutter-y: 6px; }
+  .fixed-bottom-button-group .left-panel,
+  .fixed-bottom-button-group .right-panel { height: auto !important; padding: 0 !important; box-shadow: none !important; }
+  .fixed-bottom-button-group .mat-button-toggle { min-height: 52px; }
+  .fixed-bottom-button-group .mat-button-toggle-label-content {
+    display: flex !important; align-items: center; justify-content: center; min-height: 52px;
+    line-height: 1.2 !important; white-space: normal !important; font-weight: 700;
+  }
+}
+/* Tablets in landscape: the same screens stay side by side, but the left panel is ~350px: its toolbar fields and
+   buttons share the row by need (New Supplier / New Item / GO no longer run over the field beside them) and the
+   bottom button labels wrap instead of overflowing */
+@media (min-width: 768px) and (max-width: 1280px) and (orientation: landscape) {
+  .main-transaction-container .sticky-top-toolbar .row { flex-wrap: wrap; align-items: flex-end; }
+  .main-transaction-container .sticky-top-toolbar .row > [class*="col-"] { flex: 1 1 70px; width: auto; min-width: 0; }
+  .main-transaction-container .sticky-top-toolbar .row > [class*="col-"]:first-child { flex: 2 1 150px; }
+  .main-transaction-container .sticky-top-toolbar .row > [class*="col-"]:last-child:not(:first-child) { flex: 0 0 auto; }
+  .main-transaction-container .sticky-top-toolbar button { white-space: nowrap; padding: 0 10px; margin-top: 0 !important; margin-bottom: 14px; min-height: 40px; }
+  .main-transaction-container .sticky-top-toolbar .align-elements .mat-form-field { flex: 1 1 0; min-width: 0; }
+  /* a date filter (checkbox + Date From / Date To, Sales Return / Return To Supplier) gets its own line */
+  .main-transaction-container .sticky-top-toolbar .row > .align-elements:not(:first-child) { order: 2; flex: 1 1 100% !important; }
+  .fixed-bottom-button-group .mat-button-toggle { min-width: 0; }
+  .fixed-bottom-button-group .mat-button-toggle-label-content {
+    display: flex !important; align-items: center; justify-content: center; min-height: 48px;
+    line-height: 1.2 !important; white-space: normal !important; padding: 4px 6px !important;
+  }
+}
+/* config screens with four columns of fields (Receiving / Expense / Payable / Return Config): two columns until
+   the card has room for four */
+@media (max-width: 991.98px) {
+  .content > mat-card .field-row2 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; gap: 8px !important; }
+  .content > mat-card .field-row2 label,
+  .content > mat-card .field-row label { white-space: normal !important; }
+  /* the indented rows (margin-left 30-50%) start at the left edge: indented, their label and field did not fit */
+  .content > mat-card .field-row.align-top,
+  .content > mat-card .field-row2.align-top { margin-left: 0 !important; }
+  .content > mat-card .field-row mat-checkbox,
+  .content > mat-card .field-row2 mat-checkbox { white-space: normal !important; min-width: 0; }
+}
+
+/* ===== Phones: transaction screens with the Receiving Transaction layout (Receiving, Purchasing, Canvassing,
+   Return To Supplier, Sales Return, Stock Adjustment, Delivery, Expenses, Payments, Production).
+   Item list on top, order lines below, the bottom buttons docked at the bottom of the screen. ===== */
+@media (max-width: 767.98px), (max-height: 500px) and (orientation: landscape) {
+  .main-transaction-container {
+    display: flex !important; flex-direction: column !important; gap: 10px !important;
+    height: auto !important; overflow: visible !important; margin: 6px 6px 150px !important;
+  }
+  .main-transaction-container > .left-panel,
+  .main-transaction-container > .right-panel {
+    flex: none !important; width: 100% !important; max-width: 100% !important; height: auto !important;
+    overflow: hidden !important; border-radius: 12px; background: #fff;
+  }
+  .main-transaction-container .sticky-top-toolbar,
+  .main-transaction-container .sticky-top-toolbar2 { position: static !important; }
+  .main-transaction-container .sticky-top-toolbar2 .row { margin-top: 8px !important; margin-bottom: 8px !important; }
+  .main-transaction-container .totalAmount { font-size: 20px !important; }
+
+  /* each list scrolls in its own box, sideways too, with the first column pinned */
+  .main-transaction-container .itemListTransaction,
+  .main-transaction-container .itemListTransaction2 {
+    flex: none !important; min-height: 160px !important; max-height: 45vh !important; margin-bottom: 0 !important;
+    overflow: auto !important; -webkit-overflow-scrolling: touch;
+  }
+  .main-transaction-container .itemListTransaction .mat-table,
+  .main-transaction-container .itemListTransaction2 .mat-table { min-width: 600px; overflow: visible !important; }
+  .main-transaction-container .itemListTransaction .mat-header-cell:first-child,
+  .main-transaction-container .itemListTransaction .mat-cell:first-child,
+  .main-transaction-container .itemListTransaction2 .mat-header-cell:first-child,
+  .main-transaction-container .itemListTransaction2 .mat-cell:first-child {
+    position: sticky; left: 0; z-index: 2; background: #fff; box-shadow: 1px 0 0 #e0e0e0;
+  }
+
+  /* bottom buttons: docked at the bottom (the footer is in the side menu on phones) */
+  .fixed-bottom-button-group {
+    position: fixed !important; left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100% !important;
+    z-index: 1001 !important; background: #fff !important;
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom)) !important;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+  .fixed-bottom-button-group > .row { margin: 0 !important; --bs-gutter-x: 0; --bs-gutter-y: 6px; }
+  .fixed-bottom-button-group .left-panel,
+  .fixed-bottom-button-group .right-panel { height: auto !important; padding: 0 !important; box-shadow: none !important; }
+  .fixed-bottom-button-group .mat-button-toggle-group { border-radius: 10px; }
+  .fixed-bottom-button-group .mat-button-toggle { min-height: 50px; }
+  .fixed-bottom-button-group .mat-button-toggle-button { height: 100%; }
+  .fixed-bottom-button-group .mat-button-toggle-label-content {
+    display: flex !important; align-items: center; justify-content: center; min-height: 50px;
+    line-height: 1.2 !important; white-space: normal !important; padding: 4px 6px !important;
+    font-size: 13px; font-weight: 700;
+  }
+  /* TOTAL QTY beside SAVE: readable instead of a 20% sliver */
+  .fixed-bottom-button-group .mat-button-toggle[style*="20%"] { width: 34% !important; flex: 0 0 34%; }
+
+  /* toolbars: a field and its button share a row (Supplier | New Supplier, Search | Qty | New Item) */
+  .main-transaction-container .sticky-top-toolbar .row { flex-wrap: wrap; align-items: flex-end; }
+  .main-transaction-container .sticky-top-toolbar .row > [class*="col-"] { flex: 1 1 70px; width: auto; min-width: 0; }
+  .main-transaction-container .sticky-top-toolbar .row > [class*="col-"]:first-child { flex: 2 1 150px; }
+  .main-transaction-container .sticky-top-toolbar .row > [class*="col-"]:last-child:not(:first-child) { flex: 0 0 auto; }
+  .main-transaction-container .sticky-top-toolbar button { white-space: nowrap; padding: 0 10px; margin-top: 0 !important; margin-bottom: 14px; min-height: 40px; }
+  /* a date filter (checkbox + Date From / Date To, Sales Return / Return To Supplier) gets its own line */
+  .main-transaction-container .sticky-top-toolbar .row > .align-elements:not(:first-child) { order: 2; flex: 1 1 100% !important; }
+  .main-transaction-container .sticky-top-toolbar .align-elements .mat-form-field { flex: 1 1 0; min-width: 0; }
+}

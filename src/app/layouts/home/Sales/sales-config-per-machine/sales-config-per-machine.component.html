@@ -1,0 +1,67 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>SalesConfigPerMachine - {{machineName.toUpperCase()}}</h2>
+<mat-divider></mat-divider>
+
+<form [formGroup]="saleConfigPerMachineForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <div class="fields-container pt-3">
+            <div class="field-row">
+                <label>
+                    <mat-checkbox [checked]="saleConfigPerMachines.CashDrawerTrigger == 'yes'" (change)="onCheck('CashDrawerTrigger', $event.checked, saleConfigPerMachines.CashDrawerTrigger, 'Boolean')">Cash Drawer Trigger:</mat-checkbox>
+                </label>
+                <input class="CashDrawerTrigger" matInput placeholder="Input CashDrawerTrigger" autocomplete="off" formControlName="CashDrawerTrigger">
+            </div>
+
+            <div class="field-row">
+                <label>
+                    <mat-checkbox [checked]="saleConfigPerMachines.PoleDisplay == 'yes'" (change)="onCheck('PoleDisplay', $event.checked, saleConfigPerMachines.PoleDisplay, 'Boolean')">Pole Display:</mat-checkbox>
+                </label>
+                <input class="PoleDisplay" matInput placeholder="Input PoleDisplay" autocomplete="off" formControlName="PoleDisplay">
+            </div>
+
+            <div class="field-row">
+                <label>
+                    <mat-checkbox [checked]="saleConfigPerMachines.PrintCashiering == 'yes'" (change)="onCheck('PrintCashiering', $event.checked, saleConfigPerMachines.PrintCashiering, 'Boolean')">Print Cashiering:</mat-checkbox>
+                </label>
+                <input class="PrintCashiering" matInput placeholder="Input PrintCashiering" autocomplete="off" formControlName="PrintCashiering">
+            </div>
+
+            <div class="field-row">
+                <label>
+                    <mat-checkbox [checked]="saleConfigPerMachines.PrintReceipt == 'yes'" (change)="onCheck('PrintReceipt', $event.checked, saleConfigPerMachines.PrintReceipt, 'Boolean')">Print Receipt:</mat-checkbox>
+                </label>
+                <input class="PrintReceipt" matInput placeholder="Input PrintReceipt" autocomplete="off" formControlName="PrintReceipt">
+            </div>
+
+            <div class="field-row">
+                <label>Printer To Be Used:</label>
+                <mat-form-field appearance="standard" class="printer-select">
+                    <mat-select role="combobox" [disableOptionCentering]="true" formControlName="Printer">
+                        <mat-option value="pos">POS</mat-option>
+                        <mat-option value="ordinary">ORDINARY</mat-option>
+                        <mat-option value="both">BOTH</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="field-row">
+                <label>POS Printer Width:</label>
+                <input class="POSPrinterWidth" matInput type="number" min="0" placeholder="Input POSPrinterWidth" autocomplete="off" formControlName="POSPrinterWidth" [readonly]="isOrdinaryPrinter">
+            </div>
+            <div class="field-row">
+                <label>POS Printer FontSize:</label>
+                <input class="POSPrinterFontSize" matInput type="number" min="0" placeholder="Input POSPrinterFontSize" autocomplete="off" formControlName="POSPrinterFontSize" [readonly]="isOrdinaryPrinter">
+            </div>
+            <div class="field-row">
+                <label>OrderSlip FontSize:</label>
+                <input class="OrderSlipPOSPrinterFontSize" matInput type="number" min="0" placeholder="Input OrderSlipPOSPrinterFontSize" autocomplete="off" formControlName="OrderSlipPOSPrinterFontSize" [readonly]="isOrdinaryPrinter">
+            </div>
+        </div>
+    </div>
+
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+        <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="saleConfigPerMachineForm.invalid || loading == true">{{btnText}}</button>
+    </div>
+</form>

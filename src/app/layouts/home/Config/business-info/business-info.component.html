@@ -1,0 +1,100 @@
+     <app-background-logo-ui></app-background-logo-ui>
+
+
+<div class="content ">
+    <mat-card class="mat-elevation-z10">
+        <button mat-icon-button class="close-button" (click)="onClose()">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+        <h2 mat-dialog-title>BusinessInfoUI</h2>
+        <div mat-dialog-content>
+            <mat-divider></mat-divider>
+            <form [formGroup]="businessForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <mat-form-field appearance="standard">
+                        <mat-label>BusinessName</mat-label>
+                        <input  matInput placeholder="Input BusinessName"  autocomplete="off" formControlName="BusinessName" required>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100" appearance="standard">
+                            <mat-label>BusinessStyle</mat-label>
+                            <input  matInput placeholder="Input BusinessStyle"  autocomplete="off" formControlName="BusinessStyle" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100" appearance="standard">
+                            <mat-label>Address</mat-label>
+                            <input matInput placeholder="Input Address"formControlName="Address" required autocomplete="off" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100" appearance="standard">
+                            <mat-label>Proprietor</mat-label>
+                            <input matInput placeholder="Input Proprietor"formControlName="Proprietor" required autocomplete="off" >
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100" appearance="standard">
+                            <mat-label>BranchCode</mat-label>
+                            <input matInput placeholder="Input BranchCode"formControlName="BranchCode" required autocomplete="off" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100"appearance="standard">
+                            <mat-label>TIN</mat-label>
+                            <input matInput placeholder="Input TIN"formControlName="TIN" required autocomplete="off" >
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100" appearance="standard">
+                            <mat-label>VATType</mat-label>
+                            <mat-select role="combobox" [disableOptionCentering]="true" formControlName="VATType" required>
+                                <mat-option  value="VAT REG TIN">VAT REG TIN</mat-option>
+                                <mat-option  value="NON-VAT REG TIN">NON-VAT REG TIN</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100" appearance="standard">
+                            <mat-label>ContactInfo</mat-label>
+                            <input matInput placeholder="Input ContactNo"formControlName="ContactNo" required autocomplete="off" >
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100" appearance="standard">
+                            <mat-label>ContactPerson</mat-label>
+                            <input matInput placeholder="Input ContactPerson"formControlName="ContactPerson" required autocomplete="off" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="standard">
+                        <mat-label>BusinessStartYear</mat-label>
+                    <input  matInput placeholder="Input StartYear"  autocomplete="off" formControlName="StartYear" required>
+                    </mat-form-field>
+                </div>
+                <div mat-dialog-actions [align]="'end'" class="mb-3">
+                    <button  type="button" mat-button color="primary" class="me-3" [matMenuTriggerFor]="logosMenu">
+                       Setup Logo
+                    </button>
+                    <mat-menu #logosMenu="matMenu">
+                    <button mat-menu-item *ngFor="let x of logos"
+                            (click)="onClickBackgroundLogo(x)">
+                        {{ x }}
+                    </button>
+                    </mat-menu>
+
+                    <button type="submit" mat-raised-button color="primary" [disabled]="businessForm.invalid || loading == true">Save</button>
+                </div>
+            </form>
+        </div>
+    </mat-card>
+</div>

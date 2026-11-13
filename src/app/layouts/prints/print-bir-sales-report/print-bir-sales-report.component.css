@@ -1,0 +1,11 @@
+@page {
+    size: landscape;
+    margin: 6mm;
+}
+.title{
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: larger;
+    font-weight: bold;
+    padding: 1% 0 2%;
+}

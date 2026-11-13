@@ -1,0 +1,38 @@
+<div class="hideOnPrint">
+  <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+</div>
+<div class="p text-center">
+  <app-aprint-header></app-aprint-header>
+</div>
+<div class="title">
+  {{Title}}
+</div>
+
+<table class="table table-bordered" #tableToExport>
+  <thead class="thead-background">
+    <tr>
+      <th scope="col" *ngFor="let col of columns" [ngClass]="{'numeric': isNumeric(col)}">{{col.Label}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of data">
+      <td *ngFor="let col of columns" [ngClass]="{'numeric': isNumeric(col)}">
+        <ng-container [ngSwitch]="col.Type">
+          <span *ngSwitchCase="'decimal'">{{row[col.Key] | number:'1.2-2'}}</span>
+          <span *ngSwitchCase="'int'">{{row[col.Key] | number:'1.0-0'}}</span>
+          <span *ngSwitchCase="'date'">{{row[col.Key] | date:'MM/dd/yyyy'}}</span>
+          <span *ngSwitchDefault>{{row[col.Key]}}</span>
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="totals">
+    <tr>
+      <td *ngFor="let col of columns; let i = index" [ngClass]="{'numeric': isNumeric(col)}">
+        <span *ngIf="i == 0 && totals[col.Key] == null">TOTAL</span>
+        <span *ngIf="totals[col.Key] != null">{{totals[col.Key] | number:'1.2-2'}}</span>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+<app-aprint-footer [totalRecords]="data.length"></app-aprint-footer>

@@ -1,0 +1,31 @@
+.content{
+    width: 100%;
+    position: fixed;
+}
+
+mat-card{
+    width: 500px;
+    margin: auto;
+}
+mat-form-field {
+    width: 100%;
+}
+.loginBtn
+{
+    width: 100%;
+}
+@media (max-width: 900px){
+    mat-card{
+        width: initial;
+        margin: 0;
+    }
+
+}
+.landing-background{
+    position: fixed;
+    top: -5%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width:60%;
+  }
+  

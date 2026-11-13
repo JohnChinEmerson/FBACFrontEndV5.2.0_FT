@@ -1,0 +1,83 @@
+.content {
+    width: 100%;
+    position: fixed;
+}
+
+mat-card {
+    width: 800px;
+    margin: auto;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+mat-form-field {
+    line-height: normal;
+}
+
+.landing-background {
+    position: fixed;
+    top: -5%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width: 60%;
+}
+
+.fields-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.row-pair {
+    display: grid;
+    /* equal halves whatever is inside (a long select value must not widen its column) */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 50px;
+}
+
+.field-row {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+ .field-row label {
+    white-space: nowrap;
+    text-align: left;
+}
+
+.field-row input, .field-row select, .field-row mat-select {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    padding: 6px 8px;
+    background: #f5f5f5;
+    width: 100%;
+    box-sizing: border-box;
+}
+/* Send Kitchen: same box as the inputs beside it */
+.field-row mat-select {
+    display: block;
+    min-width: 0;
+    line-height: 20px;
+}
+.notes-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+.notes-row  textarea {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    padding: 8px;
+    background: #f5f5f5;
+    width: 100%;
+    box-sizing: border-box;
+    resize: vertical;
+}

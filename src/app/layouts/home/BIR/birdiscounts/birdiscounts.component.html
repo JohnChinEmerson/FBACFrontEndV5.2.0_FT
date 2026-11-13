@@ -1,0 +1,90 @@
+<section class="content">
+    <div class="search-div">
+        <ng-select 
+            [items]="terminals" 
+            [virtualScroll]="true" 
+            appendTo="body" 
+            bindLabel="ComputerName"
+            bindValue="ComputerName"
+            [(ngModel)]="terminal" 
+            [searchable]="true" 
+            [clearable] = "false" 
+            placeholder="Machine"
+            class="w-10"
+            >
+        </ng-select>
+        <mat-form-field appearance="standard">
+            <mat-label>DateFrom</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="dateFrom"  autocomplete="off" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>DateTo</mat-label>
+            <input matInput [matDatepicker]="picker2" [(ngModel)]="dateTo"  autocomplete="off" required>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+            <button mat-raised-button color="primary" *ngFor="let tB of toolButtons" [disabled]="!tB.Disabled" (click)="tB.Function()" >{{tB.Label}}</button> 
+    </div>
+    <div class="mat-elevation-z2">
+        <div class=" w-50" *ngIf="loaded" id="toprint"> 
+            <div class="p text-center">
+                <app-aprint-header></app-aprint-header>
+            </div>
+            <div class="title">
+                    {{reportLabel}}
+            </div>
+            <div class="mb-5">
+                <table class="w-100 table table-bordered">
+                <thead class="thead-background">  
+                    <tr>
+                    <th scope="col">TERMINAL</th>
+                    <th scope="col">SERIAL NO</th>
+                    <th scope="col">MIN NO</th>
+                    <th scope="col">PTU</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td >{{machinePermit.ComputerName }}</td>
+                    <td >{{machinePermit.SerialNo }}</td>
+                    <td >{{machinePermit.MachineNo }}</td>
+                    <td >{{machinePermit.PermitNo }}</td>
+                </tbody>  
+                </table>
+
+                <table class="w-100 table table-bordered">
+                    <thead class="thead-background">  
+                    <tr>
+                        <th scope="col">DATE</th>
+                        <th scope="col">SINO</th>
+                        <th scope="col">DISCOUNT TYPE</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">CUSTOMER</th>
+                        <th scope="col">DISCOUNT ID</th>
+                        <th scope="col">TIN</th>
+                        <th scope="col">TOTAL AMOUNT</th>
+                        <th scope="col">DISCOUNT</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let x of discounts">
+                            <td >{{x.TransDate | date:'MM/dd/yyyy' }}</td>
+                            <td >{{x.SINo }}</td>
+                            <td >{{x.DiscountPerson }}</td>
+                            <td >{{x.PersonName }}</td>
+                            <td >{{x.CustomerName }}</td>
+                            <td >{{x.DiscountId }}</td>
+                            <td >{{x.DiscountTIN }}</td>
+                            <td >{{x.TotalAmount | number:'1.2-2' }}</td>
+                            <td >{{x.DiscountAmount | number:'1.2-2' }}</td>
+                        </tr>
+                    </tbody>  
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+</section>

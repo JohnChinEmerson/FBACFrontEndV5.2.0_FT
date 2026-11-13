@@ -1,0 +1,149 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+    </div>
+    <div class="p text-center">
+    <app-aprint-header></app-aprint-header>
+    </div>
+    <div class="title">
+    {{Title}}
+    </div>
+    
+    <table class="w-100 table table-bordered">
+    <thead class="thead-background">  
+      <tr>
+        <th scope="col">TERMINAL</th>
+        <th scope="col">MACHINE NO</th>
+        <th scope="col">PERMIT NO</th>
+      </tr>
+    </thead>
+    <tbody>
+        <td >{{Data.Terminal }}</td>
+        <td >{{Data.MachineNo }}</td>
+        <td >{{Data.PermitNo }}</td>
+    </tbody>  
+    </table>
+    
+    <table class="w-100 table table-bordered">
+      <thead class="thead-background">  
+        <tr>
+          <th scope="col">DATE</th>
+          <th scope="col">CONTROL NO</th>
+          <th scope="col">BEGINNING SI</th>
+          <th scope="col">ENDING SI</th>
+        </tr>
+      </thead>
+      <tbody>
+          <td >{{Data.TransDate | date:'MM/dd/yyyy' }}</td>
+          <td >{{Data.ZReadingNo }}</td>
+          <td >{{Data.StartingSI }}</td>
+          <td >{{Data.EndingSI }}</td>
+      </tbody>  
+    </table>
+    
+    <table class="w-100 table table-bordered">
+      <thead class="thead-background">  
+        <tr>
+          <th scope="col">GROSS SALES</th>
+          <th scope="col">SENIOR DSC</th>
+          <th scope="col">PWD DSC</th>
+          <th scope="col">REGULAR DSC</th>
+          <th scope="col">LESS VAT SNR</th>
+          <th scope="col">LESS VAT DPLMT</th>
+          <th scope="col">DATE SALES</th>
+        </tr>
+      </thead>
+      <tbody>
+          <td >{{Data.GrossSales | number: '1.2-2'}}</td>
+          <td >{{Data.SeniorDiscount | number: '1.2-2'}}</td>
+          <td >{{Data.PWDDiscount | number: '1.2-2'}}</td>
+          <td >{{Data.RegularDiscount | number: '1.2-2'}}</td>
+          <td >{{Data.LessVATSenior | number: '1.2-2'}}</td>
+          <td >{{Data.LessVATDiplomat | number: '1.2-2'}}</td>
+          <td >{{Data.NetSales | number: '1.2-2'}}</td>
+      </tbody>  
+    </table>
+    
+    <table class="w-100 table table-bordered">
+      <thead class="thead-background">  
+        <tr>
+          <th scope="col">VAT SALES</th>
+          <th scope="col">VAT AMOUNT</th>
+          <th scope="col">VAT EXEMPT SALES</th>
+          <th scope="col">ZERO RATED SALES</th>
+        </tr>
+      </thead>
+      <tbody>
+          <td >{{Data.VATSales | number: '1.2-2'}}</td>
+          <td >{{Data.VATAmount | number: '1.2-2'}}</td>
+          <td >{{Data.VATExemptSales | number: '1.2-2'}}</td>
+          <td >{{Data.ZeroRatedSales | number: '1.2-2'}}</td>
+      </tbody>  
+    </table>
+    
+    <table class="w-100 table table-bordered">
+      <thead class="thead-background">  
+        <tr>
+          <th scope="col">CASH SALES</th>
+          <th scope="col">BANK DEPOSIT SALES</th>
+          <th scope="col">CHECK PAYMENT SALES</th>
+        </tr>
+      </thead>
+      <tbody>
+          <td >{{Data.CashSales | number: '1.2-2'}}</td>
+          <td >{{Data.BankDepositSales | number: '1.2-2'}}</td>
+          <td >{{Data.CheckPaymentSales | number: '1.2-2'}}</td>
+      </tbody>  
+    </table>
+    
+    <table class="w-100 table table-bordered">
+      <thead class="thead-background">  
+        <tr>
+          <th scope="col">SENIOR SALES</th>
+          <th scope="col">PWD SALES</th>
+          <th scope="col">DIPLOMAT SALES</th>
+        </tr>
+      </thead>
+      <tbody>
+          <td >{{Data.SeniorSales | number: '1.2-2'}}</td>
+          <td >{{Data.PWDSales | number: '1.2-2'}}</td>
+          <td >{{Data.DiplomatSales | number: '1.2-2'}}</td>
+      </tbody>  
+    </table>
+    
+    <table class="w-100 table table-bordered">
+      <thead class="thead-background">  
+        <tr>
+          <th scope="col">SALES RETURN</th>
+          <th scope="col">SALES RETURN COUNT</th>
+        </tr>
+      </thead>
+      <tbody>
+          <td >{{Data.SalesReturn | number: '1.2-2'}}</td>
+          <td >{{Data.SRCount | number: '1.2-2'}}</td>
+      </tbody>  
+    </table>
+    
+    <table class="w-100 table table-bordered">
+      <thead class="thead-background">  
+        <tr>
+          <th scope="col">TOTAL CUSTOMERS</th>
+          <th scope="col">REGULAR</th>
+          <th scope="col">SENIOR</th>
+          <th scope="col">PWD</th>
+          <th scope="col">DIPLOMAT</th>
+        </tr>
+      </thead>
+      <tbody>
+          <td >{{Data.TotalCustomers | number: '1.2-2'}}</td>
+          <td >{{Data.Regular | number: '1.2-2'}}</td>
+          <td >{{Data.Senior | number: '1.2-2'}}</td>
+          <td >{{Data.PWD | number: '1.2-2'}}</td>
+          <td >{{Data.Diplomat | number: '1.2-2'}}</td>
+      </tbody>  
+    </table>
+    <p>SignedBy : {{line}}</p>
+    
+    
+    
+      
+    

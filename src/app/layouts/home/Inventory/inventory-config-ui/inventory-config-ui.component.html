@@ -1,0 +1,47 @@
+<app-background-logo-ui></app-background-logo-ui>
+
+<div class="content">
+    <mat-card>
+        <button mat-icon-button class="close-button" (click)="onClose()">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+        <h2 mat-dialog-title>InventoryConfigUI</h2>
+        <mat-divider></mat-divider>
+
+        <form [formGroup]="InventoryConfigForm" (ngSubmit)="onSubmit()">
+            <div mat-dialog-content>
+                <div class="field-row">
+                    <label>Report Positive Variance As:</label>
+                    <mat-form-field appearance="outline" class="dense-field">
+                        <mat-select role="combobox" [disableOptionCentering]="true" formControlName="PositiveVariance" autocomplete="off" required>
+                            <mat-option value="Adjustment">Adjustment</mat-option>
+                            <mat-option value="Payable">Payable</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="field-row">
+                    <label>Report Negative Variance As:</label>
+                    <mat-form-field appearance="outline" class="dense-field">
+                        <mat-select role="combobox" [disableOptionCentering]="true" formControlName="NegativeVariance" autocomplete="off" required>
+                            <mat-option value="Expense">Expense</mat-option>
+                            <mat-option value="Adjustment">Adjustment</mat-option>
+                            <mat-option value="Receivable">Receivable</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="field-row">
+                    <label>
+                        <mat-checkbox [checked]="ConfigStockAdjustment.ColorOutOfStock == 'yes'" (change)="onCheck('ColorOutOfStock', $event.checked, ConfigStockAdjustment.ColorOutOfStock, 'Boolean')"> Color Out Of Stock </mat-checkbox>
+                    </label>
+                    <input  matInput placeholder="Input ColorOutOfStock" autocomplete="off"  formControlName="ColorOutOfStock">
+                </div>
+                 <div mat-dialog-actions [align]="'end'" class="mb-3">
+                  <button type="submit" mat-raised-button color="primary"
+                            [disabled]="InventoryConfigForm.invalid || loading == true">
+                        {{btnText}}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+</div>

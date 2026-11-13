@@ -1,0 +1,32 @@
+<app-background-logo-ui></app-background-logo-ui>
+
+<div class="content">
+    <mat-card>
+        <button mat-icon-button class="close-button" (click)="onClose()">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+        <h2 mat-dialog-title>CashieringConfigUI</h2>
+        <mat-divider></mat-divider>
+
+        <form [formGroup]="cashieringConfigForm" (ngSubmit)="onSubmit()">
+            <div mat-dialog-content>
+                <div class="field-row">
+                    <label>Printer Type:</label>
+                    <mat-form-field appearance="outline" class="dense-field">
+                        <mat-select role="combobox" [disableOptionCentering]="true" formControlName="PrinterType" autocomplete="off" required>
+                            <mat-option value="ordinary">ORDINARY</mat-option>
+                            <mat-option value="pos">POS</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div mat-dialog-actions [align]="'end'" class="mb-3">
+                    <button type="submit" mat-raised-button color="primary"
+                            [disabled]="cashieringConfigForm.invalid || loading == true">
+                        {{btnText}}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+</div>

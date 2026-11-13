@@ -1,0 +1,69 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+    <table class="table table-bordered" #tableToExport *ngIf="supplierId.toLowerCase() == 'all'">
+        <thead class="thead-background">
+          <tr>
+            <th scope="col">SUPPLIER</th>
+            <th scope="col">TOTAL DUE</th>
+            <th scope="col">AMOUNT PAID</th>
+            <th scope="col">BALANCE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of Data">
+            <td>{{data.SupplierName}}</td>
+            <td  class="numeric">{{data.TotalDue | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.AmountPaid | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.Balance | number:'1.2-2'}}</td>
+          </tr>
+          <tr class="footer">
+              <td class="no-border" ></td>
+              <td  class="numeric">{{getTotal('TotalDue') | number:'1.2-2'}}</td>
+              <td  class="numeric">{{getTotal('AmountPaid') | number:'1.2-2'}}</td>
+              <td  class="numeric">{{getTotal('Balance') | number:'1.2-2'}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-bordered" #tableToExport *ngIf="supplierId.toLowerCase() != 'all'">
+        <thead class="thead-background">
+          <tr>
+            <th scope="col">SUPPLIER</th>
+            <th scope="col">CONTACT NO</th>
+            <th scope="col">ADDRESS</th>
+            <th scope="col">TRANS NO</th>
+            <th scope="col">TRANSDATE</th>
+            <th scope="col">DUEDATE</th>
+            <th scope="col">TOTAL DUE</th>
+            <th scope="col">AMOUNT PAID</th>
+            <th scope="col">BALANCE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of Data">
+            <td>{{data.SupplierName}}</td>
+            <td>{{data.ContactNo}}</td>
+            <td>{{data.Address}}</td>
+            <td >{{data.SourceTransNo }}</td>
+            <td >{{data.TransDate | date:'MM/dd/yyyy'}}</td>
+            <td >{{data.DueDate | date:'MM/dd/yyyy'}}</td>
+            <td  class="numeric">{{data.TotalDue | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.AmountPaid | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.Balance | number:'1.2-2'}}</td>
+          </tr>
+          <tr class="footer">
+              <td class="no-border" colspan="6"></td>
+              <td  class="numeric">{{getTotal('TotalDue') | number:'1.2-2'}}</td>
+              <td  class="numeric">{{getTotal('AmountPaid') | number:'1.2-2'}}</td>
+              <td  class="numeric">{{getTotal('Balance') | number:'1.2-2'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  

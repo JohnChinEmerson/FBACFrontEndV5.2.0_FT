@@ -1,0 +1,30 @@
+mat-toolbar{
+    justify-content: space-between;
+}
+
+.productLogo {
+    display: flex;
+    align-items: center;
+}
+
+.productLogo a img {
+    margin-right: 5px; 
+    margin-top: 5px; 
+}
+
+.header {
+    padding: 0;
+    position: fixed; 
+    top: 0;
+    width: 100%;
+    z-index: 1000; 
+}
+
+.product-name {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 200;
+  }
+  

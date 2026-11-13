@@ -1,0 +1,44 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+        <app-aprint-header></app-aprint-header>
+    </div>
+    <div class="title">
+        <h3>{{Title}}</h3>
+    </div>
+    <table class="table table-bordered" #tableToExport  >
+        <thead class="thead-background">
+        <tr>
+            <th scope="col">DATE</th>
+            <th scope="col">TRANSNO</th>
+            <th scope="col">SUPPLIER NAME</th>
+            <th scope="col">RCVD QTY</th>
+            <th scope="col">COST</th>
+            <th scope="col">DISCOUNT</th>
+            <th scope="col">RCVD STCKVALUE</th>
+            <th scope="col">OLD QTY</th>
+            <th scope="col">OLD AVECOST</th>
+            <th scope="col">OLD STCKVALUE</th>
+            <th scope="col">NEW AVECOST</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of Data">
+            <td>{{data.TransDate | date:'MM/dd/yyyy'}}</td>
+            <td>{{data.TransNo}}</td>
+            <td>{{data.SupplierName}}</td>
+            <td class="numeric">{{data.ReceivedQty | number:'1.2-2'}}</td>
+            <td class="numeric">{{data.Cost | number:'1.2-2'}}</td>
+            <td class="numeric">{{data.Discount | number:'1.2-2'}}</td>
+            <td class="numeric">{{data.ReceivedStockValue | number:'1.2-2'}}</td>
+            <td class="numeric">{{data.OldQty | number:'1.2-2'}}</td>
+            <td class="numeric">{{data.OldAveCost | number:'1.2-2'}}</td>
+            <td class="numeric">{{data.OldStockValue | number:'1.2-2'}}</td>
+            <td class="numeric">{{data.NewAveCost | number:'1.2-2'}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  
+   
+   

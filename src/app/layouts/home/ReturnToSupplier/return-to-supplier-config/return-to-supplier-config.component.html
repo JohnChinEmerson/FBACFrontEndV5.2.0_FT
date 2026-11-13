@@ -1,0 +1,118 @@
+     <!-- <app-background-logo-ui></app-background-logo-ui>
+
+<div class="content">
+    <mat-card>
+        <button mat-icon-button class="close-button" (click)="onClose()">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+        <h2 mat-dialog-title>ReturnToSupplierConfigUI</h2>
+        <mat-divider></mat-divider>
+            <form [formGroup]="returnToSupplierConfigForm" (ngSubmit)="onSubmit()">
+                <div mat-dialog-content>
+                    <div class="row">
+                            <mat-form-field  appearance="standard">
+                                <mat-checkbox [checked]="returnToSupplierConfig.ReceiptLabel != null " (change)="onCheck('ReceiptLabel', $event.checked, returnToSupplierConfig.ReceiptLabel, 'String')">ReceiptLabel</mat-checkbox>
+                                <input class="ReceiptLabel" matInput placeholder="Input ReceiptLabel" autocomplete="off"  formControlName="ReceiptLabel">
+                            </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field  appearance="standard">
+                            <mat-checkbox [checked]="returnToSupplierConfig.DisableTransDate == 'yes'" (change)="onCheck('DisableTransDate', $event.checked, returnToSupplierConfig.DisableTransDate, 'Boolean')">DisableTransDate</mat-checkbox>
+                            <input class="DisableTransDate" matInput placeholder="Input DisableTransDate" autocomplete="off"  formControlName="DisableTransDate">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field  appearance="standard">
+                            <mat-checkbox [checked]="returnToSupplierConfig.ReceiptNotes != null " (change)="onCheck('ReceiptNotes', $event.checked, returnToSupplierConfig.ReceiptNotes, 'String')">ReceiptNotes</mat-checkbox>
+                            <textarea class="ReceiptNotes" matInput  cols="30" rows="2"  autocomplete="off" placeholder="Input ReceiptNotes"  formControlName="ReceiptNotes"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+               
+                <div mat-dialog-actions [align]="'end'" class="mb-3">
+                <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="returnToSupplierConfigForm.invalid || loading == true">{{btnText}}</button>
+                </div>
+            </form>
+    </mat-card>
+</div> -->
+
+<app-background-logo-ui></app-background-logo-ui>
+
+<div class="content">
+    <mat-card>
+        <button mat-icon-button class="close-button" (click)="onClose()" aria-label="Close dialog">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+
+        <h2 mat-dialog-title>ReturnToSupplierConfigUI</h2>
+        <mat-divider></mat-divider>
+
+        <form [formGroup]="returnToSupplierConfigForm" (ngSubmit)="onSubmit()">
+            <div mat-dialog-content>
+                <div class="config-grid">
+
+                    <!-- DisableTransDate + ReceiptLabel -->
+                    <div class="field-row1">
+                        <mat-checkbox
+                            [checked]="returnToSupplierConfig.DisableTransDate == 'yes'"
+                            (change)="onCheck('DisableTransDate', $event.checked, returnToSupplierConfig.DisableTransDate, 'Boolean')">
+                            DisableTransDate
+                        </mat-checkbox>
+
+                        <mat-form-field appearance="outline" class="dense-field">
+                            <input
+                                matInput
+                                placeholder="Input DisableTransDate"
+                                autocomplete="off"
+                                formControlName="DisableTransDate">
+                        </mat-form-field>
+                    </div>
+
+                    <!-- ReceiptNotes -->
+                    <div class="field-row2">
+                        <mat-checkbox
+                            [checked]="returnToSupplierConfig.ReceiptNotes != null"
+                            (change)="onCheck('ReceiptNotes', $event.checked, returnToSupplierConfig.ReceiptNotes, 'String')">
+                            ReceiptNotes
+                        </mat-checkbox>
+
+                        <mat-form-field appearance="outline" class="dense-field receipt-notes-field">
+                            <textarea
+                                matInput
+                                cols="30"
+                                rows="2"
+                                autocomplete="off"
+                                placeholder="Input ReceiptNotes"
+                                formControlName="ReceiptNotes"></textarea>
+                        </mat-form-field>
+                        <mat-checkbox
+                            [checked]="returnToSupplierConfig.ReceiptLabel != null"
+                            (change)="onCheck('ReceiptLabel', $event.checked, returnToSupplierConfig.ReceiptLabel, 'String')">
+                            ReceiptLabel
+                        </mat-checkbox>
+
+                        <mat-form-field appearance="outline" class="dense-field">
+                            <input
+                                matInput
+                                placeholder="Input ReceiptLabel"
+                                autocomplete="off"
+                                formControlName="ReceiptLabel">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <div mat-dialog-actions align="end" class="mb-3">
+                <button
+                    type="submit"
+                    class="mt-4 me-2"
+                    mat-raised-button
+                    color="primary"
+                    [disabled]="returnToSupplierConfigForm.invalid || loading == true">
+                    {{ btnText }}
+                </button>
+            </div>
+
+        </form>
+    </mat-card>
+</div>

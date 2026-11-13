@@ -1,0 +1,45 @@
+<section class="content">
+    <div class="search-div">
+        <mat-form-field appearance="standard">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="transDate" (dateChange)="onClickView()" autocomplete="off" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="w-20" floatLabel="never" appearance="standard">
+            <input matInput placeholder="Search" [(ngModel)]="searchKey" (keyup)="applyFilter()" autocomplete="off">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <button mat-raised-button color="primary" *ngFor="let tB of toolButtons" [disabled]="!tB.Disabled" (click)="tB.Function()">{{tB.Label}}</button>
+        <span class="total-count">Total Count : {{ (listData?.filteredData?.length || 0) | number:'1.0-0' }}</span>
+    </div>
+    <div class="mat-elevation-z2 w-100">
+        <mat-table [dataSource]="listData" matSort>
+            <ng-container *ngFor="let dc of defaultColumns">
+                <ng-container [matColumnDef]="dc">
+                    <mat-header-cell *matHeaderCellDef sticky>{{ labels[dc] || dc }}</mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="auto-adjust-cell" [ngClass]="element | rowClasses:dc:columnTypeMap[dc]" [class.negative]="dc == 'Variance' && element.Variance < 0" [title]="element[dc]">
+                        <span>{{ element | rowDisplay:dc:columnTypeMap[dc] }}</span>
+                    </mat-cell>
+                    <mat-footer-cell *matFooterCellDef class="footer" [ngClass]="columnTypeMap[dc]">
+                        <span *ngIf="dc == 'TotalCost'">{{ listData | columnTotal:dc | number:'1.2-2' }}</span>
+                    </mat-footer-cell>
+                </ng-container>
+            </ng-container>
+            <ng-container matColumnDef="loading">
+                <mat-footer-cell *matFooterCellDef colspan="6"><mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar></mat-footer-cell>
+            </ng-container>
+            <ng-container matColumnDef="noData">
+                <mat-footer-cell *matFooterCellDef colspan="6">No End-of-Day Inventory for {{ dateText }}. Click "Ingredients Used" to compute the ingredients consumed by the day's sales.</mat-footer-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="defaultColumns; sticky:true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: defaultColumns;"></mat-row>
+            <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+            <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':isLoading || !(listData!=null && listData.data.length==0)}"></mat-footer-row>
+            <mat-footer-row [ngClass]="{'hide':(listData!=null && listData.data.length==0)}" *matFooterRowDef="defaultColumns;"></mat-footer-row>
+        </mat-table>
+        <mat-paginator class="mat-paginator-sticky" [pageSize]="25" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
+    </div>
+</section>

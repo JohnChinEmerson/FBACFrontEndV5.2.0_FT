@@ -1,0 +1,64 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+
+  <div >
+    <table class="table table-bordered" #tableToExport>
+        <thead class="thead-background">
+          <tr>
+            <th scope="col">TRANSDATE</th>
+            <th scope="col">TRANSNO</th>
+            <th scope="col">CUSTOMER</th>
+            <th  class="numeric" scope="col">TOTAL SALES</th>
+            <th  class="numeric" scope="col">DISCOUNT</th>
+            <th  class="numeric" scope="col">WHTAX</th>
+            <th  class="numeric" scope="col">VAT</th>
+            <th  class="numeric" scope="col">LESS VAT</th>
+            <th  class="numeric" scope="col">DELIVERY</th>
+            <th  class="numeric" scope="col">ADVANCE PO</th>
+            <th  class="numeric" scope="col">REBATE PAID</th>
+            <th  class="numeric" scope="col">TOTAL DUE</th>
+            <th scope="col">INVOICE NO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of Data">
+            <td>{{data.TransDate | date:'MM/dd/yyyy'}}</td>
+            <td>{{data.TransNo}}</td>
+            <td>{{data.CustomerName}}</td>
+            <td  class="numeric">{{data.TotalSales | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.DiscountAmount | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.WHTaxAmount | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.VAT | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.LessVAT | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.DeliveryFee | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.AdvancePayment | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.RebatePaid | number:'1.2-2'}}</td>
+            <td  class="numeric">{{data.TotalDue | number:'1.2-2'}}</td>
+            <td>{{data.InvoiceNo}}</td>
+          </tr>
+          <tr class="footer">
+              <td class="no-border" colspan="3"></td>
+              <td  class="numeric">{{ getTotal('TotalSales')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('DiscountAmount')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('WHTaxAmount')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('VAT')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('LessVAT')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('DeliveryFee')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('AdvancePayment')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('RebatePaid')| number:'1.2-2'}}</td>
+              <td  class="numeric">{{ getTotal('TotalDue')| number:'1.2-2'}}</td>
+              <td class="no-border"></td>
+          </tr>
+        </tbody>
+      </table>
+    <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  
+  </div>
+   

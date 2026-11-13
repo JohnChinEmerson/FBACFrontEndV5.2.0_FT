@@ -1,0 +1,29 @@
+<div class="osk" *ngIf="osk.visible" role="dialog" aria-label="On-screen keyboard" (mousedown)="keepFocus($event)" (pointerdown)="keepFocus($event)">
+    <div class="osk-bar">
+        <button type="button" class="osk-tab" [class.active]="osk.mode == 'letters'" (click)="osk.setMode('letters')">ABC</button>
+        <button type="button" class="osk-tab" [class.active]="osk.mode == 'numbers'" (click)="osk.setMode('numbers')">123</button>
+        <span class="osk-spacer"></span>
+        <button type="button" class="osk-tab osk-close" aria-label="Close keyboard" (click)="osk.close()"><mat-icon>keyboard_hide</mat-icon></button>
+    </div>
+
+    <!-- LET -->
+    <div class="osk-letters" *ngIf="osk.mode == 'letters'">
+        <div class="osk-row" *ngFor="let row of letterRows">
+            <button type="button" class="osk-key" *ngFor="let k of row" (click)="type(k)">{{ shift || !(k >= 'A' && k <= 'Z') ? k : k.toLowerCase() }}</button>
+        </div>
+        <div class="osk-row">
+            <button type="button" class="osk-key fn" [class.on]="shift" (click)="shift = !shift"><mat-icon>keyboard_capslock</mat-icon></button>
+            <button type="button" class="osk-key space" (click)="type(' ')">SPACE</button>
+            <button type="button" class="osk-key fn" aria-label="Backspace" (click)="type('back')"><mat-icon>backspace</mat-icon></button>
+            <button type="button" class="osk-key enter" (click)="type('enter')">ENTER</button>
+        </div>
+    </div>
+
+    <!-- NUM -->
+    <div class="osk-numbers" *ngIf="osk.mode == 'numbers'">
+        <button type="button" class="osk-key" *ngFor="let k of numberKeys" (click)="type(k)">{{ k }}</button>
+        <button type="button" class="osk-key fn" aria-label="Backspace" (click)="type('back')"><mat-icon>backspace</mat-icon></button>
+        <button type="button" class="osk-key fn" (click)="type('clear')">CLEAR</button>
+        <button type="button" class="osk-key enter wide" (click)="type('enter')">ENTER</button>
+    </div>
+</div>

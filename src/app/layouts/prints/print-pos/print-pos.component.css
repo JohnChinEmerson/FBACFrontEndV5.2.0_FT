@@ -1,0 +1,48 @@
+@page {
+  margin: 1mm !important;
+}
+
+* {
+  font-family: Verdana;
+  color: black;
+}
+
+.print-pos-container {
+  font-size: inherit;
+}
+
+.print-pos-container * {
+  font-size: inherit !important;
+}
+.item-name {
+  margin-bottom: 2px;
+  display: block;
+}
+
+.key-value-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: inherit !important;
+  margin-bottom: 4px !important; 
+  line-height: 1.2 !important;
+}
+
+.key-value-row .key {
+  text-align: left;
+  width: 70%;
+}
+
+.key-value-row .value {
+  text-align: right;
+  width: 30%;
+}
+
+@media print {
+  .key-value-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: inherit !important;
+    margin-bottom: 4px !important;
+    line-height: 1.2 !important;
+}
+}

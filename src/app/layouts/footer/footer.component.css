@@ -1,0 +1,42 @@
+.spacer{
+    flex: 1 1 auto;
+}
+.acct-name{
+    color: #3f51b5;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /* 45px plus the device safe area (iPhone home bar); its real height is measured by HomeComponent */
+  min-height: 45px;
+  box-sizing: border-box;
+  padding-bottom: env(safe-area-inset-bottom) !important;
+  background-color: #F5F5F5;
+  color: #3F51B5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-weight: 500;
+  z-index: 1000; /* must be lower than button group */
+}
+
+
+
+/* inside the side menu (phones): a plain block at the bottom of the menu */
+.footer.in-sidenav {
+  position: static;
+  height: auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 14px 16px;
+  border-top: 1px solid #e0e0e0;
+  font-size: 13px;
+  z-index: auto;
+}
+.footer.in-sidenav > div { display: flex; flex-direction: column; gap: 6px; }
+.sep { margin: 0 6px; }
+.footer.in-sidenav .sep { display: none; }

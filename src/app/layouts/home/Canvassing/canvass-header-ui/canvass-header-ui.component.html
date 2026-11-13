@@ -1,0 +1,49 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>CanvassHeaderUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="canvassHeaderForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content class="sh-content" [class.sh-show-more]="showMore">
+        <div class="row">
+            <div class="col-6 col-md-4">
+                <mat-form-field appearance="standard" class="w-100">
+                    <mat-label>TransDate</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="TransDate"  autocomplete="off" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-6 col-md-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>ReferenceNo</mat-label>
+                    <input matInput placeholder="Input ReferenceNo" autocomplete="off" required formControlName="ReferenceNo" >
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>ReasonName</mat-label>
+                    <input matInput placeholder="Input ReasonName" autocomplete="off" required formControlName="ReasonName" readonly>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>Remarks</mat-label>
+                <textarea  matInput placeholder="Input Remarks" rows="1" autocomplete="off" required formControlName="Remarks" ></textarea>
+            </mat-form-field>
+        </div>
+       
+        <div mat-dialog-actions [align]="'end'" class="mb-3 sh-actions">
+            <button type="button"    mat-button color="primary" class="me-3" >
+                <mat-checkbox  [checked]="printReceipt" (change)="onChangePrintReceipt($event.checked)"  [disabled]="disablePrintReceipt">
+                    <mat-label>Print Receipt</mat-label>
+                </mat-checkbox>
+            </button>
+            <button type="button"    mat-button color="primary" class="me-3" (click)="onClickSignatures()">
+                    <mat-label>Signatures</mat-label>
+            </button>
+            <button type="button" class="me-3 sh-save" (click)="validateForm()" mat-raised-button color="primary" [disabled]="canvassHeaderForm.invalid || loading == true">{{btnText}}</button>
+          </div>
+    </div>
+  </form>

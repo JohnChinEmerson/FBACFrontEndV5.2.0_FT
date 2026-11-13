@@ -1,0 +1,21 @@
+:host { display: contents; }
+.thumb { display: block; overflow: hidden; }
+.thumb.size-fill { position: absolute; inset: 0; }
+.thumb.size-small { position: relative; flex: 0 0 32px; width: 32px; height: 32px; border-radius: 6px; }
+.thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.placeholder {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(0, 0, 0, 0.08)) !important;
+}
+.ph-initials { font-weight: 700; letter-spacing: .5px; font-size: 30px; line-height: 1; }
+.ph-icon { position: absolute; left: 8px; bottom: 6px; opacity: .55; font-size: 22px; width: 22px; height: 22px; }
+
+.size-small .ph-initials { font-size: 13px; }
+.size-small .ph-icon { display: none; }

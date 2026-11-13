@@ -1,0 +1,38 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+  <div class="p text-center">
+    <app-aprint-header></app-aprint-header>
+  </div>
+  <div class="title">
+    <h3>{{Title}}</h3>
+  </div>
+  <div >
+      <table class="table table-bordered" #tableToExport>
+          <thead class="thead-background">
+            <tr>
+              <th scope="col">TransDate</th>
+              <th scope="col">TransTime</th>
+              <th scope="col">FullName</th>
+              <th scope="col">AccessRight</th>
+              <th scope="col">Module</th>
+              <th scope="col">Action</th>
+              <th scope="col">RefNo</th>
+              <th scope="col">Subject</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of Data">
+              <td>{{data.TransDate | date: 'MM/dd/yyyy'}}</td>
+              <td>{{data.TransTime}}</td>
+              <td>{{data.FullName}}</td>
+              <td>{{data.AccessRight}}</td>
+              <td>{{data.Module}}</td>
+              <td>{{data.Action}}</td>
+              <td>{{data.RefNo}}</td>
+              <td>{{data.Subject}}</td>
+            </tr>
+          </tbody>
+      </table>
+  </div>
+  <app-aprint-footer [totalRecords]="Data.length"></app-aprint-footer>  

@@ -1,0 +1,83 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+        <app-aprint-header></app-aprint-header>
+    </div>
+    
+    <table  class="w-100 table table-bordered">
+        <thead class="thead-background">
+            <tr>
+            <th class="w-18 title"  colspan="6">{{Title}}</th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="w-18">VOUCHER NO</td>
+            <td class="w-2"> : </td>
+            <td class="w-30">{{PettyCash.VoucherNo}}</td>
+            <td class="w-18">RELEASED</td>
+            <td class="w-2"> : </td>
+            <td class="w-30">{{PettyCash.AmountReleased | number:'1.2-2'}}</td>
+        </tr>
+        <tr>
+            <td class="w-18">TRANS DATE</td>
+            <td class="w-2"> : </td>
+            <td class="w-30">{{PettyCash.TransDate | date:'MM/dd/yyyy' }}</td>
+            <td class="w-18">AMOUNT USED</td>
+            <td class="w-2"> : </td>
+            <td class="w-30">{{PettyCash.AmountUsed | number:'1.2-2'}}</td>
+        </tr>
+        <tr>
+            <td class="w-18">DISBURSE NO</td>
+            <td class="w-2"> : </td>
+            <td class="w-30">{{PettyCash.DisburseNo}}</td>
+            <td class="w-18">AMOUNT LEFT</td>
+            <td class="w-2"> : </td>
+            <td class="w-30">{{PettyCash.AmountLeft | number:'1.2-2'}}</td>
+        </tr>
+        <tr>
+            <td class="w-18">ACCOUNT</td>
+            <td class="w-2"> : </td>
+            <td class="w-30">{{PettyCash.CashAccount}}</td>
+            <td class="w-18">AMOUNT COUNT</td>
+            <td class="w-2"> : </td>
+            <td class="w-30">{{PettyCash.AmountCount | number:'1.2-2'}}</td>
+        </tr>
+        <tr>
+            <td class="w-18">RECEIVED BY</td>
+            <td class="w-2"> : </td>
+            <td class="w-30">{{PettyCash.ReceivedBy }}</td>
+            <td class="w-18">VARIANCE</td>
+            <td class="w-2"> : </td>
+            <td class="w-30">{{PettyCash.Variance  | number:'1.2-2' }}</td>
+        </tr>
+    </table>
+    <table class="table table-bordered" #tableToExport >
+        <thead class="thead-background">
+          <tr>
+            <th scope="col">DATE</th>
+            <th scope="col">TRANSNO</th>
+            <th scope="col">TRANS NAME</th>
+            <th scope="col">DESCRIPTION</th>
+            <th scope="col">AMOUNT PAID</th>
+            <th scope="col">VARIANCE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of PaidTrans">
+            <td>{{data.TransDate | date:'MM/dd/yyyy'}}</td>
+            <td>{{data.TransNo}}</td>
+            <td>{{data.TransName}}</td>
+            <td >{{data.Description }}</td>
+            <td class="numeric">{{data.AmountPaid | number:'1.2-2'}}</td>
+            <td class="numeric">{{data.AmountLeft | number:'1.2-2'}}</td>
+          </tr>
+          <tr class="footer">
+              <td class="no-border" colspan="4"></td>
+              <td class="numeric">{{getTotal('AmountPaid') | number:'1.2-2'}}</td>
+              <td class="numeric">{{getTotal('AmountLeft') | number:'1.2-2'}}</td>
+          </tr>
+        </tbody>
+    </table>
+   
+   

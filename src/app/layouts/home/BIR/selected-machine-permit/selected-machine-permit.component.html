@@ -1,0 +1,145 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>MachinePermitUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="MachinePermitForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>PermitNo</mat-label>
+                    <input matInput placeholder="Input PermitNo" autocomplete="off" required formControlName="PermitNo">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>RDOCode</mat-label>
+                    <input matInput placeholder="Input RDOCode" autocomplete="off" required formControlName="RDOCode">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="standard" class="w-100">
+                    <mat-label>DateIssued</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="DateIssued"  autocomplete="off" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="standard" class="w-100">
+                    <mat-label>ExpiryDate</mat-label>
+                    <input matInput [matDatepicker]="picker2" formControlName="ExpiryDate"  autocomplete="off" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <mat-form-field class="w-100" appearance="standard">
+                <mat-label>ComputerName</mat-label>
+                <input matInput placeholder="Input ComputerName" autocomplete="off" required formControlName="ComputerName">
+            </mat-form-field>
+        </div>
+       <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>SerialNo</mat-label>
+                    <input matInput placeholder="Input SerialNo" autocomplete="off" required formControlName="SerialNo">
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>MachineNo</mat-label>
+                    <input matInput placeholder="Input MachineNo" autocomplete="off" required formControlName="MachineNo">
+                </mat-form-field>
+            </div>
+       </div>
+       <div class="row d-flex align-items-center">
+            <div class="col-md-3 text-end">Sales Invoice</div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Prefix</mat-label>
+                    <input matInput placeholder="Input PSINo" autocomplete="off" required formControlName="PSINo">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>StartNo</mat-label>
+                    <input matInput placeholder="Input SINo" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="SINo">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>EndNo</mat-label>
+                    <input matInput placeholder="Input SILastNo" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="SILastNo">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row d-flex align-items-center">
+            <div class="col-md-3 text-end">Sales Return</div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Prefix</mat-label>
+                    <input matInput placeholder="Input PSRNo" autocomplete="off" required formControlName="PSRNo">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>StartNo</mat-label>
+                    <input matInput placeholder="Input SRNo" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="SRNo">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>EndNo</mat-label>
+                    <input matInput placeholder="Input SRLastNo" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="SRLastNo">
+                </mat-form-field>
+            </div>
+        </div>
+        <!-- Desktop MachinePermitUI: VOID receipt counter -->
+        <div class="row d-flex align-items-center">
+            <div class="col-md-3 text-end">Void</div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Prefix</mat-label>
+                    <input matInput placeholder="Input PVoidNo" autocomplete="off" required formControlName="PVoidNo">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>StartNo</mat-label>
+                    <input matInput placeholder="Input VoidNo" type="number" inputmode="numeric" min="0" autocomplete="off" required formControlName="VoidNo">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>EndNo</mat-label>
+                    <input matInput placeholder="Input VoidLastNo" type="number" inputmode="numeric" min="0" autocomplete="off" required formControlName="VoidLastNo">
+                </mat-form-field>
+            </div>
+        </div>
+        <!-- Desktop MachinePermitUI: store hours of the X / Z Reading day (an AM end is the next day) -->
+        <div class="row d-flex align-items-center">
+            <div class="col-md-3 text-end">Store Hours</div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>Start (e.g. 8:00:00 AM)</mat-label>
+                    <input matInput placeholder="8:00:00 AM" autocomplete="off" required formControlName="StoreHourStart">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="standard">
+                    <mat-label>End (e.g. 2:00:00 AM)</mat-label>
+                    <input matInput placeholder="11:59:59 PM" autocomplete="off" required formControlName="StoreHourEnd">
+                </mat-form-field>
+            </div>
+        </div>
+
+        </div>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+      <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="MachinePermitForm.invalid || loading == true">{{btnText}}</button>
+    </div>
+  </form>

@@ -1,0 +1,48 @@
+     <app-background-logo-ui></app-background-logo-ui>
+
+<div class="content">
+    <mat-card>
+        <button mat-icon-button class="close-button" (click)="onClose()">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+        <h2 mat-dialog-title>EReceiptsUI</h2>
+        <mat-divider></mat-divider>
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field appearance="standard">
+                    <mat-label>DateFrom</mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="dateFrom"  autocomplete="off" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field appearance="standard">
+                    <mat-label>DateTo</mat-label>
+                    <input matInput [matDatepicker]="picker2" [(ngModel)]="dateTo"  autocomplete="off" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <ng-select 
+                [items]="terminals" 
+                [virtualScroll]="true" 
+                appendTo="body" 
+                bindLabel="ComputerName"
+                bindValue="ComputerName"
+                [(ngModel)]="terminal" 
+                [searchable]="true" 
+                [clearable] = "false" 
+                placeholder="Machine"
+                >
+            </ng-select>
+        </div>
+        <div class="row">
+            <button type="button" (click)="onSubmit()"  mat-raised-button color="primary" [disabled]="loading == true">{{btnText}}</button>
+        </div>
+
+    </mat-card>
+</div>
+        

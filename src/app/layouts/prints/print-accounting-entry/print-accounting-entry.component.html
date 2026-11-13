@@ -1,0 +1,49 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+</div>
+   <div class="p text-center">
+        <app-aprint-header></app-aprint-header>
+    </div>
+    <div class="title">
+        <h3>{{Title}}</h3>
+    </div>
+
+    <table  class="w-100">
+        <tr class="no-border">
+            <td class="no-border">DATE : </td>
+            <td class="no-border w-45">{{Header.Date | date:'MM/dd/yyyy'}}</td>
+            <td class="no-border">REFERENCE NO : </td>
+            <td class="no-border w-25">{{Header.ReferenceNo}}</td>
+        </tr>
+        <tr class="no-border">
+            <td class="no-border">PARTICULARS : </td>
+            <td class="no-border w-45">{{Header.Particular}}</td>
+            <td class="no-border">REMARKS : </td>
+            <td class="no-border w-25"></td>
+        </tr>
+    </table>
+
+    <table class="table table-bordered w-100">
+        <thead class="thead-background">
+        <tr>
+            <th scope="col">ACCOUNT TITLE</th>
+            <th class="numeric" scope="col">DEBIT</th>
+            <th class="numeric" scope="col">CREDIT</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of Data">
+            <td class="ItemName">{{item.AccountTitle}}</td>
+            <td class="numeric">{{item.Debit| number: '1.2-2'}}</td>
+            <td class="numeric">{{item.Credit | number: '1.2-2'}}</td>
+        </tr>
+        <tr class="no-border footer">
+            <td class="no-border" colspan="1"></td>
+            <td class="numeric">{{getTotal('Debit') | number: '1.2-2'}}</td>
+            <td class="numeric">{{getTotal('Credit') | number: '1.2-2'}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+   
+    

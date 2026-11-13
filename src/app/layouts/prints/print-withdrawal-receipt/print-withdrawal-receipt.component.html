@@ -1,0 +1,40 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+        <app-aprint-header></app-aprint-header>
+    </div>
+        <div class="title">
+            {{Title}}
+        </div>
+
+    <table  class=" table-bordered w-100" #tableToExport  >
+        <tr class="no-border">
+            <td class="no-border">TransNo : </td>
+            <td class="no-border w-45">{{Data.TransNo}}</td>
+            <td class="no-border">ReadingNo : </td>
+            <td class="no-border w-25">{{Data.ReadingNo}}</td>
+        </tr>
+        <tr class="no-border">
+            <td class="no-border">Amount : </td>
+            <td class="no-border w-45">{{Data.Amount | number: '1.2-2'}}</td>
+            <td class="no-border">DateTime : </td>
+            <td class="no-border w-25">{{Data.TransDate | date:'MM/dd/yyyy h:mm a'}}</td>
+        </tr>
+        <tr class="no-border">
+            <td class="no-border">Reason : </td>
+            <td class="no-border w-45">{{Data.Reason }}</td>
+            <td class="no-border">Username : </td>
+            <td class="no-border w-25">{{Data.UserFullName }}</td>
+        </tr>
+        <tr class="no-border">
+            <td class="no-border">Destination : </td>
+            <td class="no-border w-45">{{Data.Destination }}</td>
+            <td class="no-border">Machine : </td>
+            <td class="no-border w-25">{{Data.MachineName }}</td>
+        </tr>
+    </table>
+
+     
+
+   

@@ -1,0 +1,48 @@
+<button mat-icon-button class="close-button"  (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>MultipleUMUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="multipleUMForm" (ngSubmit)="validateForm()">
+    <div mat-dialog-content>
+            <div class="row">
+                <div class="align-elements">
+                    <ng-select  
+                        class="w-15" 
+                        [items]="unitMeasures" 
+                        [virtualScroll]="true" 
+                        appendTo="body" 
+                        formControlName="UM" 
+                        bindLabel="UM" 
+                        bindValue="UM"  
+                        [searchable]="true" 
+                        [clearable] = "false" 
+                        placeholder="UnitMeasure" 
+                        required>
+                    </ng-select>
+                    <button type="button" (click)="onClickUM()"  mat-icon-button color="primary" title="New"><mat-icon>list</mat-icon> </button>
+                </div>
+            </div>
+            <div class="row">
+                    <mat-form-field class="" appearance="standard">
+                        <mat-label>Equivalent no. of {{item.UM}}</mat-label>
+                        <input matInput placeholder="Input Conversion" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" min="0"  autocomplete="off" required formControlName="Conversion">
+                    </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>Cost</mat-label>
+                    <input matInput placeholder="Input Cost" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" min="0"  autocomplete="off" required formControlName="Cost" >
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>Price</mat-label>
+                    <input matInput placeholder="Input Price" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" min="0"  autocomplete="off" required formControlName="Price" >
+                </mat-form-field>
+            </div>
+        </div>
+        <div mat-dialog-actions [align]="'end'" class="mb-3">
+            <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="multipleUMForm.invalid || loading == true">{{btnText}}</button>
+        </div>
+  </form>

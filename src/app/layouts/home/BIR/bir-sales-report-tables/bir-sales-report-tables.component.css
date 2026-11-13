@@ -1,0 +1,49 @@
+.table-wrap{
+    overflow-x: auto;
+    margin-bottom: 12px;
+}
+table{
+    border-collapse: collapse;
+    width: 100%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 11px;
+}
+th, td{
+    border: 1px solid #888;
+    padding: 4px 6px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+thead th{
+    font-weight: 700;
+    background-color: #D3D3D3;
+    text-align: center;
+    white-space: normal;
+    min-width: 64px;
+}
+tfoot td{
+    font-weight: 700;
+    background-color: #F5F5F5;
+}
+.num{
+    text-align: right;
+}
+.empty{
+    text-align: center;
+    color: rgba(0,0,0,.54);
+}
+tr.void td{
+    color: #c62828;
+}
+.subtitle{
+    font-weight: 700;
+    margin: 12px 0 6px;
+}
+@media print{
+    .table-wrap{
+        overflow: visible;
+    }
+    table{
+        font-size: 7px;
+    }
+}

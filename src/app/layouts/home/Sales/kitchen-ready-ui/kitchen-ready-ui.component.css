@@ -1,0 +1,79 @@
+/* the list / details scroll inside the dialog; the title and the buttons stay */
+.kr { max-height: 70vh; max-height: 70dvh; padding-top: 8px; overflow-x: hidden; }
+.kr-summary { margin: 4px 2px 10px; font-size: 13px; font-weight: 600; color: #6b7280; }
+
+/* one row per table */
+.kr-list { display: flex; flex-direction: column; gap: 8px; }
+.kr-table {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 64px;
+  padding: 10px 12px;
+  border: 1px solid #e3e6ef;
+  border-radius: 10px;
+  background: #fff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+}
+.kr-table:hover, .kr-table:focus-visible { border-color: #3F51B5; box-shadow: 0 2px 8px rgba(63, 81, 181, .15); outline: 0; }
+.kr-icon {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+.kr-info { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+.kr-name { font-size: 17px; font-weight: 700; color: #1f2937; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kr-sub { font-size: 12px; color: #6b7280; }
+.kr-count {
+  flex: 0 0 auto;
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid #a5d6a7;
+  background: #e8f5e9;
+  color: #1b5e20;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.kr-view { flex: 0 0 auto; display: inline-flex; align-items: center; color: #3F51B5; font-size: 13px; font-weight: 700; white-space: nowrap; }
+
+.kr-empty { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 32px 8px; color: #6b7280; }
+.kr-empty mat-icon { font-size: 40px; width: 40px; height: 40px; color: #a5d6a7; }
+
+/* details: back link + the table's card full width */
+.kr-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 40px;
+  margin-bottom: 4px;
+  padding: 0 6px 0 0;
+  border: 0;
+  background: transparent;
+  color: #3F51B5;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.kr-details ::ng-deep .koc-grid { grid-template-columns: 1fr; padding: 0; }
+
+.kr-actions { display: flex; justify-content: flex-end; gap: 8px; }
+/* touch: finger-sized buttons */
+.kr-btn { min-height: 44px; min-width: 88px; }
+@media (max-width: 767.98px) {
+  .kr { max-height: calc(100dvh - 160px); }
+  .kr-table { min-height: 72px; }
+  .kr-view { font-size: 0; }               /* phones: the arrow only */
+  .kr-view mat-icon { font-size: 24px; }
+  .kr-btn { min-height: 48px; flex: 1 1 auto; }
+}

@@ -1,0 +1,81 @@
+.fd { display: flex; flex-direction: column; gap: 12px; }
+
+.fd-toolbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.fd-range { flex: 0 1 auto; min-width: 0; }
+.fd-view { min-height: 44px; min-width: 100px; font-weight: 600; }
+.fd-asof { margin-left: auto; font-size: 12px; color: #6b7280; }
+
+/* KPIs: big readable numbers */
+.fd-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.fd-kpi {
+  display: flex; flex-direction: column; gap: 2px; min-width: 0;
+  padding: 14px 16px; background: #fff; border: 1px solid #e3e6ef; border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(20, 30, 70, 0.06);
+}
+.fd-kpi-main { background: #3F51B5; border-color: #3F51B5; color: #fff; }
+.fd-kpi-label { font-size: 13px; font-weight: 600; color: #5f6b7a; }
+.fd-kpi-main .fd-kpi-label { color: #dfe3f7; }
+.fd-kpi-help { display: inline-flex; align-items: center; gap: 4px; cursor: help; }
+.fd-kpi-help mat-icon { font-size: 16px; width: 16px; height: 16px; color: #9aa3b2; }
+.fd-kpi-value { font-size: 28px; font-weight: 700; line-height: 1.2; color: #1f2937; overflow-wrap: anywhere; }
+.fd-kpi-main .fd-kpi-value { color: #fff; }
+.fd-kpi-sub { font-size: 12px; color: #6b7280; }
+.fd-delta { display: inline-flex; align-items: center; gap: 2px; font-size: 12px; font-weight: 600; color: #6b7280; }
+.fd-delta mat-icon { font-size: 16px; width: 16px; height: 16px; }
+.fd-delta.up { color: #2e7d32; }
+.fd-delta.down { color: #c62828; }
+.fd-kpi-main .fd-delta, .fd-kpi-main .fd-delta.up, .fd-kpi-main .fd-delta.down { color: #fff; }
+
+/* cards */
+.fd-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.fd-card {
+  display: flex; flex-direction: column; min-width: 0; padding: 12px 14px;
+  background: #fff; border: 1px solid #e3e6ef; border-radius: 12px; box-shadow: 0 1px 3px rgba(20, 30, 70, 0.06);
+}
+.fd-wide { grid-column: span 2; }
+.fd-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.fd-card-head h3 { margin: 0; font-size: 15px; font-weight: 700; color: #1f2937; }
+.fd-sub { font-size: 12px; color: #6b7280; }
+.fd-chart { display: block; width: 100%; height: 260px; }
+
+.fd-list { list-style: none; margin: 0; padding: 0; }
+.fd-list li { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f0f2f6; }
+.fd-list li:last-child { border-bottom: 0; }
+.fd-rank {
+  flex: 0 0 26px; height: 26px; border-radius: 50%; background: #e8eaf6; color: #3F51B5;
+  font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center;
+}
+.fd-name { flex: 1; min-width: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fd-num { display: flex; flex-direction: column; align-items: flex-end; font-weight: 700; white-space: nowrap; }
+.fd-num small { font-weight: 500; font-size: 11px; color: #6b7280; }
+.fd-num.neg { color: #c62828; }
+.fd-warn-icon { color: #ef6c00; }
+.fd-disc-icon { color: #3F51B5; }
+
+.fd-bars { display: flex; flex-direction: column; gap: 12px; }
+.fd-bar-label { display: flex; justify-content: space-between; font-weight: 600; }
+.fd-bar { height: 8px; border-radius: 4px; background: #eef0f4; overflow: hidden; margin: 4px 0 2px; }
+.fd-bar span { display: block; height: 100%; border-radius: 4px; background: #3F51B5; }
+
+.fd-badge { min-width: 26px; padding: 2px 8px; border-radius: 12px; background: #e8f5e9; color: #2e7d32; font-weight: 700; text-align: center; }
+.fd-badge.warn { background: #fff3e0; color: #ef6c00; }
+.fd-none { display: flex; align-items: center; gap: 6px; padding: 24px 4px; color: #6b7280; justify-content: center; text-align: center; }
+.fd-none mat-icon { color: #2e7d32; }
+.fd-foot { margin-top: auto; padding-top: 8px; font-size: 12px; color: #c62828; font-weight: 600; }
+.fd-empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 48px 8px; color: #6b7280; }
+
+@media (max-width: 1199px) {
+  .fd-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fd-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+  .fd-grid { grid-template-columns: 1fr; }
+  .fd-wide { grid-column: auto; }
+  .fd-kpi-value { font-size: 22px; }
+  .fd-asof { margin-left: 0; width: 100%; order: 3; }
+  .fd-range { flex: 1 1 100%; }
+  .fd-view { flex: 1 1 100%; }
+}
+@media (max-width: 380px) {
+  .fd-kpis { grid-template-columns: 1fr; }
+}

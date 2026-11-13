@@ -1,0 +1,117 @@
+<div class="fd">
+    <div class="fd-toolbar">
+        <app-date-range-filter class="fd-range" preset="today" [disabled]="isLoading" (rangeChange)="onRangeChange($event)"></app-date-range-filter>
+        <span class="fd-asof" *ngIf="data">As of {{data.asOf | date:'MMM d, h:mm a'}}</span>
+        <!-- same VIEW button as the Command Center -->
+        <button mat-raised-button color="primary" class="fd-view" (click)="load()" [disabled]="isLoading">VIEW</button>
+    </div>
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+
+    <div class="fd-empty" *ngIf="hasError && !data">
+        <mat-icon>cloud_off</mat-icon>
+        <div>Unable to load the dashboard.</div>
+        <button mat-stroked-button color="primary" (click)="load()">Try again</button>
+    </div>
+
+    <ng-container *ngIf="data">
+        <!-- the range at a glance -->
+        <div class="fd-kpis">
+            <div class="fd-kpi fd-kpi-main">
+                <span class="fd-kpi-label">Sales · {{periodLabel}}</span>
+                <span class="fd-kpi-value">{{data.current.sales | number:'1.2-2'}}</span>
+                <ng-container *ngTemplateOutlet="delta; context: { $implicit: change(data.current.sales, data.previous.sales) }"></ng-container>
+            </div>
+            <div class="fd-kpi">
+                <span class="fd-kpi-label">Transactions</span>
+                <span class="fd-kpi-value">{{data.current.count | number}}</span>
+                <ng-container *ngTemplateOutlet="delta; context: { $implicit: change(data.current.count, data.previous.count) }"></ng-container>
+            </div>
+            <div class="fd-kpi">
+                <span class="fd-kpi-label fd-kpi-help" matTooltip="Total Sales ÷ Number of Transactions" matTooltipPosition="above" tabindex="0">
+                    Avg. Sale per Transaction <mat-icon aria-hidden="true">info_outline</mat-icon>
+                </span>
+                <span class="fd-kpi-value">{{data.current.average | number:'1.2-2'}}</span>
+                <ng-container *ngTemplateOutlet="delta; context: { $implicit: change(data.current.average, data.previous.average) }"></ng-container>
+            </div>
+            <div class="fd-kpi">
+                <span class="fd-kpi-label">Open Orders · now</span>
+                <span class="fd-kpi-value">{{data.openOrders.count | number}}</span>
+                <span class="fd-kpi-sub">{{data.openOrders.tables}} table(s) · {{data.openOrders.amount | number:'1.2-2'}}</span>
+            </div>
+        </div>
+
+        <div class="fd-grid">
+            <!-- sales trend -->
+            <section class="fd-card fd-wide">
+                <header class="fd-card-head"><h3>Sales Trend</h3><span class="fd-sub">{{periodLabel}}</span></header>
+                <highcharts-chart *ngIf="hasTrend; else noData" class="fd-chart" [Highcharts]="Highcharts" [options]="trendChart" [(update)]="updateFlag" [oneToOne]="true"></highcharts-chart>
+            </section>
+
+            <!-- category share -->
+            <section class="fd-card">
+                <header class="fd-card-head"><h3>Category Share</h3><span class="fd-sub">{{periodLabel}}</span></header>
+                <highcharts-chart *ngIf="data.categories.length; else noData" class="fd-chart" [Highcharts]="Highcharts" [options]="categoryChart" [(update)]="updateFlag" [oneToOne]="true"></highcharts-chart>
+            </section>
+
+            <!-- top items -->
+            <section class="fd-card">
+                <header class="fd-card-head"><h3>Top-Selling Items</h3><span class="fd-sub">{{periodLabel}}</span></header>
+                <ol class="fd-list" *ngIf="data.topItems.length; else noData">
+                    <li *ngFor="let item of data.topItems; let i = index; trackBy: trackByIndex">
+                        <span class="fd-rank">{{i + 1}}</span>
+                        <span class="fd-name" [title]="item.ItemName">{{item.ItemName}}</span>
+                        <span class="fd-num">{{item.Qty | number:'1.0-2'}} sold<small>{{item.Amount | number:'1.2-2'}}</small></span>
+                    </li>
+                </ol>
+            </section>
+
+            <!-- payment types -->
+            <section class="fd-card">
+                <header class="fd-card-head"><h3>Payment Types</h3><span class="fd-sub">{{periodLabel}}</span></header>
+                <div class="fd-bars" *ngIf="data.payments.length; else noData">
+                    <div class="fd-bar-row" *ngFor="let p of data.payments; trackBy: trackByIndex">
+                        <div class="fd-bar-label"><span>{{p.PaymentType}}</span><b>{{p.Amount | number:'1.2-2'}}</b></div>
+                        <div class="fd-bar"><span [style.width.%]="share(p.Amount, data.payments)"></span></div>
+                        <div class="fd-sub">{{p.Count}} sale(s) · {{share(p.Amount, data.payments) | number:'1.0-1'}}%</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- low stock -->
+            <section class="fd-card">
+                <header class="fd-card-head"><h3>Low Stock <span class="fd-sub">now</span></h3><span class="fd-badge" [class.warn]="data.lowStock.count > 0">{{data.lowStock.count}}</span></header>
+                <ul class="fd-list" *ngIf="data.lowStock.items.length; else allStocked">
+                    <li *ngFor="let s of data.lowStock.items; trackBy: trackByIndex">
+                        <mat-icon class="fd-warn-icon">warning_amber</mat-icon>
+                        <span class="fd-name" [title]="s.ItemName">{{s.ItemName}}</span>
+                        <span class="fd-num" [class.neg]="s.Available <= 0">{{s.Available | number:'1.0-2'}} {{s.UM}}<small>alert at {{s.AlertQty | number:'1.0-2'}}</small></span>
+                    </li>
+                </ul>
+                <ng-template #allStocked><div class="fd-none"><mat-icon>check_circle</mat-icon> Stocks are above their alert level.</div></ng-template>
+            </section>
+
+            <!-- discounts in the range -->
+            <section class="fd-card">
+                <header class="fd-card-head"><h3>Discounts</h3><span class="fd-sub">{{periodLabel}} · {{data.discounts.amount | number:'1.2-2'}}</span></header>
+                <ul class="fd-list" *ngIf="data.discounts.byType.length; else noDiscount">
+                    <li *ngFor="let d of data.discounts.byType; trackBy: trackByIndex">
+                        <mat-icon class="fd-disc-icon">sell</mat-icon>
+                        <span class="fd-name">{{d.DiscountName}}</span>
+                        <span class="fd-num">{{d.Amount | number:'1.2-2'}}<small>{{d.Count}} applied</small></span>
+                    </li>
+                </ul>
+                <ng-template #noDiscount><div class="fd-none">No discounts given in this period.</div></ng-template>
+                <div class="fd-foot" *ngIf="data.current.voided">{{data.current.voided}} voided sale(s) in this period</div>
+            </section>
+        </div>
+    </ng-container>
+</div>
+
+<ng-template #noData><div class="fd-none">No sales in this period yet.</div></ng-template>
+
+<ng-template #delta let-value>
+    <span class="fd-delta" *ngIf="value !== null" [class.up]="value >= 0" [class.down]="value < 0">
+        <mat-icon>{{ value >= 0 ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>{{ (value < 0 ? -value : value) | number:'1.0-1' }}% {{compareLabel}}
+    </span>
+    <span class="fd-delta" *ngIf="value === null">{{noCompareLabel}}</span>
+</ng-template>

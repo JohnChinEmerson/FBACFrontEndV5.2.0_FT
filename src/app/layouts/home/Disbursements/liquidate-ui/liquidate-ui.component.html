@@ -1,0 +1,49 @@
+
+<button mat-icon-button class="close-button" (click)="onClose()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>LiquidateUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="liquidateForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>DisburseNo</mat-label>
+                    <input matInput placeholder="Input DisburseNo" autocomplete="off" required formControlName="DisburseNo" readonly>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>AmountReleased</mat-label>
+                    <input matInput placeholder="Input AmountReleased"  type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true"  autocomplete="off" required formControlName="AmountReleased" readonly>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>AmountUsed</mat-label>
+                    <input matInput placeholder="Input AmountUsed" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="AmountUsed" readonly>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>AmountLeft</mat-label>
+                    <input matInput placeholder="Input AmountLeft" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="AmountLeft" readonly>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>AmountCount</mat-label>
+                    <input matInput placeholder="Input AmountCount" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="AmountCount" (keyup)="onChangeAmountCount()">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="" appearance="standard">
+                    <mat-label>AmountVariance</mat-label>
+                    <input matInput placeholder="Input AmountVariance" type="text" mask="separator.2" thousandSeparator="," decimalMarker="." [dropSpecialCharacters]="true" [allowNegativeNumbers]="true" autocomplete="off" required formControlName="AmountVariance" readonly>
+                </mat-form-field>
+            </div>
+    </div>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+        <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="liquidateForm.invalid || loading == true">{{btnText}}</button>
+    </div>
+</form>

@@ -1,0 +1,37 @@
+<app-background-logo-ui></app-background-logo-ui>
+
+<!-- Same popup form as Sales Config (SaleConfigUI) -->
+<div class="content">
+    <mat-card>
+        <button mat-icon-button class="close-button" (click)="onClose()">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+        <h2 mat-dialog-title>FilesConfigUI</h2>
+        <mat-divider></mat-divider>
+
+        <form [formGroup]="fileConfigForm" (ngSubmit)="onSubmit()">
+            <div mat-dialog-content>
+                <div class="fields-container pt-3">
+                    <div class="row-pair">
+                        <div class="field-row">
+                            <label title="Tables are grouped by Table Category (Sales shows TABLE CATEGORY then TABLE). Changing it deletes all tables.">
+                                <mat-checkbox [checked]="fileConfigForm.controls['MultipleTable'].value == 'yes'" (change)="onCheck('MultipleTable', $event.checked)">Multiple Table:</mat-checkbox>
+                            </label>
+                            <input class="MultipleTable" matInput placeholder="Input MultipleTable" autocomplete="off" formControlName="MultipleTable">
+                        </div>
+                        <div class="field-row">
+                            <label title="no: hides Production Transaction / Production Reports and production item types.">
+                                <mat-checkbox [checked]="fileConfigForm.controls['HasProduction'].value == 'yes'" (change)="onCheck('HasProduction', $event.checked)">Has Production:</mat-checkbox>
+                            </label>
+                            <input class="HasProduction" matInput placeholder="Input HasProduction" autocomplete="off" formControlName="HasProduction">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div mat-dialog-actions [align]="'end'" class="mb-3">
+                <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="!toolButtons[0].Disabled || loading == true">{{btnText}}</button>
+            </div>
+        </form>
+    </mat-card>
+</div>

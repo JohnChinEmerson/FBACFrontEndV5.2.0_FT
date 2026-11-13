@@ -1,0 +1,41 @@
+<div class="hideOnPrint">
+    <app-all-buttons (printClicked)="onClickPrint()" (excelClicked)="onClickExcel()"></app-all-buttons>
+  </div>
+   <div class="p text-center">
+          <app-aprint-header></app-aprint-header>
+        </div>
+    <div class="title">
+            {{Title}}
+        </div>
+
+  <table class="table table-bordered" #tableToExport>
+      <thead class="thead-background">
+        <tr>
+          <th scope="col" >InputDate</th>
+          <th scope="col">TransNo</th>
+          <th scope="col">TransName</th>
+          <th scope="col">ExpiryDate</th>
+          <th scope="col">BatchLotNo</th>
+          <th scope="col">UM</th>
+          <th scope="col">QtyIn</th>
+          <th scope="col">QtyOut</th>
+          <th scope="col">Conversion</th>
+          <th scope="col">RunningQty</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of items">
+          <td class="InputDate">{{data.InputDate}}</td>
+          <td>{{data.TransNo}}</td>
+          <td>{{data.TransName }}</td>
+          <td>{{data.ExpiryDate}}</td>
+          <td>{{data.BatchLotNo }}</td>
+          <td>{{data.UM }}</td>
+          <td class="numeric">{{data.QtyIn | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.QtyOut | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.Conversion | number:'1.2-2'}}</td>
+          <td class="numeric">{{data.RunningQty | number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <app-aprint-footer [totalRecords]="items.length"></app-aprint-footer>  

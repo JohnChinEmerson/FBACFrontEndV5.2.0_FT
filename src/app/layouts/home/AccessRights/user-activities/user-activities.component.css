@@ -1,0 +1,28 @@
+.content{
+    margin: 10px;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.search-form-field
+{
+    width: 20%;
+}
+.forward-icon{
+    font-size: 23px;
+}
+.tab-content{
+    padding: 5px;
+}
+
+::ng-deep .ng-select .ng-select-container .ng-value-container{
+    padding: 15px 0 0 0 !important;
+}
+.feed-note{
+    margin: 4px 10px;
+    font-style: italic;
+}

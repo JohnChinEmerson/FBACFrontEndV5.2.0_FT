@@ -1,0 +1,9 @@
+<span class="thumb" [ngClass]="'size-' + size">
+    <img *ngIf="photoUrl && !failed; else placeholder" [src]="photoUrl" loading="lazy" alt="" (error)="failed = true">
+    <ng-template #placeholder>
+        <span class="placeholder" [style.background]="color" aria-hidden="true">
+            <mat-icon class="ph-icon">{{icon}}</mat-icon>
+            <span class="ph-initials">{{initials}}</span>
+        </span>
+    </ng-template>
+</span>

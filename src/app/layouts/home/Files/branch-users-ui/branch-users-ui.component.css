@@ -1,0 +1,33 @@
+.content{
+    margin-top: 10%;
+    width: 100%;
+    position: fixed;
+}
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.align-elements mat-form-field{
+    width: 100% !important;
+}
+.align-elements{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap:nowrap;
+}
+.mat-column-actions{
+    flex: 0 0 20%;
+
+}
+mat-card{
+    width:  800px;
+    margin: auto;
+}
+mat-form-field {
+    width: 100%;
+    line-height: -10%;
+}

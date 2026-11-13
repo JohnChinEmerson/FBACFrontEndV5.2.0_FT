@@ -1,0 +1,25 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>SupplierPaymentDetailUI</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="supplierPaymentDetailForm" (ngSubmit)="validateForm()">
+    <div mat-dialog-content>
+        <div class="row">
+            <mat-form-field class="" appearance="standard">
+                <mat-label>SourceTransNo</mat-label>
+                <input matInput placeholder="Input SourceTransNo" autocomplete="off" required formControlName="SourceTransNo" readonly>
+            </mat-form-field>
+        </div>
+        
+        <div class="row">
+            <mat-form-field class="w-100"  appearance="standard">
+                <mat-label>Amount</mat-label>
+                <input  #amountInput matInput placeholder="Input Amount" autocomplete="off" required formControlName="Amount" (keyup.enter)="validateForm()">
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions [align]="'end'" class="mb-3">
+        <button type="button"  (click)="validateForm()" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="supplierPaymentDetailForm.invalid || loading == true">{{btnText}}</button>
+    </div>
+  </form>

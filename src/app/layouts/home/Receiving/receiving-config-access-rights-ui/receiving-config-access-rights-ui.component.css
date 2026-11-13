@@ -1,0 +1,43 @@
+/* .access-right-select {
+    padding: 12px 24px 0;
+} */
+
+.access-right-select ::ng-deep .ng-select {
+    width: 100%;
+}
+
+.access-right-select ::ng-deep .ng-select .ng-select-container .ng-value-container {
+    padding: 15px 0 0 0 !important;
+}
+
+.fields-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.row-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+}
+
+.field-row {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    align-items: center;
+    gap: 8px;
+}
+ .field-row label {
+    white-space: nowrap;
+    text-align: left;
+}
+
+.field-row input {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    padding: 6px 8px;
+    background: #f5f5f5;
+    width: 100%;
+    box-sizing: border-box;
+}
